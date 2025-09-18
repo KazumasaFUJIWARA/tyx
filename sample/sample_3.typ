@@ -77,24 +77,24 @@ we consider the behavior of solutions
 to the Cauchy problem for the semilinear damped wave equation
 	$
 	cases(
-	\partial_(t)^(2) u+\partial_(t) u-\Delta u=|u|^p\, &= t>0\, x \in \mathbb R^(n)\, \
-	u(0)=u_(0)\, \partial_(t) u(0)=u_(1)\, &= x \in \mathbb R^(n) .
+	∂_(t)^(2) u+∂_(t) u-Δ u=|u|^p\, &= t>0\, x ∈ ℝ^(n)\, \
+	u(0)=u_(0)\, ∂_(t) u(0)=u_(1)\, &= x ∈ ℝ^(n) .
 	)
 	$ //[formula type:align]
 The aim of this manuscript
 is to establish the global existence of solutions
 under the initial conditions
 	$
-		 &= \left(u_(0), u_(1)\right)=\left(\varepsilon_(0) \varphi, \varepsilon_(1) \varphi\right), \
-	 &= 0 < \varepsilon_(0) < |\varepsilon_(1)| = - \varepsilon_(1).
+		 &= \left(u_(0), u_(1)\right)=\left(ε_(0) φ, ε_(1) φ\right), \
+	 &= 0 < ε_(0) < |ε_(1)| = - ε_(1).
 	$ //[formula type:align]
 with
 $n = 1$
 ,
-$\left(\varepsilon_(0), \varepsilon_(1)\right) \in \mathbb{R}^2$
+$\left(ε_(0), ε_(1)\right) ∈ ℝ^2$
 small,
 and
-$\varphi$
+$φ$
 being a regular non-negative function.
 // %]]]
 
@@ -139,8 +139,8 @@ is to first
 understand the corresponding linear (free) problem:
 	$
 	cases(
-	\partial_(t)^(2) u + \partial_(t) u - \Delta u = 0\,\
-	u(0) = u_(0)\, \partial_(t) u(0) = u_(1).
+	∂_(t)^(2) u + ∂_(t) u - Δ u = 0\,\
+	u(0) = u_(0)\, ∂_(t) u(0) = u_(1).
 	)
 	$ //[formula type:align]
 // %]]]
@@ -156,7 +156,7 @@ which transforms
 @eq:linear_damped_wave //[ref type:eqref]
 into the wave-type equation
 	$
-	\partial_(t)^(2) w - \Delta w = (1)/(4) w,
+	∂_(t)^(2) w - Δ w = (1)/(4) w,
 	$ //[formula type:align]
 which highlights the wave structure; for details, see Chapter VI, Section 6 in
 @CH89 //[ref type:cite]
@@ -200,10 +200,10 @@ $(u_(0),u_(1))=(0,f)$
 // %]]]
 
 // %[[[ Owing to the damping term
-$\partial_(t) u$
+$∂_(t) u$
 ,
 Owing to the damping term
-$\partial_(t) u$
+$∂_(t) u$
 ,
 the free solution to
 @eq:DW //[ref type:eqref]
@@ -211,12 +211,12 @@ is
 asymptotically equivalent to the solution of the free heat equation:
 	$
 	cases(
-	\partial_(t) v - \Delta v = 0\,\
+	∂_(t) v - Δ v = 0\,\
 	v(0) = u_(0) + u_(1).
 	)
 	$ //[formula type:align]
 For simplicity, we denote by
-$e^(t \Delta) f$
+$e^(t Δ) f$
 the solution to
 @eq:free_heat //[ref type:eqref]
 corresponding to the data
@@ -234,7 +234,7 @@ $f$
 the following asymptotic relation holds:
 	$
 		S(t) f
-	\sim e^(t \Delta) f + e^(-t/2) W(t) f.
+	∼ e^(t Δ) f + e^(-t/2) W(t) f.
 	$ //[formula type:align]
 We refer to
 @IIOW19 //[ref type:cite]
@@ -270,7 +270,7 @@ $L^(p)$
 $L^(q)$
 type estimates
 as
-$e^(t \Delta)$
+$e^(t Δ)$
 .
 Therefore, the following local existence result holds:
 #lemma(title: "Local existence", id: "lemma:local_existence")[
@@ -281,12 +281,10 @@ $T_1=T_1(u_0,u_1)$
 such that @eq:DW //[ref type:eqref] possesses a unique mild solution
 $u \in C\left(\left[0, T_1\right) ;W^{1,\infty} \cap W^{1,1}\right)$
 satisfying the estimate
-	\begin{align}\label{eq2}
-	\sup _{0 \leq t \leq T_1} \|u(t) \|_{ L^{\infty}}
-	\lesssim ( \|u_0 \|_{L^\infty} + \|u_1 \|_{L^\infty}).
-	\end{align}
+	$ \sup _{0 \leq t \leq T_1} \|u(t) \|_{ L^{\infty}}
+	\lesssim ( \|u_0 \|_{L^\infty} + \|u_1 \|_{L^\infty}). $ //[formula type:align]
 ] //[Lemma]
-$(u_(0),u_(1)) \in W^(1,∞) \cap W^(1,1) × L^∞ \cap L^(1)$
+$(u_(0),u_(1)) ∈ W^(1,∞) ∩ W^(1,1) × L^∞ ∩ L^(1)$
 and
 $p > 1$
 and
@@ -297,11 +295,11 @@ $T_(1)=T_(1)(u_(0),u_(1))$
 such that
 @eq:DW //[ref type:eqref]
 possesses a unique mild solution
-$u \in C\left(\left[0, T_(1)\right) ;W^(1,∞) \cap W^(1,1)\right)$
+$u ∈ C\left(\left[0, T_(1)\right) ;W^(1,∞) ∩ W^(1,1)\right)$
 satisfying the estimate
 	$
-		\sup _{0 ≤ t ≤ T_(1)} \|u(t) \|_{ L^(∞)}
-	\lesssim ( \|u_(0) \|_{L^∞} + \|u_(1) \|_{L^∞}).
+		sup _{0 ≤ t ≤ T_(1)} \|u(t) \|_{ L^(∞)}
+	≲ ( \|u_(0) \|_{L^∞} + \|u_(1) \|_{L^∞}).
 	$ //[formula type:align]
 \end{Lemma}
 \noindent
@@ -326,13 +324,13 @@ which gives the threshold for blow-up of positive solutions to
 @eq:DW //[ref type:eqref]
 and for the existence of global solutions to the Fujita-type heat equation:
 	$
-	\partial_(t) v - \Delta v = |v|^p.
+	∂_(t) v - Δ v = |v|^p.
 	$ //[formula type:align]
 For details, see
 @F66,H73,KST77 //[ref type:cite]
 .
 We also remark that when
-$n \in \mathbb N$
+$n ∈ ℕ$
 ,
 $p > 1+2/n$
 ,
@@ -364,7 +362,7 @@ to
 by treating
 $u$
 as if it were
-$e^(t \Delta)(u_(0) + u_(1))$
+$e^(t Δ)(u_(0) + u_(1))$
 —that is,
 as if
 $u$
@@ -398,7 +396,7 @@ in a parabolic region,
 as if, roughly speaking,
 $u$
 behaved like
-$e^(t \Delta) (u_(0) + u_(1))$
+$e^(t Δ) (u_(0) + u_(1))$
 ,
 and introduced an ODE governing the infimum of
 $u$
@@ -435,8 +433,8 @@ and obtained sharp lifespan estimates
 under the mean-zero initial condition
 	$
 		∫ u_(0) + u_(1) dx = 0,
-	\quad
-	u_(0), u_(1) \not≡ 0.
+	 
+	u_(0), u_(1) ≢ 0.
 	$ //[formula type:align]
 The approach of
 @FG25a //[ref type:cite]
@@ -456,21 +454,21 @@ for related topics.
 The arguments above do not yield
 the sharp initial conditions for blow-up.
 In particular, for any
-$\mu_(0), \mu_(1) \in \mathbb{R}$
+$μ_(0), μ_(1) ∈ ℝ$
 ,
 by combining the finite propagation speed
 with the arguments above,
 for any
-$\mu_(0), \mu_(1) \in \mathbb{R}$
+$μ_(0), μ_(1) ∈ ℝ$
 ,
 there exist smooth initial data
 $(u_(0), u_(1))$
 satisfying
 $
 	
-	∫ u_(0) dx = \mu_(0),
-	\quad
-	∫ u_(1) dx = \mu_(1),
+	∫ u_(0) dx = μ_(0),
+	 
+	∫ u_(1) dx = μ_(1),
 	
 $ //[formula type:display]
 such that the corresponding solution blows up in finite time.
@@ -486,8 +484,8 @@ $L$
 be a large positive number.
 If
 	$
-		u_(0)(x) &= = ψ(x) + (\mu_(0)-1) ψ(x-L), \
-	u_(1)(x) &= = \mu_(1) ψ(x-L),
+		u_(0)(x) &= = ψ(x) + (μ_(0)-1) ψ(x-L), \
+	u_(1)(x) &= = μ_(1) ψ(x-L),
 	$ //[formula type:align*]
 then one can show
 $u(t,x) = u_(b)(t,x) + u_(g)(t,x-L)$
@@ -499,21 +497,21 @@ $(u_(0), u_(1)) = (ψ,0)$
 and
 $u_(g)$
 is the solution with initial data
-$(u_(0), u_(1)) = ((\mu_(0)-1)ψ, \mu_(1) ψ)$
+$(u_(0), u_(1)) = ((μ_(0)-1)ψ, μ_(1) ψ)$
 .
 Since the argument above implies that
-$∫ u_(b) + \partial_(t) u_(b) dx$
+$∫ u_(b) + ∂_(t) u_(b) dx$
 blows up in finite time
 and
-$∫ u_(g) + \partial_(t) u_(g) dx$
+$∫ u_(g) + ∂_(t) u_(g) dx$
 is increasing,
 there exists a time
 $t_(0)$
 such that
 $
 	
-	∫ u(t_(0)) + \partial_(t) u(t_(0)) dx
-	= ∫ u_(b)(t_(0)) + \partial_(t) u_(b)(t_(0)) dx + ∫ u_(g)(t_(0)) + \partial_(t) u_(g)(t_(0)) dx
+	∫ u(t_(0)) + ∂_(t) u(t_(0)) dx
+	= ∫ u_(b)(t_(0)) + ∂_(t) u_(b)(t_(0)) dx + ∫ u_(g)(t_(0)) + ∂_(t) u_(g)(t_(0)) dx
 	> 0.
 	
 $ //[formula type:display]
@@ -546,7 +544,7 @@ $x$
 ):
 	$
 		u_(0)(x) = 0,
-	\quad
+	 
 	u_(1)(x) ≤ 0.
 	$ //[formula type:align]
 This was further extended to
@@ -632,14 +630,14 @@ $c_(0) > 0$
 such that, for
 $
 	
-	0 < \varepsilon_(0) < c_(0) |\varepsilon_(1)| \ll 1,
+	0 < ε_(0) < c_(0) |ε_(1)| \ll 1,
 	
 $ //[formula type:display]
 there exists a smooth, positive function
-$\varphi$
+$φ$
 such that
 the solution with initial data
-$(u_(0),u_(1)) = (\varepsilon_(0) \varphi, \varepsilon_(1) \varphi)$
+$(u_(0),u_(1)) = (ε_(0) φ, ε_(1) φ)$
 exists globally in time?
 To the best of the authors' knowledge,
 global existence for
@@ -649,20 +647,20 @@ Accordingly, we employ the following simple sufficient condition for global exis
 there exist a constant
 $c_(0) > 0$
 and a smooth, positive function
-$\varphi$
+$φ$
 such that, for
 $
 	
-	\varepsilon_(0) < c_(0) |\varepsilon_(1)| \ll 1,
+	ε_(0) < c_(0) |ε_(1)| \ll 1,
 	
 $ //[formula type:display]
 the solution
 $u$
 with initial data
-$(u_(0),u_(1)) = (\varepsilon_(0) \varphi, \varepsilon_(1) \varphi)$
+$(u_(0),u_(1)) = (ε_(0) φ, ε_(1) φ)$
 satisfies
 	$
-	u(t,x) ≤ 0,\ \ \partial_(t) u(t,x) + (1)/(2)u(t,x) ≤ 0
+	u(t,x) ≤ 0,\ \ ∂_(t) u(t,x) + (1)/(2)u(t,x) ≤ 0
 	$ //[formula type:align]
 for all
 $x$
@@ -683,66 +681,60 @@ The following is the main statement of this manuscript,
 answering the question above:
 #theorem(id: "theorem:main")[
 Let
-	\begin{align}
-	0 < \varepsilon_0 < -\varepsilon_1 \ll 1.
-	\label{eq:condition_ratio}
-	\end{align}
+	$ 0 < \varepsilon_0 < -\varepsilon_1 \ll 1.
+	\label{eq:condition_ratio} $ //[formula type:align]
 Then there exists a sufficiently small number $\rho$ and
 a positive function $\varphi \in W^{2,1} \cap W^{2,\infty}$
 satisfying the following pointwise control
-	\begin{align}\label{eq:shape_assumption} \tag{H1}
-	|\varphi^\prime(x)| + |\varphi^{\prime\prime} (x)| \leq \rho  \varphi(x) , \ \ \forall x \geq 0
-	\end{align}
+	$ \label{eq:shape_assumption} \tag{H1}
+	|\varphi^\prime(x)| + |\varphi^{\prime\prime} (x)| \leq \rho  \varphi(x) , \ \ \forall x \geq 0 $ //[formula type:align]
 and the mild solution $u \in C([0,T_0) \times \mathbb{R})$ to @eq:DW //[ref type:eqref]
 with initial data $(u_0,u_1) = (\varepsilon_0 \varphi, \varepsilon_1 \varphi)$
 exists and satisfies the pointwise estimates @eq:aim //[ref type:eqref]
 at time
-	\[
-	t(\varepsilon_0/|\varepsilon_1|)+\delta \in (0,2),
-	\]
+	$ t(\varepsilon_0/|\varepsilon_1|)+\delta \in (0,2), $ //[formula type:display]
 where $\delta>0$ is sufficiently small
 and $t=t(\varepsilon_0/|\varepsilon_1|)$ is the unique positive solution 
 of 
-	\begin{align}\label{eq.deft}
-	\frac{\varepsilon_0}{|\varepsilon_1|} =  \frac{4t}{(4-t)(2+t)}.
-	\end{align}
+	$ \label{eq.deft}
+	\frac{\varepsilon_0}{|\varepsilon_1|} =  \frac{4t}{(4-t)(2+t)}. $ //[formula type:align]
 ] //[Theorem]
 	$
-	0 < \varepsilon_(0) < -\varepsilon_(1) \ll 1.
+	0 < ε_(0) < -ε_(1) \ll 1.
 	$ //[formula type:align]
 Then there exists a sufficiently small number
 $ρ$
 and
 a positive function
-$\varphi \in W^(2,1) \cap W^(2,∞)$
+$φ ∈ W^(2,1) ∩ W^(2,∞)$
 satisfying the following pointwise control
 	$
 		\tag{H1}
-	|\varphi^\prime(x)| + |\varphi^(\prime\prime) (x)| ≤ ρ  \varphi(x) , \ \ \forall x ≥ 0
+	|φ^\prime(x)| + |φ^(\prime\prime) (x)| ≤ ρ  φ(x) , \ \ \forall x ≥ 0
 	$ //[formula type:align]
 and the mild solution
-$u \in C([0,T_(0)) × \mathbb{R})$
+$u ∈ C([0,T_(0)) × ℝ)$
 to
 @eq:DW //[ref type:eqref]
 with initial data
-$(u_(0),u_(1)) = (\varepsilon_(0) \varphi, \varepsilon_(1) \varphi)$
+$(u_(0),u_(1)) = (ε_(0) φ, ε_(1) φ)$
 exists and satisfies the pointwise estimates
 @eq:aim //[ref type:eqref]
 at time
 $
 	
-	t(\varepsilon_(0)/|\varepsilon_(1)|)+δ \in (0,2),
+	t(ε_(0)/|ε_(1)|)+δ ∈ (0,2),
 	
 $ //[formula type:display]
 where
 $δ>0$
 is sufficiently small
 and
-$t=t(\varepsilon_(0)/|\varepsilon_(1)|)$
+$t=t(ε_(0)/|ε_(1)|)$
 is the unique positive solution 
 of
 	$
-	(\varepsilon_(0))/(|\varepsilon_(1)|) =  (4t)/((4-t)(2+t)).
+	(ε_(0))/(|ε_(1)|) =  (4t)/((4-t)(2+t)).
 	$ //[formula type:align]
 \end{Theorem}
 
@@ -754,7 +746,7 @@ the condition
 @eq:condition_ratio //[ref type:eqref]
 is optimal.
 Indeed, for
-$\varepsilon_(0) + \varepsilon_(1) ≥ 0$
+$ε_(0) + ε_(1) ≥ 0$
 ,
 we can apply Theorem 1.1 in
 @FG25a //[ref type:cite]
@@ -764,7 +756,7 @@ for any positive
 $ρ$
 ,
 there exists a function
-$\varphi \in W^(2,1) \cap W^(2,∞)$
+$φ ∈ W^(2,1) ∩ W^(2,∞)$
 satisfying
 @eq:shape_assumption //[ref type:eqref]
 .
@@ -775,15 +767,15 @@ $a >1$
 , and
 $
 	
-	\varphi(x) = (N^(2)+x^(2))^{-a/2}
+	φ(x) = (N^(2)+x^(2))^{-a/2}
 	
 $ //[formula type:display]
 then
-$\varphi \in W^(2,1) \cap W^(2,∞)$
+$φ ∈ W^(2,1) ∩ W^(2,∞)$
 and
 	$
-		|\varphi^\prime(x)| &= ≤ (a)/(N) \varphi(x),\
-	|\varphi^(\prime\prime)(x)| &= ≤ (a(a+1))/(N^(2)) \varphi(x),
+		|φ^\prime(x)| &= ≤ (a)/(N) φ(x),\
+	|φ^(\prime\prime)(x)| &= ≤ (a(a+1))/(N^(2)) φ(x),
 	$ //[formula type:align*]
 so
 $ρ = a/N + a(a+1)/N^(2) \to 0$
@@ -802,7 +794,7 @@ implies that
 solutions
 $u$
 are estimated by
-$\varphi$
+$φ$
 pointwisely up to a certain time,
 and this pointwise control implies the conclusion.
 Finally,
@@ -813,14 +805,14 @@ $
 	
 $ //[formula type:display]
 is strictly increasing for
-$t \in (0,2)$
+$t ∈ (0,2)$
 , with
 $a(0)=0$
 and
 $a(2)=1$
 .
 Therefore, the unique positive solution
-$t \in (0,2)$
+$t ∈ (0,2)$
 of
 @eq.deft //[ref type:eqref]
 is well-defined.
@@ -841,7 +833,7 @@ $ //[formula type:display]
 The proof that
 $b(t)>a(t)$
 for
-$t \in (0,2)$
+$t ∈ (0,2)$
 is elementary
 and can be found at the end of the proof of Theorem
 @theorem:main //[ref type:ref]
@@ -852,21 +844,21 @@ it is still unclear whether
 there exists a global solution to
 @eq:DW //[ref type:eqref]
 in the case where
-$(u_(0),u_(1)) = (\varepsilon_(0) \varphi, \varepsilon_(1) \varphi)$
+$(u_(0),u_(1)) = (ε_(0) φ, ε_(1) φ)$
 with smooth positive
-$\varphi$
+$φ$
 and
-$\varepsilon_(0)$
+$ε_(0)$
 and
-$\varepsilon_(1)$
+$ε_(1)$
 are sufficiently small and satisfy
 $
 	
-	\varepsilon_(0) < 0,\quad
-	\varepsilon_(1) > 0,\quad
-	\varepsilon_(0) + \varepsilon_(1) < 0,\quad
+	ε_(0) < 0, 
+	ε_(1) > 0, 
+	ε_(0) + ε_(1) < 0, 
 	\mbox{and} \
-	\varepsilon_(1) + \varepsilon_(0)/2 > 0.
+	ε_(1) + ε_(0)/2 > 0.
 	
 $ //[formula type:display]
 In the next section, we collect some preliminary estimates.
@@ -881,26 +873,22 @@ for the solution to the Cauchy problem for a nonhomogeneous wave equation.
 Let $g \in W^{1,\infty}$ and $f, w \in L^\infty(0,2;L^\infty)$.
 Then there exists a unique $L^\infty$ valued mild solution $v$
 to the following Cauchy problem:
-	\[
-	\begin{cases}
+	$ \begin{cases}
 	\partial_t^2 v + \partial_t v - \partial_x^2 v  = f w+g \partial_x w,\\
 	v(0,x)= \varepsilon_0,\\
 	\partial_t v(0,x)= \varepsilon_1.
-	\end{cases}
-	\]
+	\end{cases} $ //[formula type:display]
 Moreover, $v$ enjoys the following estimate:
-	\begin{align}
-	\|v(t)\|_{L^\infty}
+	$ \|v(t)\|_{L^\infty}
 	& \leq \varepsilon_0 e^{-t} + (\varepsilon_0 + \varepsilon_1) (1-e^{-t})\\
 	& + C t \bigg(
 		\|f\|_{L^\infty(0,t; L^\infty)} + \| g \|_{W^{1,\infty}}
 	\bigg) \|w\|_{L^\infty(0,t; L^\infty)}.
-	\label{1dmax}
-	\end{align}
+	\label{1dmax} $ //[formula type:align]
 ] //[Lemma]
-$g \in W^(1,∞)$
+$g ∈ W^(1,∞)$
 and
-$f, w \in L^∞(0,2;L^∞)$
+$f, w ∈ L^∞(0,2;L^∞)$
 .
 Then there exists a unique
 $L^∞$
@@ -909,9 +897,9 @@ $v$
 to the following Cauchy problem:
 $
 	
-	cases( \partial_(t)^(2) v + \partial_(t) v - \partial_(x)^(2) v  = f w+g \partial_(x) w,\\
-	v(0,x)= \varepsilon_(0),\\
-	\partial_(t) v(0,x)= \varepsilon_(1).
+	cases( ∂_(t)^(2) v + ∂_(t) v - ∂_(x)^(2) v  = f w+g ∂_(x) w,\\
+	v(0,x)= ε_(0),\\
+	∂_(t) v(0,x)= ε_(1).
 	)
 	
 $ //[formula type:display]
@@ -920,7 +908,7 @@ $v$
 enjoys the following estimate:
 	$
 		\|v(t)\|_{L^∞}
-	 &= ≤ \varepsilon_(0) e^(-t) + (\varepsilon_(0) + \varepsilon_(1)) (1-e^(-t))\
+	 &= ≤ ε_(0) e^(-t) + (ε_(0) + ε_(1)) (1-e^(-t))\
 	 &= + C t \bigg(
 	\|f\|_{L^∞(0,t; L^∞)} + \| g \|_{W^(1,∞)}
 	\bigg) \|w\|_{L^∞(0,t; L^∞)}.
@@ -929,10 +917,10 @@ enjoys the following estimate:
 // Unknown node type: NodeType.PROOF
 	$
 		v(t,x)
-	 &= = \varepsilon_(0) e^(-t)
-	+ ( \varepsilon_(0) + \varepsilon_(1) )(1-e^(-t))\
+	 &= = ε_(0) e^(-t)
+	+ ( ε_(0) + ε_(1) )(1-e^(-t))\
 	 &= + \int_(0)^(t) S(t-τ) f(τ) w(τ)(x) dτ
-	+ \int_(0)^(t) S(t-τ) g \partial_(x) w(τ,x) dτ,
+	+ \int_(0)^(t) S(t-τ) g ∂_(x) w(τ,x) dτ,
 	$ //[formula type:align*]
 where
 $
@@ -962,8 +950,8 @@ We note that by writing
 $σ = t-τ$
 we have
 	$
-		e^(σ/2) S(σ) g \partial_(x) w(τ)(x)
-	 &= = \int_(-σ)^{σ} I_(0) \bigg( \frac{\sqrt{σ^(2)-y^(2)}}{2} \bigg) g(x+y) \partial_(x) w(τ, x+y) dy\
+		e^(σ/2) S(σ) g ∂_(x) w(τ)(x)
+	 &= = \int_(-σ)^{σ} I_(0) \bigg( \frac{\sqrt{σ^(2)-y^(2)}}{2} \bigg) g(x+y) ∂_(x) w(τ, x+y) dy\
 	 &= = g(x+σ) w(τ,x+σ) - g(x-σ) w(τ,x-σ)\
 	 &= - \int_(-σ)^{σ} I_(0) \bigg( \frac{\sqrt{σ^(2)-y^(2)}}{2} \bigg) \dot g(x+y) w(τ,x+y) dy\
 	 &= + \int_(-σ)^{σ} I_(1) \bigg( \frac{\sqrt{σ^(2)-y^(2)}}{2} \bigg) (y)/(\sqrt{σ^(2)-y^(2))} g(x+y) w(τ,x+y) dy.
@@ -982,7 +970,7 @@ $ //[formula type:display]
 Thereore, we have
 $
 	
-	\| S(t-τ) g(τ) \partial_(x) w(τ) \|_{L^∞}
+	\| S(t-τ) g(τ) ∂_(x) w(τ) \|_{L^∞}
 	≤ C \| g \|_{W^(1,∞)} \| w(τ) \|_{L^∞}
 	
 $ //[formula type:display]
@@ -997,56 +985,51 @@ By using Lemma
 we mesure the difference between
 $u(t)$
 and initial position
-$\varphi$
+$φ$
 under a certain condition by using their ratio.
 #lemma(title: "Refined local estimates")[
 \label{lemma:estaimte_of_u_devided}
 Let $\varepsilon_0$ and $\varepsilon_1$ are real constans sufficiently close to $0$
 satisfying $0 < \varepsilon_0 < - \varepsilon_1$.
 Let $t \in (0,T_0)$ and $\rho >0$ satisfy
-	\begin{align}
-	C ( |\varepsilon_1|^{p-1} + \rho ) t < 1
-	\label{eq:condition_for_u_devided}
-	\end{align}
+	$ C ( |\varepsilon_1|^{p-1} + \rho ) t < 1
+	\label{eq:condition_for_u_devided} $ //[formula type:align]
 with a positive constant $C$.
 Assume that $\varphi \in W^{2,1} \cap W^{2,\infty}$
 satisfy @eq:shape_assumption //[ref type:eqref].
 If the mild solution $u$ of Lemma @lemma:local_existence //[ref type:ref]
 with initial data $(u_0,u_1) = (\varepsilon_0,\varepsilon_1)$
 satsify 
-	\[
-	\| |u|^{p-2}u\|_{L^\infty(0,T_0; L^\infty)}
+	$ \| |u|^{p-2}u\|_{L^\infty(0,T_0; L^\infty)}
 	+ \bigg\|\frac{\ddot \varphi}{\varphi} \bigg\|_{L^\infty}
 	+ \bigg\|\frac{\dot \varphi^2}{\varphi^2} \bigg\|_{L^\infty}
-	\leq C ( \varepsilon_1^{p-1} + \rho ).
-	\]
+	\leq C ( \varepsilon_1^{p-1} + \rho ). $ //[formula type:display]
 Then $u$ enjoys the following estimate for $t \in (0,T_0)$:
-	\begin{align}\label{eq2mm}
+	$ \label{eq2mm}
 	\left\| \frac{u(t)}{\varphi} \right\|_{ L^{\infty}}
-	\leq \frac{|\varepsilon_0 e^{-t} + (\varepsilon_1 + \varepsilon_0)(1-e^{-t})|}{1-C ( |\varepsilon_1|^{p-1} + \rho ) t}.
-	\end{align}
+	\leq \frac{|\varepsilon_0 e^{-t} + (\varepsilon_1 + \varepsilon_0)(1-e^{-t})|}{1-C ( |\varepsilon_1|^{p-1} + \rho ) t}. $ //[formula type:align]
 ] //[Lemma]
-$\varepsilon_(0)$
+$ε_(0)$
 and
-$\varepsilon_(1)$
+$ε_(1)$
 are real constans sufficiently close to
 $0$
 satisfying
-$0 < \varepsilon_(0) < - \varepsilon_(1)$
+$0 < ε_(0) < - ε_(1)$
 .
 Let
-$t \in (0,T_(0))$
+$t ∈ (0,T_(0))$
 and
 $ρ >0$
 satisfy
 	$
-	C ( |\varepsilon_(1)|^{p-1} + ρ ) t < 1
+	C ( |ε_(1)|^{p-1} + ρ ) t < 1
 	$ //[formula type:align]
 with a positive constant
 $C$
 .
 Assume that
-$\varphi \in W^(2,1) \cap W^(2,∞)$
+$φ ∈ W^(2,1) ∩ W^(2,∞)$
 satisfy
 @eq:shape_assumption //[ref type:eqref]
 .
@@ -1055,74 +1038,74 @@ $u$
 of Lemma
 @lemma:local_existence //[ref type:ref]
 with initial data
-$(u_(0),u_(1)) = (\varepsilon_(0),\varepsilon_(1))$
+$(u_(0),u_(1)) = (ε_(0),ε_(1))$
 satsify
 $
 	
 	\| |u|^{p-2}u\|_{L^∞(0,T_(0); L^∞)}
-	+ \bigg\|(\ddot \varphi)/(\varphi) \bigg\|_{L^∞}
-	+ \bigg\|(\dot \varphi^(2))/(\varphi^(2)) \bigg\|_{L^∞}
-	≤ C ( \varepsilon_(1)^(p-1) + ρ ).
+	+ \bigg\|(\ddot φ)/(φ) \bigg\|_{L^∞}
+	+ \bigg\|(\dot φ^(2))/(φ^(2)) \bigg\|_{L^∞}
+	≤ C ( ε_(1)^(p-1) + ρ ).
 	
 $ //[formula type:display]
 Then
 $u$
 enjoys the following estimate for
-$t \in (0,T_(0))$
+$t ∈ (0,T_(0))$
 :
 	$
-		\left\| (u(t))/(\varphi) \right\|_{ L^(∞)}
-	≤ \frac{|\varepsilon_(0) e^(-t) + (\varepsilon_(1) + \varepsilon_(0))(1-e^(-t))|}{1-C ( |\varepsilon_(1)|^{p-1} + ρ ) t}.
+		\left\| (u(t))/(φ) \right\|_{ L^(∞)}
+	≤ \frac{|ε_(0) e^(-t) + (ε_(1) + ε_(0))(1-e^(-t))|}{1-C ( |ε_(1)|^{p-1} + ρ ) t}.
 	$ //[formula type:align]
 \end{Lemma}
 // Unknown node type: NodeType.PROOF
 $
 	
-	v(t,x) = (u(t,x))/(\varphi(x)),
+	v(t,x) = (u(t,x))/(φ(x)),
 	
 $ //[formula type:display]
 so we have
 	$
-		\partial_(t)^(2) v + \partial_(t) v - \partial_(x)^(2) v
-	= (|u|^p)/(\varphi)
-	+ 2 (\dot \varphi \partial_(x) u)/(\varphi^(2))
-	+ (\ddot \varphi)/(\varphi^(2)) u
-	- 2 (\dot \varphi^(2))/(\varphi^(3)) u
+		∂_(t)^(2) v + ∂_(t) v - ∂_(x)^(2) v
+	= (|u|^p)/(φ)
+	+ 2 (\dot φ ∂_(x) u)/(φ^(2))
+	+ (\ddot φ)/(φ^(2)) u
+	- 2 (\dot φ^(2))/(φ^(3)) u
 	$ //[formula type:align*]
 Since
 $
 	
-	\partial_(x) u = v \dot \varphi  + \varphi \partial_(x) v
+	∂_(x) u = v \dot φ  + φ ∂_(x) v
 	
 $ //[formula type:display]
 we arrive at
 $
 	
-	\partial_(t)^(2) v + \partial_(t) v - \partial_(x)^(2) v \\
-	= \bigg( |u|^{p-2} u + (\ddot \varphi)/(\varphi) \bigg) v
-	+ 2 (\dot \varphi)/(\varphi) \partial_(x) v
+	∂_(t)^(2) v + ∂_(t) v - ∂_(x)^(2) v \\
+	= \bigg( |u|^{p-2} u + (\ddot φ)/(φ) \bigg) v
+	+ 2 (\dot φ)/(φ) ∂_(x) v
 	
 $ //[formula type:display]
 Therefore, the Cauchy problem can be rewritten as
 	$
 	cases(
-	\partial_(t)^(2) v + \partial_(t) v - \partial_(x)^(2) v  = f v+g\partial_(x)v\, \
-	v(0\,x)=\varepsilon_(0) \, &= x \in \mathbb R\, \
-	\partial_(t) v(0\,x) =\varepsilon_(1) \, &= x \in \mathbb R.
+	∂_(t)^(2) v + ∂_(t) v - ∂_(x)^(2) v  = f v+g∂_(x)v\, \
+	v(0\,x)=ε_(0) \, &= x ∈ ℝ\, \
+	∂_(t) v(0\,x) =ε_(1) \, &= x ∈ ℝ.
 	)
 	$ //[formula type:align*]
 with
 $
 	
-	f = |u|^{p-2}u  + (\ddot \varphi)/(\varphi),
-	\quad
-	g =  2  (\dot \varphi)/(\varphi).
+	f = |u|^{p-2}u  + (\ddot φ)/(φ),
+	 
+	g =  2  (\dot φ)/(φ).
 	
 $ //[formula type:display]
 Noting
 $
 	
-	\dot g = 2 (\ddot \varphi)/(\varphi) - 2 (\dot \varphi^(2))/(\varphi^(2))
+	\dot g = 2 (\ddot φ)/(φ) - 2 (\dot φ^(2))/(φ^(2))
 	
 $ //[formula type:display]
 and applying Lemma
@@ -1133,7 +1116,7 @@ and the assumption
 $
 	
 \|f\|_{L^∞(0,T_(0); L^∞)}
-≤ C_(1) ( |\varepsilon_(1)|^{p-1} + ρ )
+≤ C_(1) ( |ε_(1)|^{p-1} + ρ )
 
 $ //[formula type:display]
 and
@@ -1148,22 +1131,19 @@ to estimate the solution on the basis of initial data.
 #lemma(title: "Hermite–Hadamard", id: "l3")[
 Let $\phi$ be $C^1(\mathbb R; [0,\infty))$,
 such that there is a positive constant $\rho$ so that
-\begin{align}\label{eq.bb1}
- &  |\dot \phi(x)| \leq \rho  \phi(x) , \ \ \forall x \geq 0.
-\end{align}
+$ \label{eq.bb1}
+ &  |\dot \phi(x)| \leq \rho  \phi(x) , \ \ \forall x \geq 0. $ //[formula type:align]
 Then we have
-\begin{align}\label{eq.HH1}
-      & \frac{ \phi(\alpha) + \phi(\beta)}{2} \leq  \frac{1}{\beta - \alpha} \int_{\alpha}^{\beta} \phi(\sigma) d \sigma + \frac{\rho}{2} \int_{\alpha}^\beta \phi(\sigma) d \sigma
-\end{align}
+$ \label{eq.HH1}
+      & \frac{ \phi(\alpha) + \phi(\beta)}{2} \leq  \frac{1}{\beta - \alpha} \int_{\alpha}^{\beta} \phi(\sigma) d \sigma + \frac{\rho}{2} \int_{\alpha}^\beta \phi(\sigma) d \sigma $ //[formula type:align]
 and
-\begin{align}\label{eq.HH1mm}
-      & \frac{ \phi(\alpha) + \phi(\beta)}{2} \geq  \frac{1}{\beta - \alpha} \int_{\alpha}^{\beta} \phi(\sigma) d \sigma -\frac{\rho}{2} \int_{\alpha}^\beta \phi(\sigma) d \sigma
-\end{align}
+$ \label{eq.HH1mm}
+      & \frac{ \phi(\alpha) + \phi(\beta)}{2} \geq  \frac{1}{\beta - \alpha} \int_{\alpha}^{\beta} \phi(\sigma) d \sigma -\frac{\rho}{2} \int_{\alpha}^\beta \phi(\sigma) d \sigma $ //[formula type:align]
 for $0  \leq  \alpha < \beta < \infty.$
 ] //[Lemma]
 $φ$
 be
-$C^(1)(\mathbb R; [0,∞))$
+$C^(1)(ℝ; [0,∞))$
 ,
 such that there is a positive constant
 $ρ$
@@ -1237,14 +1217,14 @@ We finalize this section
 by collecting some estimates of calculs to control nonlinaerity.
 Consider the function
 	$
-		C(t,r,ρ,\varepsilon_(1))
-	= \sup_(τ \in [0,t]) G(τ,r,ρ,\varepsilon_(1)),
+		C(t,r,ρ,ε_(1))
+	= \sup_(τ ∈ [0,t]) G(τ,r,ρ,ε_(1)),
 	$ //[formula type:align]
 where
 $
 	
-	G(τ,r,ρ,\varepsilon_(1))
-	= \frac{ | r + e^(-τ) - 1 |}{1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ}
+	G(τ,r,ρ,ε_(1))
+	= \frac{ | r + e^(-τ) - 1 |}{1-C ( |ε_(1)|^{p-1} + ρ ) τ}
 	
 $ //[formula type:display]
 under the assumption
@@ -1253,50 +1233,46 @@ is satisfied.
 Here
 $ρ$
 is a positive number and
-$\varepsilon_(1)$
+$ε_(1)$
 is a negative number
 which are close to
 $0$
 .
 #lemma(id: "l.61")[
 We have the relation
-	\[
-	C(t,r,\rho, \varepsilon_1)
+	$ C(t,r,\rho, \varepsilon_1)
 	= \begin{cases}
 	G(t,r,\rho, \varepsilon_1) & \text{if } \quad r < r_1(t), \\
 	r & \text{if } \quad r \in [r_1(t), r_2(t)], \\
 	G(\min(t,- \log(1-r)),r,\rho, \varepsilon_1) & \text{if } \quad r > r_2(t),
-	\end{cases}
-	\]
+	\end{cases} $ //[formula type:display]
 where
-	\begin{align*}
-	r_1(t)
+	$ r_1(t)
 	&= \frac{1+C | \varepsilon_1|^{p-1} t + C \rho t}{2 + t},\\
 	r_2(t)
-	&= \frac{1-e^{-\tau}}{C ( |\varepsilon_1|^{p-1} + \rho ) \tau}.
-	\end{align*}
+	&= \frac{1-e^{-\tau}}{C ( |\varepsilon_1|^{p-1} + \rho ) \tau}. $ //[formula type:align*]
 ] //[Lemma]
 $
 	
-	C(t,r,ρ, \varepsilon_(1))
-	= cases( G(t\,r\,ρ\, \varepsilon_(1)) & \text{if } \quad r < r_(1)(t), \\
-	r & \text{if } \quad r \in [r_(1)(t), r_(2)(t)], \\
-	G(min(t,- log(1-r)),r,ρ, \varepsilon_(1)) & \text{if } \quad r > r_(2)(t),
+	C(t,r,ρ, ε_(1))
+	= cases( G(t\,r\,ρ\, ε_(1)) & \text{if }   r < r_(1)(t), \\
+	r & \text{if }   r ∈ [r_(1)(t), r_(2)(t)], \\
+	G(min(t,- log(1-r)),r,ρ, ε_(1)) & \text{if }   r > r_(2)(t),
 	)
 	
 $ //[formula type:display]
 where
 	$
 		r_(1)(t)
-	 &= = \frac{1+C | \varepsilon_(1)|^{p-1} t + C ρ t}{2 + t},\
+	 &= = \frac{1+C | ε_(1)|^{p-1} t + C ρ t}{2 + t},\
 	r_(2)(t)
-	 &= = \frac{1-e^(-τ)}{C ( |\varepsilon_(1)|^{p-1} + ρ ) τ}.
+	 &= = \frac{1-e^(-τ)}{C ( |ε_(1)|^{p-1} + ρ ) τ}.
 	$ //[formula type:align*]
 \end{Lemma}
 // Unknown node type: NodeType.PROOF
 $r < r_(1)(t)$
 ,
-$r \in [r_(1)(t), r_(2)(t)]$
+$r ∈ [r_(1)(t), r_(2)(t)]$
 and
 $r > r_(2)(t)$
 .
@@ -1316,50 +1292,50 @@ $
 	
 $ //[formula type:display]
 Therfore,
-$r \in [r_(1)(t), r_(2)(t)]$
+$r ∈ [r_(1)(t), r_(2)(t)]$
 implies that
 $
 	
-	r \in \bigcap_(τ \in [0,t]) [r_(1)(τ), r_(2)(τ)].
+	r ∈ \bigcap_(τ ∈ [0,t]) [r_(1)(τ), r_(2)(τ)].
 	
 $ //[formula type:display]
 Since
 $C δ t < 1$
 , we note that
-$1-e^(-τ) \in [r_(1)(τ), r_(2)(τ)]$
+$1-e^(-τ) ∈ [r_(1)(τ), r_(2)(τ)]$
 for any
-$τ \in [0,t]$
+$τ ∈ [0,t]$
 .
 In the case where
-$r \in [r_(1)(τ), 1-e^(-τ)]$
+$r ∈ [r_(1)(τ), 1-e^(-τ)]$
 , we have
 	$
-		 &= G(τ,r,ρ, \varepsilon_(1)) ≤ r\
-	\Leftrightarrow &= \frac{ 1 - e^(-τ) - r}{1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ} ≤ r\
-	\Leftrightarrow &= 1 - e^(-τ) - r ≤ r (1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ)\
-	\Leftrightarrow &= r ≥ \frac{1-e^(-τ)}{2-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ} = r_(1)(τ).
+		 &= G(τ,r,ρ, ε_(1)) ≤ r\
+	\Leftrightarrow &= \frac{ 1 - e^(-τ) - r}{1-C ( |ε_(1)|^{p-1} + ρ ) τ} ≤ r\
+	\Leftrightarrow &= 1 - e^(-τ) - r ≤ r (1-C ( |ε_(1)|^{p-1} + ρ ) τ)\
+	\Leftrightarrow &= r ≥ \frac{1-e^(-τ)}{2-C ( |ε_(1)|^{p-1} + ρ ) τ} = r_(1)(τ).
 	$ //[formula type:align*]
 Similarly, in the case where
-$r \in [1-e^(-τ), r_(2)(τ)]$
+$r ∈ [1-e^(-τ), r_(2)(τ)]$
 , we have
 	$
-		 &= G(τ,r,ρ, \varepsilon_(1)) ≤ r\
-	\Leftrightarrow &= \frac{ r - 1 + e^(-τ)}{1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ} ≤ r\
-	\Leftrightarrow &= r - 1 + e^(-τ) ≤ r (1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ)\
-	\Leftrightarrow &= r ≤ \frac{1-e^(-τ)}{C ( |\varepsilon_(1)|^{p-1} + ρ ) τ} = r_(2)(τ).
+		 &= G(τ,r,ρ, ε_(1)) ≤ r\
+	\Leftrightarrow &= \frac{ r - 1 + e^(-τ)}{1-C ( |ε_(1)|^{p-1} + ρ ) τ} ≤ r\
+	\Leftrightarrow &= r - 1 + e^(-τ) ≤ r (1-C ( |ε_(1)|^{p-1} + ρ ) τ)\
+	\Leftrightarrow &= r ≤ \frac{1-e^(-τ)}{C ( |ε_(1)|^{p-1} + ρ ) τ} = r_(2)(τ).
 	$ //[formula type:align*]
 These computations imples that
-$C(t,r,ρ, \varepsilon_(1)) = r$
+$C(t,r,ρ, ε_(1)) = r$
 for
-$r \in [r_(1)(t), r_(2)(t)]$
+$r ∈ [r_(1)(t), r_(2)(t)]$
 .
 
 In the case where
 $r < r_(1)(t)$
 ,
-$C(t,r,ρ, \varepsilon_(1)) = G(t,r,ρ, \varepsilon_(1))$
+$C(t,r,ρ, ε_(1)) = G(t,r,ρ, ε_(1))$
 because
-$C(\cdot,r,ρ, \varepsilon_(1))$
+$C(\cdot,r,ρ, ε_(1))$
 is increasing.
 
 In the case where
@@ -1367,50 +1343,46 @@ $r > r_(2)(t)$
 ,
 we compute
 	$
-		\partial_τ G(τ,r,ρ, \varepsilon_(1))
-	 &= = - \frac{ e^(-τ)}{1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ}
-	+ \frac{ C ( |\varepsilon_(1)|^{p-1} + ρ ) (r + e^(-τ) - 1) }{(1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ)^2}\
-	 &= = \frac{ C ( |\varepsilon_(1)|^{p-1} + ρ ) (r + ( τ + 1 ) e^(-τ) - 1) - e^(-τ) }{(1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ)^2}\
-	 &= = e^(-τ) \frac{ C ( |\varepsilon_(1)|^{p-1} + ρ ) ( τ + 1) - 1 - (1-r) C ( |\varepsilon_(1)|^{p-1} + ρ ) e^τ }{(1-C ( |\varepsilon_(1)|^{p-1} + ρ ) τ)^2}.
+		∂_τ G(τ,r,ρ, ε_(1))
+	 &= = - \frac{ e^(-τ)}{1-C ( |ε_(1)|^{p-1} + ρ ) τ}
+	+ \frac{ C ( |ε_(1)|^{p-1} + ρ ) (r + e^(-τ) - 1) }{(1-C ( |ε_(1)|^{p-1} + ρ ) τ)^2}\
+	 &= = \frac{ C ( |ε_(1)|^{p-1} + ρ ) (r + ( τ + 1 ) e^(-τ) - 1) - e^(-τ) }{(1-C ( |ε_(1)|^{p-1} + ρ ) τ)^2}\
+	 &= = e^(-τ) \frac{ C ( |ε_(1)|^{p-1} + ρ ) ( τ + 1) - 1 - (1-r) C ( |ε_(1)|^{p-1} + ρ ) e^τ }{(1-C ( |ε_(1)|^{p-1} + ρ ) τ)^2}.
 	$ //[formula type:align*]
 So
-$\partial_τ G(0,r,ρ, \varepsilon_(1)) < 0$
+$∂_τ G(0,r,ρ, ε_(1)) < 0$
 .
 Moreover, we also compute
 	$
-		 &= \partial_τ \{ C ( |\varepsilon_(1)|^{p-1} + ρ ) ( τ + 1) - 1 - (1-r) C ( |\varepsilon_(1)|^{p-1} + ρ ) e^τ \}\
-	 &= = C ( |\varepsilon_(1)|^{p-1} + ρ ) (1 - (1-r) e^τ).
+		 &= ∂_τ \{ C ( |ε_(1)|^{p-1} + ρ ) ( τ + 1) - 1 - (1-r) C ( |ε_(1)|^{p-1} + ρ ) e^τ \}\
+	 &= = C ( |ε_(1)|^{p-1} + ρ ) (1 - (1-r) e^τ).
 	$ //[formula type:align*]
 This implise that
 $
 	
-	C(t,r,ρ, \varepsilon_(1)) = G(min(t,- log(1-r)),r,ρ, \varepsilon_(1)).
+	C(t,r,ρ, ε_(1)) = G(min(t,- log(1-r)),r,ρ, ε_(1)).
 	
 $ //[formula type:display]
 \end{proof}
 #corollary(id: "c62")[
 We have the relation
-	\begin{align}
-	C(t,r,0,1/4) =
+	$ C(t,r,0,1/4) =
 	\begin{cases}
 	\frac{t(1-r/2)-r }{(1-t^2/4)}
 	& \mbox{if} \quad r < r_t,\\
 	r
 	& \mbox{if} \quad r \geq r_t,
-	\end{cases}
-	\end{align}
+	\end{cases} $ //[formula type:align]
 where
-	\[
-	r_t
+	$ r_t
 	= \frac{4t}{8+2t-t^2}
-	= \frac{4t}{(4-t)(2+t)}.
-	\]
+	= \frac{4t}{(4-t)(2+t)}. $ //[formula type:display]
 ] //[Corollary]
 	$
 		C(t,r,0,1/4) =
 cases(
-	(t(1-r/2)-r )/((1-t^(2)/4)) &= \mbox{if} \quad r < r_(t)\,\
-	r &= \mbox{if} \quad r ≥ r_(t)\,
+	(t(1-r/2)-r )/((1-t^(2)/4)) &= \mbox{if}   r < r_(t)\,\
+	r &= \mbox{if}   r ≥ r_(t)\,
 	)
 	$ //[formula type:align]
 where
@@ -1433,15 +1405,15 @@ $w = e^(t/2) u$
 is a solution to the Cauchy problem
 	$
 	cases(
-	\partial_(t)^(2) w - \Delta w = \left((1)/(4) + u|u|^{p-2} \right) w\, &= t \in (0\,T_(0))\, \
-	x \in \mathbb R\,\
-	w(0)=\varepsilon_(0) \varphi(x)\, &= x \in \mathbb R\,\
-	\partial_(t) w(0) =\varepsilon_(1)\varphi(x)+(\varepsilon_(0))/(2)\varphi(x)\, &= x \in \mathbb R.
+	∂_(t)^(2) w - Δ w = \left((1)/(4) + u|u|^{p-2} \right) w\, &= t ∈ (0\,T_(0))\, \
+	x ∈ ℝ\,\
+	w(0)=ε_(0) φ(x)\, &= x ∈ ℝ\,\
+	∂_(t) w(0) =ε_(1)φ(x)+(ε_(0))/(2)φ(x)\, &= x ∈ ℝ.
 	)
 	$ //[formula type:align]
 The D'Alembert formula implies
 	$
-		 &= w(t) = \varepsilon_(0) (d)/(dt) W(t) (\varphi)(x) + \left(\varepsilon_(1) + (\varepsilon_(0))/(2) \right) W(t)(\varphi)(x)\
+		 &= w(t) = ε_(0) (d)/(dt) W(t) (φ)(x) + \left(ε_(1) + (ε_(0))/(2) \right) W(t)(φ)(x)\
 	 &= + \int_(0)^(t) W(t-τ)\left( \left((1)/(4)+u(τ)|u(τ)|^{p-2}\right) w(τ) \right) (x) dτ
 	$ //[formula type:align*]
 where
@@ -1452,17 +1424,17 @@ $
 $ //[formula type:display]
 so
 	$
-		 &= \partial_(t) w(t,x) =  \varepsilon_(0) \left((d)/(dt)\right)^2 W(t) (\varphi)(x) + \left(\varepsilon_(1) + (\varepsilon_(0))/(2) \right) (d)/(dt) W(t)(\varphi)(x)\
+		 &= ∂_(t) w(t,x) =  ε_(0) \left((d)/(dt)\right)^2 W(t) (φ)(x) + \left(ε_(1) + (ε_(0))/(2) \right) (d)/(dt) W(t)(φ)(x)\
 	 &= + \int_(0)^(t) (d)/(dt) W(t-τ)\left( \left((1)/(4)+u(τ)|u(τ)|^{p-2}\right) w(τ) \right) (x) dτ
 	$ //[formula type:align*]
 Set
 $
 	
-	r = \varepsilon_(0)/|\varepsilon_(1)|
+	r = ε_(0)/|ε_(1)|
 	
 $ //[formula type:display]
 and
-$r\in [0,1)$
+$r∈ [0,1)$
 follows from the assumption
 @eq:condition_ratio //[ref type:eqref]
 .
@@ -1484,9 +1456,9 @@ i.e.
 \end{equation}
 
 We start with a sufficient condition that guaranties
-$\partial_(t) w(t,x) ≤ 0$
+$∂_(t) w(t,x) ≤ 0$
 for almost every
-$x \in \mathbb{R}.$
+$x ∈ ℝ.$
 #lemma[
 \label{lemma:condition_for_negative_speed}
 Let the assumption of Lemma @lemma:estaimte_of_u_devided //[ref type:ref]
@@ -1520,9 +1492,9 @@ satisfies the estimate
 	\leq \bigg(1 - r \bigg( \rho + \frac{1}{2} \bigg) \bigg) \bigg( \frac{1}{2t} - \frac \rho 2 \bigg)
 	\end{equation}
 then
-$\partial_(t) w(t,x) ≤ 0$
+$∂_(t) w(t,x) ≤ 0$
 for a.e.
-$x \in \mathbb{R}.$
+$x ∈ ℝ.$
 \end{Lemma}
 // Unknown node type: NodeType.PROOF
 @eq2mm //[ref type:eqref]
@@ -1534,34 +1506,34 @@ we obtain
 		 &= \int_(0)^(t) (d)/(dt) W(t-τ)\left( \left((1)/(4)+u(τ)|u(τ)|^{p-2}\right) w(τ) \right) (x) dτ \
 	 &= ≤ c_(0) \int_(0)^(t) (d)/(dt) W(t-τ) ( w(τ) ) (x) dτ \
 	 &= =  (c_(0))/(2)\int_(0)^(t) \left(  w(τ, x+t-τ) +  w(τ, x-t+τ) \right) dτ \
-	 &= ≤ (c_(0))/(2)\max_(0≤ τ ≤ t) ( |\varepsilon_(0) + τ(\varepsilon_(1) + \varepsilon_(0)/2)|)/((1-c_(0) τ^(2)-2c_(0)ρ τ^(2) - 3 ρ τ))
-	\int_(0)^(t) \left(  \varphi(x+t-τ) +  \varphi( x-t+τ) \right) dτ\
-	 &= ≤ (c_(0))/(2)| \varepsilon_(1) | C(t,r) \int_(-t)^t  \varphi(x+σ) dσ.
+	 &= ≤ (c_(0))/(2)\max_(0≤ τ ≤ t) ( |ε_(0) + τ(ε_(1) + ε_(0)/2)|)/((1-c_(0) τ^(2)-2c_(0)ρ τ^(2) - 3 ρ τ))
+	\int_(0)^(t) \left(  φ(x+t-τ) +  φ( x-t+τ) \right) dτ\
+	 &= ≤ (c_(0))/(2)| ε_(1) | C(t,r) \int_(-t)^t  φ(x+σ) dσ.
 	$ //[formula type:align*]
 Using
 @eq:shape_assumption //[ref type:eqref]
 , we obtain
 	$
-		 &= \partial_(t) w(t,x)\
-	 &= ≤ \varepsilon_(0) (\varphi^\prime(x+t)- \varphi^\prime(x-t))/(2)
-	+ \left(\varepsilon_(1) + (\varepsilon_(0))/(2) \right) (\varphi(x+t) + \varphi(x-t))/(2) \
-	 &= + (c_(0))/(2) |\varepsilon_(1)| C(t,r) \int_(-t)^t  \varphi(x+σ) dτ\
-	 &= ≤ \left(\varepsilon_(0) ρ + \varepsilon_(1) + (\varepsilon_(0))/(2)\right)(\varphi(x+t) + \varphi(x-t))/(2)
-	+ (c_(0))/(2)| \varepsilon_(1) | C(t,r)
-	\int_(-t)^t  \varphi(x+σ) dσ.
+		 &= ∂_(t) w(t,x)\
+	 &= ≤ ε_(0) (φ^\prime(x+t)- φ^\prime(x-t))/(2)
+	+ \left(ε_(1) + (ε_(0))/(2) \right) (φ(x+t) + φ(x-t))/(2) \
+	 &= + (c_(0))/(2) |ε_(1)| C(t,r) \int_(-t)^t  φ(x+σ) dτ\
+	 &= ≤ \left(ε_(0) ρ + ε_(1) + (ε_(0))/(2)\right)(φ(x+t) + φ(x-t))/(2)
+	+ (c_(0))/(2)| ε_(1) | C(t,r)
+	\int_(-t)^t  φ(x+σ) dσ.
 	$ //[formula type:align*]
 Lemma
 @l3 //[ref type:ref]
 implies
 	$
-		(\varphi(x+t) + \varphi(x-t))/(2)
+		(φ(x+t) + φ(x-t))/(2)
 	≥  \left( (1)/(2t) - \frac ρ 2 \right)
-	\int_(-t)^t  \varphi(x+σ) dτ.
+	\int_(-t)^t  φ(x+σ) dτ.
 	$ //[formula type:align]
 Then we estimate
 	$
-		\partial_(t) w(t,x)
-	 &= ≤ |\varepsilon_(1)| A(t,r) \int_(-t)^t  \varphi(x+σ) dτ,
+		∂_(t) w(t,x)
+	 &= ≤ |ε_(1)| A(t,r) \int_(-t)^t  φ(x+σ) dτ,
 	$ //[formula type:align]
 where
 $
@@ -1576,7 +1548,7 @@ Therefore, the condition
 implies
 $A(t,r) ≤ 0$
 and hence
-$\partial_(t) w(t,x) ≤ 0$
+$∂_(t) w(t,x) ≤ 0$
 a.e.
 This completes the proof.
 \end{proof}
@@ -1603,7 +1575,7 @@ If the inequality
 holds, then
 $ w (t,x) ≤ 0$
 for a.e.
-$x \in \mathbb{R}$
+$x ∈ ℝ$
 .
 Here
 $C(t,r,ρ,c_(0))$
@@ -1614,17 +1586,17 @@ is defined in
 // Unknown node type: NodeType.PROOF
 	$
 		 &= w(t,x)\
-	 &= ≤ \varepsilon_(0) (\varphi(x+t)+ \varphi(x-t))/(2)
-	+ \left(\varepsilon_(1) + (\varepsilon_(0))/(2) \right) \int_(-t)^{t}(\varphi(x+τ))/(2) dτ \
-	 &= + (c_(0))/(2)|\varepsilon_(1)| C(t,r) \int_(0)^(t) \int_(τ-t)^{t-τ}\varphi(x+σ) dσ dτ\
+	 &= ≤ ε_(0) (φ(x+t)+ φ(x-t))/(2)
+	+ \left(ε_(1) + (ε_(0))/(2) \right) \int_(-t)^{t}(φ(x+τ))/(2) dτ \
+	 &= + (c_(0))/(2)|ε_(1)| C(t,r) \int_(0)^(t) \int_(τ-t)^{t-τ}φ(x+σ) dσ dτ\
 	 &= ≤
-	- |\varepsilon_(1)|
+	- |ε_(1)|
 	\bigg\{
 	\frac 1 2
 	- \bigg( (2ρ+1)/(4) + (1)/(2t)\bigg) r
 	- (c_(0))/(2) t  C(t,r)
 	\bigg\}
-	\int_(-t)^t \varphi(x+σ) dσ.
+	\int_(-t)^t φ(x+σ) dσ.
 	$ //[formula type:align*]
 \end{proof}
 
@@ -1641,7 +1613,7 @@ contains the following set.
 $
 	
 	\mathcal{B}
-	= \{r \in [0,1); \exists (t,c_(0),ρ)\
+	= \{r ∈ [0,1); \exists (t,c_(0),ρ)\
 	\mathrm{satisfying}\
 	\eqref{eq:condition_(f)or_(u)_devided},\
 	\eqref{eq.a1},\
@@ -1657,17 +1629,17 @@ $ //[formula type:display]
 \}
 	\]
 Indeed, if
-$r \in \mathcal{B}$
+$r ∈ \mathcal{B}$
 , then
 there exits
-$(\varepsilon_(0), \varepsilon_(1), \varphi)$
+$(ε_(0), ε_(1), φ)$
 such that
-$r=\varepsilon_(0)/|\varepsilon_(1)|$
+$r=ε_(0)/|ε_(1)|$
 and the assumptions
 @eq:condition_for_u_devided //[ref type:eqref]
 is satisfied.
 Therefore,
-$r \in \mathcal{A}$
+$r ∈ \mathcal{A}$
 .
 
 The definition
@@ -1685,17 +1657,17 @@ imply
 	\end{cases}
 	\end{equation}
 Therefore, a sufficient condition for
-$r \in \mathcal B$
+$r ∈ \mathcal B$
 is that whether
-$r \in [0,1)$
+$r ∈ [0,1)$
 satisfies
 that there exists
-$t \in (0,2)$
+$t ∈ (0,2)$
 such that
 {\color{blue} A sufficient condition for
-$r\in B$
+$r∈ B$
 is that
-$r \in (0,1)$
+$r ∈ (0,1)$
 and there exists
 $t$
 such that 
@@ -1725,9 +1697,9 @@ and
 	\end{cases}
 	\end{equation}
 In particular, if
-$r \in [0,1)$
+$r ∈ [0,1)$
 admits some
-$t \in (0,2)$
+$t ∈ (0,2)$
 such that
 $(t,r)$
 satisfies either
@@ -1759,7 +1731,7 @@ contains the following set:
 $
 	
 	\mathcal C
-	= \{r \in [0,1); \exists t, \ (t,r) \ \mbox{is a solution to \eqref{sys2}}\}.
+	= \{r ∈ [0,1); \exists t, \ (t,r) \ \mbox{is a solution to \eqref{sys2}}\}.
 	
 $ //[formula type:display]
 @sys2 //[ref type:eqref]
@@ -1788,7 +1760,7 @@ $
 	
 $ //[formula type:display]
 Note that for
-$t \in [0,4)$
+$t ∈ [0,4)$
 $
 	
 	(4t)/((4-t)(2+t)) < (4)/(2+t)
@@ -1811,7 +1783,7 @@ Therefore the interval
 	b(t) &= = min \left((4)/(2+t), (8t)/((2+t)^2)  \right)
 	$ //[formula type:align*]
 is nonempty for any
-$t \in (0,2).$
+$t ∈ (0,2).$
 Note that
 $
 	
@@ -1819,7 +1791,7 @@ $
 	
 $ //[formula type:display]
 for
-$t \in (0,2).$
+$t ∈ (0,2).$
 Therefore,
 $
 	

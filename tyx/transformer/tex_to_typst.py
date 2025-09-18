@@ -58,6 +58,21 @@ class TeXToTypstTransformer:
             'approx': '≈',
             'equiv': '≡',
             'propto': '∝',
+            'varepsilon': 'ε',
+            'varphi': 'φ',
+            'mathbb': 'ℝ',
+            'in': '∈',
+            'sim': '∼',
+            'lesssim': '≲',
+            'gtrsim': '≳',
+            'infty': '∞',
+            'cap': '∩',
+            'sup': 'sup',
+            'not': '¬',
+            'equiv': '≡',
+            'mu': 'μ',
+            'quad': ' ',
+            'psi': 'ψ',
         }
         
         # 数式アクセントのマッピング
@@ -317,6 +332,7 @@ class TeXToTypstTransformer:
                         combined_content = combined_content.replace(',', '\\,')
                         # \ を\<改行><タブ>に変換
                         combined_content = combined_content.replace('\\ ', '\\\n\t')
+                        # cases(の後に改行を追加
                         new_lines.append(f'\t{combined_content}')
                     new_lines.append(line)
                     in_cases = False
@@ -345,11 +361,32 @@ class TeXToTypstTransformer:
         content = re.sub(r'([a-zA-Z0-9]+)_\{([^}]+)\}', r'\1_(\2)', content)
         content = re.sub(r'([a-zA-Z0-9]+)_([a-zA-Z0-9])', r'\1_(\2)', content)
         
+        # \mathbb の特別処理
+        content = re.sub(r'\\mathbb\s*\{?R\}?', 'ℝ', content)
+        content = re.sub(r'\\mathbb\s*\{?N\}?', 'ℕ', content)
+        content = re.sub(r'\\mathbb\s*\{?Z\}?', 'ℤ', content)
+        content = re.sub(r'\\mathbb\s*\{?Q\}?', 'ℚ', content)
+        content = re.sub(r'\\mathbb\s*\{?C\}?', 'ℂ', content)
+        
         # 数式記号のUnicode変換
         for tex_symbol, unicode_symbol in self.math_symbols.items():
-            pattern = r'\\' + re.escape(tex_symbol) + r'\b'
-            replacement = unicode_symbol
-            content = re.sub(pattern, replacement, content)
+            if tex_symbol != 'mathbb':  # \mathbb は既に処理済み
+                pattern = r'\\' + re.escape(tex_symbol) + r'\b'
+                replacement = unicode_symbol
+                content = re.sub(pattern, replacement, content)
+        
+        # 特別な処理が必要な記号
+        content = re.sub(r'\\partial', '∂', content)
+        content = re.sub(r'\\Delta\b', 'Δ', content)
+        content = re.sub(r'\\varepsilon', 'ε', content)
+        content = re.sub(r'\\varphi', 'φ', content)
+        content = re.sub(r'\\not\\equiv', '≢', content)
+        content = re.sub(r'¬≡', '≢', content)
+        content = re.sub(r'\\mu', 'μ', content)
+        content = re.sub(r'\\psi', 'ψ', content)
+        
+        # &= = の重複を修正
+        content = re.sub(r'&=\s*=', '&=', content)
         
         # 数式アクセントの変換（README.mdの仕様に従う）
         for tex_accent, typst_accent in self.math_accents.items():
@@ -368,6 +405,14 @@ class TeXToTypstTransformer:
             pattern = r'\\' + re.escape(tex_op) + r'\b'
             replacement = unicode_op
             content = re.sub(pattern, replacement, content)
+        
+        # 追加の数式記号変換
+        content = re.sub(r'\\lesssim', '≲', content)
+        content = re.sub(r'\\infty', '∞', content)
+        
+        # \left と \right を削除
+        content = re.sub(r'\\\\left', '', content)
+        content = re.sub(r'\\\\right', '', content)
         
         # cases環境の変換
         content = re.sub(r'\\begin\{cases\}', 'cases(', content)

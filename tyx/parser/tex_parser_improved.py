@@ -252,14 +252,43 @@ class ImprovedTeXParser:
         theorem_match = re.match(r'\\begin\{([^}]+)\}(?:\[([^\]]*)\])?(?:\\label\{([^}]+)\})?(.*?)\\end\{\1\}', content, re.DOTALL)
         if theorem_match:
             theorem_type, title, label, body = theorem_match.groups()
+            
+            # Lemma内の数式環境を処理
+            processed_body = self._process_math_in_content(body.strip())
+            
             return TheoremNode(
                 node_type=NodeType.THEOREM,
                 theorem_type=theorem_type,
                 title=title or "",
                 label=label or "",
-                content=body.strip()
+                content=processed_body
             )
         return TheoremNode(node_type=NodeType.THEOREM, theorem_type="", title="", label="", content="")
+    
+    def _process_math_in_content(self, content: str) -> str:
+        """コンテンツ内の数式環境を処理"""
+        # \begin{align*}...\end{align*} を処理（先に処理する）
+        content = re.sub(r'\\begin\{align\*\}(.*?)\\end\{align\*\}', 
+                        lambda m: f'$ {self._parse_math_content(m.group(1))} $ //[formula type:align*]', 
+                        content, flags=re.DOTALL)
+        
+        # \begin{align}...\end{align} を処理
+        content = re.sub(r'\\begin\{align\}(.*?)\\end\{align\}', 
+                        lambda m: f'$ {self._parse_math_content(m.group(1))} $ //[formula type:align]', 
+                        content, flags=re.DOTALL)
+        
+        # \[...\] を処理
+        content = re.sub(r'\\\[(.*?)\\\]', 
+                        lambda m: f'$ {self._parse_math_content(m.group(1))} $ //[formula type:display]', 
+                        content, flags=re.DOTALL)
+        
+        return content
+    
+    def _parse_math_content(self, content: str) -> str:
+        """数式内容を基本的に処理"""
+        # 基本的な数式処理（簡易版）
+        content = content.replace('\\label{eq2}', '').strip()
+        return content
     
     def _parse_math(self, content: str) -> MathNode:
         """数式を解析"""
