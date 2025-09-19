@@ -174,9 +174,8 @@ Theorem \ref{theorem:aaaa}
 ### 7.1 アクセント（Unicode不使用）
 
 * TeX: `\dot{x}`, `\ddot{x}`, `\hat{x}`, `\bar{x}`, `\tilde{x}`, `\vec{x}`
-* Typst: `$ dot(x) $`, `$ ddot(x) $`, `$ hat(x) $`, `$ bar(x) $`, `$ tilde(x) $`, `$ vec(x) $`
+* Typst: `$ dot(x) $`, `$ dot.double(x) $`, `$ hat(x) $`, `$ bar(x) $`, `$ tilde(x) $`, `$ arrow(x) $`
 * 添字: `\dot{x}_i` → `$ dot(x)_i $`。
-* 注: テンプレートでは直接記号（`$ rho(B) < 1 $`）も使用可能。実装時に適切な変換を選択。
 
 ### 7.2 変数の分離
 

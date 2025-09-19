@@ -15,7 +15,29 @@ class ImprovedTeXParser:
     """改良されたTeXパーサー"""
     
     def __init__(self):
-        pass
+        # 数式記号のUnicodeマッピング（前処理で使用）
+        self.math_symbols = {
+            'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ',
+            'epsilon': 'ε', 'zeta': 'ζ', 'eta': 'η', 'theta': 'θ',
+            'iota': 'ι', 'kappa': 'κ', 'lambda': 'λ', 'mu': 'μ',
+            'nu': 'ν', 'xi': 'ξ', 'omicron': 'ο', 'pi': 'π',
+            'rho': 'ρ', 'sigma': 'σ', 'tau': 'τ', 'upsilon': 'υ',
+            'phi': 'φ', 'chi': 'χ', 'psi': 'ψ', 'omega': 'ω',
+            'infty': '∞', 'partial': '∂', 'nabla': '∇', 'Delta': 'Δ',
+            'varepsilon': 'ε', 'varphi': 'φ', 'in': '∈', 'sim': '∼',
+            'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
+            'not': '¬', 'equiv': '≡', 'quad': ' ', 'mathbb': 'ℝ',
+            'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
+            'times': '×'
+        }
+        
+        # 数式演算子のUnicodeマッピング
+        self.math_operators = {
+            'sum': 'Σ', 'int': '∫', 'prod': '∏', 'lim': 'lim',
+            'sin': 'sin', 'cos': 'cos', 'tan': 'tan', 'log': 'log',
+            'ln': 'ln', 'exp': 'exp', 'max': 'max', 'min': 'min',
+            'sup': 'sup', 'inf': 'inf'
+        }
     
     def parse(self, tex_content: str) -> DocumentNode:
         """TeXコンテンツを解析してASTに変換"""
@@ -143,7 +165,51 @@ class ImprovedTeXParser:
                         line = line[:line.index('%')]
                     processed_lines.append(line)
         
-        return '\n'.join(processed_lines)
+        # 記号変換を前処理として実施
+        processed_content = '\n'.join(processed_lines)
+        processed_content = self._convert_math_symbols(processed_content)
+        
+        return processed_content
+    
+    def _convert_math_symbols(self, content: str) -> str:
+        """数式記号をUnicodeに変換（前処理として実施）"""
+        # 基本的な数式記号の変換
+        for tex_symbol, unicode_char in self.math_symbols.items():
+            if tex_symbol == 'mathbb':
+                # \mathbb{R} → ℝ, \mathbb{N} → ℕ, \mathbb{Z} → ℤ, \mathbb{Q} → ℚ, \mathbb{C} → ℂ
+                content = re.sub(r'\\mathbb\s*\{?R\}?', 'ℝ', content)
+                content = re.sub(r'\\mathbb\s*\{?N\}?', 'ℕ', content)
+                content = re.sub(r'\\mathbb\s*\{?Z\}?', 'ℤ', content)
+                content = re.sub(r'\\mathbb\s*\{?Q\}?', 'ℚ', content)
+                content = re.sub(r'\\mathbb\s*\{?C\}?', 'ℂ', content)
+            else:
+                # \symbol → unicode
+                pattern = r'\\' + re.escape(tex_symbol) + r'(?![a-zA-Z])'
+                content = re.sub(pattern, unicode_char, content)
+        
+        # 数式演算子の変換
+        for tex_operator, unicode_char in self.math_operators.items():
+            pattern = r'\\' + re.escape(tex_operator) + r'(?![a-zA-Z])'
+            content = re.sub(pattern, unicode_char, content)
+        
+        # 特別な処理
+        # \not\equiv → ≢
+        content = re.sub(r'\\not\\equiv', '≢', content)
+        
+        # \left と \right を削除
+        content = re.sub(r'\\left', '', content)
+        content = re.sub(r'\\right', '', content)
+        
+        # \prime の処理（上付き文字の前に処理）
+        content = re.sub(r'\\prime', "'", content)
+        
+        # \frac の処理
+        content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)
+        
+        # &= = の重複を修正
+        content = re.sub(r'&=\s*=', '&=', content)
+        
+        return content
     
     def _extract_elements(self, content: str) -> List[str]:
         """主要な要素を抽出"""
@@ -253,17 +319,42 @@ class ImprovedTeXParser:
         if theorem_match:
             theorem_type, title, label, body = theorem_match.groups()
             
+            # 定理タイプに応じてNodeTypeを設定
+            node_type = self._get_theorem_node_type(theorem_type)
+            
             # Lemma内の数式環境を処理
             processed_body = self._process_math_in_content(body.strip())
             
             return TheoremNode(
-                node_type=NodeType.THEOREM,
+                node_type=node_type,
                 theorem_type=theorem_type,
                 title=title or "",
                 label=label or "",
                 content=processed_body
             )
         return TheoremNode(node_type=NodeType.THEOREM, theorem_type="", title="", label="", content="")
+    
+    def _get_theorem_node_type(self, theorem_type: str) -> NodeType:
+        """定理タイプに応じてNodeTypeを返す"""
+        theorem_type_lower = theorem_type.lower()
+        if theorem_type_lower == 'theorem':
+            return NodeType.THEOREM
+        elif theorem_type_lower == 'lemma':
+            return NodeType.LEMMA
+        elif theorem_type_lower == 'proposition':
+            return NodeType.PROPOSITION
+        elif theorem_type_lower == 'corollary':
+            return NodeType.COROLLARY
+        elif theorem_type_lower == 'definition':
+            return NodeType.DEFINITION
+        elif theorem_type_lower == 'remark':
+            return NodeType.REMARK
+        elif theorem_type_lower == 'example':
+            return NodeType.EXAMPLE
+        elif theorem_type_lower == 'proof':
+            return NodeType.PROOF
+        else:
+            return NodeType.THEOREM  # デフォルト
     
     def _process_math_in_content(self, content: str) -> str:
         """コンテンツ内の数式環境を処理"""

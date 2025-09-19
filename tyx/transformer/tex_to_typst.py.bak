@@ -180,19 +180,27 @@ class TeXToTypstTransformer:
     def _transform_math_display(self, node: MathNode) -> str:
         """ディスプレイ数式を変換"""
         content = self._transform_math_content(node.content)
-        return f"\t$\n\t{content}\n\t$ //[formula type:display]\n"
+        return f"$
+	{content}
+$ //[formula type:display]"
+	{content}
+$ //[formula type:display]"
+	{content}
+$ //[formula type:display]"
+	{content}
+$ //[formula type:display]"
     
     def _transform_math_align(self, node: MathNode) -> str:
         """align環境を変換"""
         # align環境の内容を解析してTypstのalign形式に変換
         content = self._transform_align_content(node.content)
-        return f"\t$\n{content}\n\t$ //[formula type:align]"
+        return f"$\n{content}\n$ //[formula type:align]"
     
     def _transform_math_align_star(self, node: MathNode) -> str:
         """align*環境を変換"""
         # align*環境の内容を解析してTypstのalign形式に変換
         content = self._transform_align_content(node.content)
-        return f"\t$\n{content}\n\t$ //[formula type:align*]"
+        return f"$\n{content}\n$ //[formula type:align*]"
     
     def _transform_theorem(self, node: TheoremNode) -> str:
         """定理環境を変換"""
@@ -296,21 +304,13 @@ class TeXToTypstTransformer:
             
             # & で分割（複数行の数式）
             if '&' in line:
-                # &= で分割して処理
-                if '&=' in line:
-                    parts = line.split('&=')
-                    converted_parts = []
-                    for part in parts:
-                        converted_part = self._transform_math_content(part.strip())
-                        converted_parts.append(converted_part)
-                    converted_line = " &= ".join(converted_parts)
-                else:
-                    parts = line.split('&')
-                    converted_parts = []
-                    for part in parts:
-                        converted_part = self._transform_math_content(part.strip())
-                        converted_parts.append(converted_part)
-                    converted_line = " &= ".join(converted_parts)
+                parts = line.split('&')
+                # 各部分を変換して結合
+                converted_parts = []
+                for part in parts:
+                    converted_part = self._transform_math_content(part.strip())
+                    converted_parts.append(converted_part)
+                converted_line = " &= ".join(converted_parts)
                 converted_lines.append(converted_line)
             else:
                 # 単一行の数式
