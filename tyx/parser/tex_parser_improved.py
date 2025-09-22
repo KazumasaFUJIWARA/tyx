@@ -30,7 +30,7 @@ class ImprovedTeXParser:
             'Tau': 'Τ', 'Upsilon': 'Υ', 'Phi': 'Φ', 'Chi': 'Χ', 'Psi': 'Ψ', 'Omega': 'Ω',
             'varepsilon': 'ε', 'varphi': 'φ', 'in': '∈', 'sim': '∼',
             'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
-            'not': '¬', 'equiv': '≡', 'quad': ' ',             'mathbb': 'ℝ', 'mathcal': 'ℋ',
+            'not': '¬', 'equiv': '≡', 'quad': ' ',             'mathbb': 'ℝ', 'mathcal': 'ℋ', 'mathfrak': '𝔖', 'cdot': '⋅',
             'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
             'times': '×', 'langle': '⟨', 'rangle': '⟩'
         }
@@ -250,6 +250,12 @@ class ImprovedTeXParser:
         content = re.sub(r'\\mathcal\s+H', 'ℋ', content)
         # ℋ H を ℋ に変換（前処理後の修正）
         content = content.replace('ℋ H', 'ℋ')
+        # 𝔖 S を 𝔖 に変換（前処理後の修正）
+        content = content.replace('𝔖 S', '𝔖')
+        # 𝔖 A を 𝔄 に変換（前処理後の修正）
+        content = content.replace('𝔖 A', '𝔄')
+        # ℋ V を 𝒱 に変換（前処理後の修正）
+        content = content.replace('ℋ V', '𝒱')
         
         # &= = の重複を修正
         content = re.sub(r'&=\s*=', '&=', content)

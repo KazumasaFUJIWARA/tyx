@@ -31,13 +31,15 @@
 	- [x] 数学記号（`\infty` → `∞`）
 	- [x] 演算子（`\sum` → `Σ`）
 	- [x] 積分（`\int` → `∫`）
-- [ ] アクセントの変換（基本的な実装）
+	- [x] mathcal
+	- [x] frak
+- [x] アクセントの変換（基本的な実装）
 	- [x] `\dot{x}` → `$ dot(x) $`
 	- [x] `\ddot{x}` → `$ dot.double(x) $`
 	- [x] `\hat{x}` → `$ hat(x) $`
-	- [ ] `\bar{x}` → `$ bar(x) $`
-	- [ ] `\tilde{x}` → `$ tilde(x) $`
-	- [ ] `\vec{x}` → `$ arrow(x) $`
+	- [x] `\bar{x}` → `$ bar(x) $`
+	- [x] `\tilde{x}` → `$ tilde(x) $`
+	- [x] `\vec{x}` → `$ arrow(x) $`
 - [ ] その他数式コマンド
 	- [ ] `\frac`
 	- [ ] `norm`
