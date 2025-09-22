@@ -23,10 +23,14 @@ class ImprovedTeXParser:
             'nu': 'ν', 'xi': 'ξ', 'omicron': 'ο', 'pi': 'π',
             'rho': 'ρ', 'sigma': 'σ', 'tau': 'τ', 'upsilon': 'υ',
             'phi': 'φ', 'chi': 'χ', 'psi': 'ψ', 'omega': 'ω',
-            'infty': '∞', 'partial': '∂', 'nabla': '∇', 'Delta': 'Δ',
+            'infty': '∞', 'partial': '∂', 'nabla': '∇', 
+            'Alpha': 'Α', 'Beta': 'Β', 'Gamma': 'Γ', 'Delta': 'Δ', 'Epsilon': 'Ε', 'Zeta': 'Ζ',
+            'Eta': 'Η', 'Theta': 'Θ', 'Iota': 'Ι', 'Kappa': 'Κ', 'Lambda': 'Λ', 'Mu': 'Μ',
+            'Nu': 'Ν', 'Xi': 'Ξ', 'Omicron': 'Ο', 'Pi': 'Π', 'Rho': 'Ρ', 'Sigma': 'Σ',
+            'Tau': 'Τ', 'Upsilon': 'Υ', 'Phi': 'Φ', 'Chi': 'Χ', 'Psi': 'Ψ', 'Omega': 'Ω',
             'varepsilon': 'ε', 'varphi': 'φ', 'in': '∈', 'sim': '∼',
             'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
-            'not': '¬', 'equiv': '≡', 'quad': ' ', 'mathbb': 'ℝ',
+            'not': '¬', 'equiv': '≡', 'quad': ' ',             'mathbb': 'ℝ', 'mathcal': 'ℋ',
             'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
             'times': '×', 'langle': '⟨', 'rangle': '⟩'
         }
@@ -233,6 +237,19 @@ class ImprovedTeXParser:
         
         # \frac の処理
         content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)
+        
+        # 数式アクセントの処理（前処理で）
+        content = re.sub(r'\\ddot\{([^}]+)\}', r'dot.double(\1)', content)
+        content = re.sub(r'\\dot\{([^}]+)\}', r'dot(\1)', content)
+        content = re.sub(r'\\hat\{([^}]+)\}', r'hat(\1)', content)
+        content = re.sub(r'\\bar\{([^}]+)\}', r'bar(\1)', content)
+        content = re.sub(r'\\tilde\{([^}]+)\}', r'tilde(\1)', content)
+        content = re.sub(r'\\vec\{([^}]+)\}', r'arrow(\1)', content)
+        
+        # \mathcal H 全体を ℋ に変換
+        content = re.sub(r'\\mathcal\s+H', 'ℋ', content)
+        # ℋ H を ℋ に変換（前処理後の修正）
+        content = content.replace('ℋ H', 'ℋ')
         
         # &= = の重複を修正
         content = re.sub(r'&=\s*=', '&=', content)

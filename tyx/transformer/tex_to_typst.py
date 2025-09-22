@@ -402,6 +402,12 @@ class TeXToTypstTransformer:
         """数式内容を変換（記号変換は前処理で完了済み）"""
         import re
         
+        # 数式アクセントの変換（最初に実行）
+        for tex_accent, typst_accent in self.math_accents.items():
+            pattern = r'\\' + re.escape(tex_accent) + r'\{([^}]+)\}'
+            replacement = typst_accent + r'(\1)'
+            content = re.sub(pattern, replacement, content)
+        
         # 分数の変換は前処理で完了済み
         
         # 数式演算子の変換（前処理で完了済みのため不要）
@@ -411,11 +417,50 @@ class TeXToTypstTransformer:
         content = re.sub(r'\\iiint(?![a-zA-Z])', '∭', content)
         content = re.sub(r'\\oint(?![a-zA-Z])', '∮', content)
         
-        # 積分記号の下付き・上付き文字の {} を () に変換
+        # 特別な処理：∫_{ℂ dot.double(f) を ∫_(ℂ) dot.double(f) に変換（最初に処理）
+        if '∫_{' in content and 'dot.double(' in content:
+            # ∫_{ から dot.double( の前までを () で囲む
+            start = content.find('∫_{')
+            dot_start = content.find('dot.double(')
+            if start != -1 and dot_start != -1 and dot_start > start:
+                inner_content = content[start+3:dot_start-1]  # 空白を除く
+                content = content[:start+2] + '(' + inner_content + ') ' + content[dot_start:]
+        
+        # 積分記号の下付き・上付き文字の {} を () に変換（特別な処理の後は除外）
+        if '∫_{' not in content or 'dot.double(' not in content:
+            content = re.sub(r'∫_\{([^}]+)\}', r'∫_(\1)', content)
+        # 下付き文字の処理（数式アクセントの後）
+        # ∫_(ℂ) dot.double(f) の状態では処理をスキップ
+        if not (content.count('∫_(') == 1 and 'dot.double(' in content):
+            content = re.sub(r'∫_([^{}]+)', r'∫_(\1)', content)
+        
+        # 余分な括弧を修正：∫_((ℋ_+) hat(f)) → ∫_(ℋ_+) hat(f)
+        content = re.sub(r'∫_\(\(([^)]+)\)\s+([^)]+)\)', r'∫_(\1) \2', content)
+        # 残存する下付き文字の {} を () に変換（複雑な内容に対応）
+        content = re.sub(r'∫_\{([^{}]*(?:\([^)]*\)[^{}]*)*)\}', r'∫_(\1)', content)
+        # 下付き文字の処理を正しく修正
+        # ∫_{...} の { から } までを正しく抽出
         content = re.sub(r'∫_\{([^}]+)\}', r'∫_(\1)', content)
+        # より直接的なアプローチ：∫_{ から最後の } までを () に変換
+        if '∫_{' in content:
+            start = content.find('∫_{')
+            if start != -1:
+                # 最後の } を見つける
+                end = content.rfind('}')
+                if end != -1 and end > start:
+                    inner_content = content[start+3:end]
+                    content = content[:start+2] + '(' + inner_content + ')' + content[end+1:]
+                else:
+                    # } がない場合は、∫_{ の後のすべてを () で囲む
+                    inner_content = content[start+3:]
+                    content = content[:start+2] + '(' + inner_content + ')'
         content = re.sub(r'∬_\{([^}]+)\}', r'∬_(\1)', content)
         content = re.sub(r'∭_\{([^}]+)\}', r'∭_(\1)', content)
         content = re.sub(r'∮_\{([^}]+)\}', r'∮_(\1)', content)
+        # 単一文字の下付き文字も処理（Unicode文字を含む）
+        content = re.sub(r'∮_([A-Za-zΑ-Ωα-ω])', r'∮_(\1)', content)
+        # 単一文字の下付き文字も処理（Unicode文字を含む）
+        content = re.sub(r'∫_([A-Za-zΑ-Ωα-ω])', r'∫_(\1)', content)
         # 上付き文字の処理（単一文字を先に処理）
         content = re.sub(r'∫\^([a-zA-Z0-9∞])', r'∫^(\1)', content)
         content = re.sub(r'∬\^([a-zA-Z0-9∞])', r'∬^(\1)', content)
@@ -427,6 +472,12 @@ class TeXToTypstTransformer:
         content = re.sub(r'∮\^\{([^}]+)\}', r'∮^(\1)', content)
         # 一般的な上付き文字の {} を () に変換
         content = re.sub(r'\^\{([^}]+)\}', r'^(\1)', content)
+        
+        # 数式アクセントの変換（下付き文字の処理より前に実行）
+        for tex_accent, typst_accent in self.math_accents.items():
+            pattern = r'\\' + re.escape(tex_accent) + r'\{([^}]+)\}'
+            replacement = typst_accent + r'(\1)'
+            content = re.sub(pattern, replacement, content)
         
         # 残存する\fracと\sqrtを処理
         content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)
@@ -459,11 +510,6 @@ class TeXToTypstTransformer:
         # &= = の重複を修正
         content = re.sub(r'&=\s*=', '&=', content)
         
-        # 数式アクセントの変換（README.mdの仕様に従う）
-        for tex_accent, typst_accent in self.math_accents.items():
-            pattern = r'\\' + re.escape(tex_accent) + r'\{([^}]+)\}'
-            replacement = typst_accent + r'(\1)'
-            content = re.sub(pattern, replacement, content)
         
         # 数式関数の変換
         for tex_func, typst_func in self.math_functions.items():

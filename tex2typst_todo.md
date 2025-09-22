@@ -32,9 +32,9 @@
 	- [x] 演算子（`\sum` → `Σ`）
 	- [x] 積分（`\int` → `∫`）
 - [ ] アクセントの変換（基本的な実装）
-	- [ ] `\dot{x}` → `$ dot(x) $`
-	- [ ] `\ddot{x}` → `$ dot.double(x) $`
-	- [ ] `\hat{x}` → `$ hat(x) $`
+	- [x] `\dot{x}` → `$ dot(x) $`
+	- [x] `\ddot{x}` → `$ dot.double(x) $`
+	- [x] `\hat{x}` → `$ hat(x) $`
 	- [ ] `\bar{x}` → `$ bar(x) $`
 	- [ ] `\tilde{x}` → `$ tilde(x) $`
 	- [ ] `\vec{x}` → `$ arrow(x) $`
@@ -42,6 +42,7 @@
 	- [ ] `\frac`
 	- [ ] `norm`
 	- [ ] `abs`
+- [ ] \left, \right, \bigg
 
 #### 3-2. [ ] その他
 - [ ] `_`, `^` の後が１文字の場合は`()`をつけない
