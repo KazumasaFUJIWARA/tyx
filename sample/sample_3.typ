@@ -75,20 +75,17 @@
 In this note,
 we consider the behavior of solutions
 to the Cauchy problem for the semilinear damped wave equation
-	$
-	c a s e s(
-	∂_t^2 u+∂_t u-Δ u=|u|^p,  &= t>0, x ∈ ℝ^n, \
-	u(0)=u_0, ∂_t u(0)=u_1,  &= x ∈ ℝ^n .
-	)
+$
+	cases(
 	$ //[formula type:align]
 The aim of this manuscript
 is to establish the global existence of solutions
 under the initial conditions
-	$
-	&= ( //[c o m m a n d t y p e:l e f t]
-	u_0, u_1) //[c o m m a n d t y p e:r i g h t]
-	=( //[c o m m a n d t y p e:l e f t]
-	ε_0 φ, ε_1 φ) //[c o m m a n d t y p e:r i g h t]
+$
+	&= ( __C O M M E N T_0__
+	u_0, u_1) __C O M M E N T_0__
+	=( __C O M M E N T_0__
+	ε_0 φ, ε_1 φ) __C O M M E N T_0__
 	, \
 	&= 0 < ε_0 < |ε_1| = - ε_1.
 	$ //[formula type:align]
@@ -143,12 +140,8 @@ A key step for analyzing the nonlinear problem
 @eq:DW //[ref type:eqref]
 is to first
 understand the corresponding linear (free) problem:
-	$
-	c a s e s(
-	∂_t^2 u + ∂_t u - Δ u = 0,\
-	u(0) = u_0,
-	∂_t u(0) = u_1.
-	)
+$
+	cases(
 	$ //[formula type:align]
 // %]]]
  
@@ -162,7 +155,7 @@ $u(t,x)=e^{-t/2}w(t,x)$
 which transforms
 @eq:linear_damped_wave //[ref type:eqref]
 into the wave-type equation
-	$
+$
 ∂_t^2 w - Δ w = (1)/(4) w,
 	$ //[formula type:align]
 which highlights the wave structure; for details, see Chapter VI, Section 6 in
@@ -216,11 +209,8 @@ the free solution to
 @eq:DW //[ref type:eqref]
 is
 asymptotically equivalent to the solution of the free heat equation:
-	$
-	c a s e s(
-	∂_t v - Δ v = 0,\
-	v(0) = u_0 + u_1.
-	)
+$
+	cases(
 	$ //[formula type:align]
 For simplicity, we denote by
 $e^{t Δ} f$
@@ -239,7 +229,7 @@ Namely, for a sufficiently regular function
 $f$
 ,
 the following asymptotic relation holds:
-	$
+$
 	S(t) f
 	∼ e^(t Δ) f + e^(-t/2) W(t) f.
 	$ //[formula type:align]
@@ -316,7 +306,7 @@ is the so-called Fujita critical exponent,
 which gives the threshold for blow-up of positive solutions to
 @eq:DW //[ref type:eqref]
 and for the existence of global solutions to the Fujita-type heat equation:
-	$
+$
 ∂_t v - Δ v = |v|^p.
 	$ //[formula type:align]
 For details, see
@@ -371,7 +361,7 @@ and
 $1 < p ≤ 3$
 ,
 if
-	$
+$
 ∫ u_0 + u_1 d x > 0,
 	$ //[formula type:align]
 then, irrespective of the size of the initial data,
@@ -424,8 +414,9 @@ showed the finite-time blow-up of solutions to
 @eq:DW //[ref type:eqref]
 and obtained sharp lifespan estimates
 under the mean-zero initial condition
-	$
+$
 	∫ u_0 + u_1 d x = 0,
+	quad
 	u_0, u_1 ¬≡ 0.
 	$ //[formula type:align]
 The approach of
@@ -456,10 +447,10 @@ $μ_0, μ_1 ∈ ℝ$
 there exist smooth initial data
 $(u_0, u_1)$
 satisfying
-	$
+$
 	
 	∫ u_0 d x = μ_0,
-	
+	quad
 	∫ u_1 d x = μ_1,
 	
 	$ //[formula type:display]
@@ -476,7 +467,7 @@ Let
 $L$
 be a large positive number.
 If
-	$
+$
 	u_0(x)  &= ψ(x) + (μ_0-1) ψ(x-L), \
 	u_1(x)  &= μ_1 ψ(x-L),
 	$ //[formula type:align*]
@@ -501,7 +492,7 @@ is increasing,
 there exists a time
 $t_0$
 such that
-	$
+$
 	
 	∫ u(t_0) + ∂_t u(t_0) d x
 	= ∫ u_b(t_0) + ∂_t u_b(t_0) d x + ∫ u_g(t_0) + ∂_t u_g(t_0) d x
@@ -536,12 +527,13 @@ global existence for small initial data holds for
 under the following pointwise condition (for all
 $x$
 ):
-	$
+$
 	u_0(x) = 0,
+	quad
 	u_1(x) ≤ 0.
 	$ //[formula type:align]
 This was further extended to
-	$
+$
 	u_0(x) ≤ 0,
 	u_1(x) + \f r a c 1 2 u_0(x) ≤ 0.
 	$ //[formula type:align]
@@ -621,7 +613,7 @@ More precisely, we ask the following question:
 Does there exist a constant
 $c_0 > 0$
 such that, for
-	$
+$
 	
 	0 < ε_0 < c_0 |ε_1| ≪ 1,
 	
@@ -643,7 +635,7 @@ $c_0 > 0$
 and a smooth, positive function
 $φ$
 such that, for
-	$
+$
 	
 	ε_0 < c_0 |ε_1| ≪ 1,
 	
@@ -654,7 +646,7 @@ $u$
 with initial data
 $(u_0,u_1) = (ε_0 φ, ε_1 φ)$
 satisfies
-	$
+$
 u(t,x) ≤ 0,\ \ ∂_t u(t,x) + (1)/(2)u(t,x) ≤ 0
 	$ //[formula type:align]
 for all
@@ -721,7 +713,7 @@ $N$
 be an integer,
 $a >1$
 , and
-	$
+$
 	
 	φ(x) = (N^2+x^2)^(-a/2)
 	
@@ -730,7 +722,7 @@ $a >1$
 then
 $φ ∈ W^{2,1} ∩ W^{2,∞}$
 and
-	$
+$
 	|φ^'(x)|  &= ≤ (a)/(N) φ(x),\
 	|φ^('')(x)|  &= ≤ (a(a+1))/(N^2) φ(x),
 	$ //[formula type:align*]
@@ -756,7 +748,7 @@ pointwisely up to a certain time,
 and this pointwise control implies the conclusion.
 Finally,
 the function
-	$
+$
 	
 	a(t) = (4t)/((4-t)(2+t))
 	
@@ -777,14 +769,14 @@ is well-defined.
 The smallness of
 $δ$
 is determined by
-	$
+$
 	
 	δ < b(t)-a(t),
 	
 	$ //[formula type:display]
 
 where
-	$
+$
 	
 	b(t) = (8t)/((2+t)^2).
 	
@@ -812,12 +804,12 @@ $ε_0$
 and
 $ε_1$
 are sufficiently small and satisfy
-	$
+$
 	
-	ε_0 < 0, 
-	ε_1 > 0, 
-	ε_0 + ε_1 < 0, 
-	\m b o x{a n d} \
+	ε_0 < 0,quad
+	ε_1 > 0,quad
+	ε_0 + ε_1 < 0,quad
+	__C M D_0__ \
 	ε_1 + ε_0/2 > 0.
 	
 	$ //[formula type:display]
@@ -860,7 +852,7 @@ where
 	$ S(t) h(x)
 	= (1)/(2) e^{-t/2} ∫_{-t}^{t} I_0 ( //[command type:bigg]
 	(sqrt(t^2-y^2))/(2) ) //[command type:bigg]
- h(x+y) d y. $ //[formula type:display]
+	h(x+y) d y. $ //[formula type:display]
 We note that by denoting $ω = sqrt(t^2-y^2)$ we have
 	$ e^{-t/2} I_0 ( //[command type:bigg]
 	(ω)/(2) ) //[command type:bigg]
@@ -881,7 +873,7 @@ We note that by writing $σ = t-τ$ we have
  \dot g(x+y) w(τ,x+y) dy\\
 	&+ ∫_{-σ}^{σ} I_1 ( //[command type:bigg]
 	(sqrt(σ^2-y^2))/(2) ) //[command type:bigg]
- (y)/(sqrt(σ^2-y^2)) g(x+y) w(τ,x+y) dy. $ //[formula type:align*]
+	(y)/(sqrt(σ^2-y^2)) g(x+y) w(τ,x+y) dy. $ //[formula type:align*]
 We note that by writing $ω = sqrt(σ^2-y^2)$,
 we have
 	$ \bigg| e^{-σ/2} (y)/(ω) I_1(ω/2) \bigg|
@@ -947,14 +939,14 @@ Therefore, the Cauchy problem can be rewritten as
 	$ //[formula type:align*]
 with 
 	$ f = |u|^{p-2}u  + (\ddot φ)/(φ),
-	
+	quad
 	g =  2  (\dot φ)/(φ). $ //[formula type:display]
 Noting
-	$ \dot g = 2 (\ddot φ)/(φ) - 2 (\dot φ^2)/(φ^2) $ //[formula type:display]	
+	$ \dot g = 2 (\ddot φ)/(φ) - 2 (\dot φ^2)/(φ^2) $ //[formula type:display]
 and applying Lemma @lemma:local_existence //[ref type:ref]
 and the assumption @eq:shape_assumption //[ref type:eqref],
 $ \|f\|_{L^∞(0,T_0; L^∞)}
-≤ C_1 ( |ε_1|^{p-1} + ρ ) $ //[formula type:display]
+	≤ C_1 ( |ε_1|^{p-1} + ρ ) $ //[formula type:display]
 and $\|g\|_{W^{1,∞}} ≤ C_1 ρ$
 with some positive constants $C_1$.
 ] //[proof]
@@ -964,13 +956,13 @@ to estimate the solution on the basis of initial data.
 Let $φ$ be $C^1(ℝ; [0,∞))$,
 such that there is a positive constant $ρ$ so that
 $ \label{eq.bb1}
- &  |\dot φ(x)| ≤ ρ  φ(x) , \ \ \forall x ≥ 0. $ //[formula type:align]
+	&  |\dot φ(x)| ≤ ρ  φ(x) , \ \ \forall x ≥ 0. $ //[formula type:align]
 Then we have
 $ \label{eq.HH1}
-      & ( φ(α) + φ(β))/(2) ≤  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ + (ρ)/(2) ∫_{α}^β φ(σ) d σ $ //[formula type:align]
+	& ( φ(α) + φ(β))/(2) ≤  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ + (ρ)/(2) ∫_{α}^β φ(σ) d σ $ //[formula type:align]
 and
 $ \label{eq.HH1mm}
-      & ( φ(α) + φ(β))/(2) ≥  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ -(ρ)/(2) ∫_{α}^β φ(σ) d σ $ //[formula type:align]
+	& ( φ(α) + φ(β))/(2) ≥  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ -(ρ)/(2) ∫_{α}^β φ(σ) d σ $ //[formula type:align]
 for $0  ≤  α < β < ∞.$
 ] //[Lemma]
 #proof[
@@ -999,12 +991,12 @@ This completes the proof.
 We finalize this section
 by collecting some estimates of calculs to control nonlinaerity.
 Consider the function
-	$
+$
 	C(t,r,ρ,ε_1)
 	= sup_(τ ∈ [0,t]) G(τ,r,ρ,ε_1),
 	$ //[formula type:align]
 where
-	$
+$
 	
 	G(τ,r,ρ,ε_1)
 	= ( | r + e^(-τ) - 1 |)/(1-C ( |ε_1|^(p-1) + ρ ) τ)
@@ -1026,9 +1018,9 @@ $0$
 We have the relation
 	$ C(t,r,ρ, ε_1)
 	= \begin{cases}
-	G(t,r,ρ, ε_1) & \text{if }   r < r_1(t), \\
-	r & \text{if }   r ∈ [r_1(t), r_2(t)], \\
-	G(min(t,- log(1-r)),r,ρ, ε_1) & \text{if }   r > r_2(t),
+	G(t,r,ρ, ε_1) & \text{if } quad r < r_1(t), \\
+	r & \text{if } quad r ∈ [r_1(t), r_2(t)], \\
+	G(min(t,- log(1-r)),r,ρ, ε_1) & \text{if } quad r > r_2(t),
 	$ //[formula type:display]
 where
 	$ r_1(t)
@@ -1081,9 +1073,9 @@ We have the relation
 	$ C(t,r,0,1/4) =
 	\begin{cases}
 	(t(1-r/2)-r )/((1-t^2/4))
-	& \mbox{if}   r < r_t,\\
+	& \mbox{if} quad r < r_t,\\
 	r
-	& \mbox{if}   r ≥ r_t,
+	& \mbox{if} quad r ≥ r_t,
 	$ //[formula type:align]
 where
 	$ r_t
@@ -1097,51 +1089,42 @@ where
 // %[[[ Proposition Comparison Principle
 $w = e^{t/2} u$
 is a solution to the Cauchy problem
-	$
-	c a s e s(
-	∂_t^2 w - Δ w = ( //[c o m m a n d t y p e:l e f t]
-	(1)/(4) + u|u|^(p-2) ) //[c o m m a n d t y p e:r i g h t]
-	w,
-	&= t ∈ (0,T_0), \ x ∈ ℝ,\
-	w(0)=ε_0 φ(x),
-	&= x ∈ ℝ,\
-	∂_t w(0) =ε_1φ(x)+(ε_0)/(2)φ(x),
-	&= x ∈ ℝ.
-	)
+$
+	cases(
 	$ //[formula type:align]
 The D'Alembert formula implies
-	$
-	&= w(t) = ε_0 (d)/(d t) W(t) (φ)(x) + ( //[c o m m a n d t y p e:l e f t]
-	ε_1 + (ε_0)/(2) ) //[c o m m a n d t y p e:r i g h t]
+$
+	&= w(t) = ε_0 (d)/(d t) W(t) (φ)(x) + ( __C O M M E N T_0__
+	ε_1 + (ε_0)/(2) ) __C O M M E N T_0__
 	W(t)(φ)(x)\
-	&= + ∫_(0^t W(t-τ)( //[c o m m a n d t y p e:l e f t])
-	( //[c o m m a n d t y p e:l e f t]
-	(1)/(4)+u(τ)|u(τ)|^(p-2)) //[c o m m a n d t y p e:r i g h t]
-	w(τ) ) //[c o m m a n d t y p e:r i g h t]
+	&= + ∫_(0^t W(t-τ)( __C O M M E N T_0__)
+	( __C O M M E N T_0__
+	(1)/(4)+u(τ)|u(τ)|^(p-2)) __C O M M E N T_0__
+	w(τ) ) __C O M M E N T_0__
 	(x) dτ
 	$ //[formula type:align*]
 where
-	$
+$
 	
 	W(t)(f)(x) = (1)/(2) ∫_((x-t)^){x+t} f(τ) dτ,
 	
 	$ //[formula type:display]
 
 so
-	$
-	&= ∂_t w(t,x) =  ε_0 ( //[c o m m a n d t y p e:l e f t]
-	(d)/(d t)) //[c o m m a n d t y p e:r i g h t]
-	^2 W(t) (φ)(x) + ( //[c o m m a n d t y p e:l e f t]
-	ε_1 + (ε_0)/(2) ) //[c o m m a n d t y p e:r i g h t]
+$
+	&= ∂_t w(t,x) =  ε_0 ( __C O M M E N T_0__
+	(d)/(d t)) __C O M M E N T_0__
+	^2 W(t) (φ)(x) + ( __C O M M E N T_0__
+	ε_1 + (ε_0)/(2) ) __C O M M E N T_0__
 	(d)/(d t) W(t)(φ)(x)\
-	&= + ∫_(0^t (d)/(d t) W(t-τ)( //[c o m m a n d t y p e:l e f t])
-	( //[c o m m a n d t y p e:l e f t]
-	(1)/(4)+u(τ)|u(τ)|^(p-2)) //[c o m m a n d t y p e:r i g h t]
-	w(τ) ) //[c o m m a n d t y p e:r i g h t]
+	&= + ∫_(0^t (d)/(d t) W(t-τ)( __C O M M E N T_0__)
+	( __C O M M E N T_0__
+	(1)/(4)+u(τ)|u(τ)|^(p-2)) __C O M M E N T_0__
+	w(τ) ) __C O M M E N T_0__
 	(x) dτ
 	$ //[formula type:align*]
 Set
-	$
+$
 	
 	r = ε_0/|ε_1|
 	
@@ -1304,14 +1287,14 @@ and
 ,
 $𝒜$
 contains the following set.
-	$
+$
 	
 	ℬ
 	= \{r ∈ [0,1); \e x i s t s (t,c_0,ρ)\
-	\m a t h r m{s a t i s f y i n g}\
-	\e q r e f{e q:c o n d i t i o n_fo r_u_d e v i d e d},\
-	\e q r e f{e q.a1},\
-	\m a t h r m{a n d}\ \e q r e f{e q.a2}\}
+	"s a t i s f y i n g"\
+	__C M D_0__,\
+	__C M D_1__,\
+	"and"\ __C M D_2__\}
 	
 	$ //[formula type:display]
 
@@ -1426,10 +1409,10 @@ are satisfied.
 Consequently,
 $ℬ$
 contains the following set:
-	$
+$
 	
 	𝒞
-	= \{r ∈ [0,1); \e x i s t s t, \ (t,r) \ \m b o x{i s a s o l u t i o n t o \e q r e f{s y s2}}\}.
+	= \{r ∈ [0,1); \e x i s t s t, \ (t,r) \ __C M D_0__}\}.
 	
 	$ //[formula type:display]
 
@@ -1439,27 +1422,23 @@ $𝒞 \supset [0,1)$
 The system
 @sys2 //[ref type:eqref]
 is equivalent to
-	$
-	c a s e s(
-	r <   (4)/(2+t),\
-	r < (8t)/((2+t)^2),\
-	r > (4t)/((4-t)(2+t)).
-	)
+$
+	cases(
 	$ //[formula type:align]
 A positive solution
 $r$
 can be found iff
-	$
+$
 	
-	(4t)/((4-t)(2+t)) < min ( //[c o m m a n d t y p e:l e f t]
-	(4)/(2+t), (8t)/((2+t)^2)  ) //[c o m m a n d t y p e:r i g h t]
+	(4t)/((4-t)(2+t)) < min ( __C O M M E N T_0__
+	(4)/(2+t), (8t)/((2+t)^2)  ) __C O M M E N T_1__
  .
 	
 	$ //[formula type:display]
 
 Note that for
 $t ∈ [0,4)$
-	$
+$
 	
 	(4t)/((4-t)(2+t)) < (4)/(2+t)
 	
@@ -1468,7 +1447,7 @@ $t ∈ [0,4)$
 is equivalent to
 $t <2$
 and
-	$
+$
 	
 	(4t)/((4-t)(2+t)) < (8t)/((2+t)^2)
 	
@@ -1477,16 +1456,16 @@ and
 is equivalent to
 $t <2.$
 Therefore the interval
-	$
+$
 	I(t)  &= (a(t),b(t)), \
 	a(t)  &= (4t)/((4-t)(2+t)) , \
-	b(t)  &= min ( //[c o m m a n d t y p e:l e f t]
-	(4)/(2+t), (8t)/((2+t)^2)  ) //[c o m m a n d t y p e:r i g h t]
+	b(t)  &= min ( __C O M M E N T_0__
+	(4)/(2+t), (8t)/((2+t)^2)  ) __C O M M E N T_0__
 	$ //[formula type:align*]
 is nonempty for any
 $t ∈ (0,2).$
 Note that
-	$
+$
 	
 	(8t)/((2+t)^2) < (4)/(2+t)
 	
@@ -1495,7 +1474,7 @@ Note that
 for
 $t ∈ (0,2).$
 Therefore,
-	$
+$
 	
 	b(t) = (8t)/((2+t)^2).
 	
@@ -1506,11 +1485,11 @@ $a$
 is increasing on
 $[0,4)$
 , because
-	$
+$
 	
 	a(t)
-	= (4)/(4-t)( //[c o m m a n d t y p e:b i g g]
-	1 - (2)/(t+2) ) //[c o m m a n d t y p e:b i g g]
+	= (4)/(4-t)( __C O M M E N T_0__
+	1 - (2)/(t+2) ) __C O M M E N T_1__
 .
 	
 	$ //[formula type:display]
@@ -1520,7 +1499,7 @@ $a(0)=0 $
 and
 $ a(2)=b(2)=1$
 imply that
-	$
+$
 	
 	𝒜 \s u p s e t ℬ \s u p s e t 𝒞 \s u p s e t [0,1).
 	

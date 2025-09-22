@@ -839,7 +839,7 @@ class TeXToTypstTransformer:
                             'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'log', 'ln', 'exp', 
                             'max', 'min', 'sup', 'inf', 'lim', 'limsup', 'liminf', 'gcd', 'lcm',
                             'det', 'rank', 'trace', 'dim', 'ker', 'im', 'span', 'norm', 'abs', 'cases',
-                            'command', 'type', 'if', 'then', 'else', 'and', 'or', 'not', 'quad']
+                            'command', 'type', 'if', 'then', 'else', 'and', 'or', 'not', 'quad', 'FUNC']
         
         # コマンド内のテキストを保護してから変数分離を実行
         # \mathrm{...}, \mathbf{...} などのコマンド内のテキストを一時的に置換
@@ -906,26 +906,16 @@ class TeXToTypstTransformer:
         # 改行文字を含む関数呼び出しパターンも保護
         content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
         
-        # プレースホルダーを保護してから変数分離
-        placeholder_protections = {}
-        protection_counter = 0
+        # 通常の変数分離（プレースホルダーと関数呼び出しパターンを除外）
+        def enhanced_separate_variables(match):
+            text = match.group(0)
+            # __で囲まれたプレースホルダーは分離しない
+            if text.startswith('__') and text.endswith('__'):
+                return text
+            # 通常の変数分離処理
+            return separate_variables(match)
         
-        def protect_placeholder(match):
-            nonlocal protection_counter
-            placeholder = f"__PROTECT_{protection_counter}__"
-            placeholder_protections[placeholder] = match.group(0)
-            protection_counter += 1
-            return placeholder
-        
-        # プレースホルダーを保護
-        content = re.sub(r'__[A-Z_]+_[a-zA-Z\s]+__', protect_placeholder, content)
-        
-        # 通常の変数分離（関数呼び出しパターンを除外）
-        content = re.sub(r'[a-zA-Z]{2,}(?!\()', separate_variables, content)
-        
-        # プレースホルダーを元に戻す
-        for placeholder, original in placeholder_protections.items():
-            content = content.replace(placeholder, original)
+        content = re.sub(r'(?!__[A-Z_]*__)[a-zA-Z]{2,}(?!\()', enhanced_separate_variables, content)
         
         # 関数呼び出しパターンを元に戻す
         content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
