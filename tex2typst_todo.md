@@ -41,8 +41,8 @@
 	- [x] `\tilde{x}` → `$ tilde(x) $`
 	- [x] `\vec{x}` → `$ arrow(x) $`
 - [ ] その他数式コマンド
-	- [ ] `\frac`
-	- [ ] `norm`
+	- [x] `\frac`
+	- [x] `norm`
 	- [ ] `abs`
 - [ ] \left, \right, \bigg
 

@@ -6,7 +6,7 @@ TeXからTypstへの変換器
 from typing import List, Optional
 from ..parser.ast import (
     ASTNode, DocumentNode, SectionNode, MathNode, TheoremNode, 
-    ReferenceNode, TextNode, NodeType
+    ReferenceNode, TextNode, NormNode, NodeType
 )
 from ..utils.meta_comments import MetaCommentGenerator
 from ..utils.labels import LabelManager
@@ -162,6 +162,8 @@ class TeXToTypstTransformer:
             return self._transform_reference(node)
         elif node.node_type == NodeType.TEXT:
             return self._transform_text(node)
+        elif node.node_type == NodeType.NORM:
+            return self._transform_norm(node)
         else:
             return f"// Unknown node type: {node.node_type}"
     
@@ -178,7 +180,18 @@ class TeXToTypstTransformer:
     
     def _transform_math_inline(self, node: MathNode) -> str:
         """インライン数式を変換"""
-        content = self._transform_math_content(node.content)
+        # 子ノードがある場合は子ノードを変換
+        if node.children:
+            content_parts = []
+            for child in node.children:
+                content_parts.append(self._transform_node(child))
+            content = "".join(content_parts)
+        else:
+            content = self._transform_math_content(node.content)
+        
+        # ノルム記号の反復的変換を適用
+        content = self._transform_norm_content_iterative(content)
+        
         return f"${content}$"
     
     def _transform_math_display(self, node: MathNode) -> str:
@@ -258,6 +271,43 @@ class TeXToTypstTransformer:
     def _transform_text(self, node: TextNode) -> str:
         """テキストを変換"""
         return self._transform_text_content(node.content)
+    
+    def _transform_norm(self, node: NormNode) -> str:
+        """ノルム記号を変換"""
+        # 内側の内容を反復的に変換
+        inner_content = self._transform_norm_content_iterative(node.content)
+        if node.subscript:
+            return f"norm({inner_content})_({node.subscript})"
+        else:
+            return f"norm({inner_content})"
+    
+    def _transform_norm_content_iterative(self, content: str) -> str:
+        """ノルム記号の内容を反復的に変換"""
+        import re
+        
+        # 変換が起こらなくなるまで繰り返す
+        prev_content = ""
+        current_content = content
+        
+        while prev_content != current_content:
+            prev_content = current_content
+            
+            # \| ... \|_{...} を norm(...)_(...) に変換
+            pattern = r'\\\|\s*([^|]+?)\s*\\\|\s*_\{\s*(.*?)\s*\}'
+            match = re.search(pattern, current_content, re.DOTALL)
+            
+            if match:
+                inner = match.group(1).strip()
+                subscript = match.group(2).strip()
+                
+                # 内側の内容を再帰的に変換
+                inner_converted = self._transform_norm_content_iterative(inner)
+                
+                # 置換を実行
+                replacement = f'norm({inner_converted})_({subscript})'
+                current_content = current_content[:match.start()] + replacement + current_content[match.end():]
+        
+        return current_content
     
     def _transform_text_content(self, content: str) -> str:
         """テキスト内容を変換"""
@@ -436,6 +486,81 @@ class TeXToTypstTransformer:
         
         # 余分な括弧を修正：∫_((ℋ_+) hat(f)) → ∫_(ℋ_+) hat(f)
         content = re.sub(r'∫_\(\(([^)]+)\)\s+([^)]+)\)', r'∫_(\1) \2', content)
+        # Σ_{𝔄} を Σ_(𝔄) に修正
+        content = re.sub(r'Σ_\{([^}]+)\}', r'Σ_(\1)', content)
+        # \| ... \|_{...} を norm(...)_(...) に変換（括弧バランス考慮）
+        def process_norm_balanced(text):
+            """ノルム記号を括弧バランスを考慮して処理"""
+            # 変換が起こらなくなるまで繰り返す
+            prev_text = ""
+            current_text = text
+            
+            while prev_text != current_text:
+                prev_text = current_text
+                
+                # ノルム記号の開始位置を検索
+                start_pos = current_text.find('\\|')
+                if start_pos == -1:
+                    break
+                
+                # ノルム記号の終了位置を検索（括弧のバランスを考慮）
+                norm_end = find_norm_end(current_text, start_pos)
+                if norm_end == -1:
+                    break
+                
+                # ノルム記号の内容を抽出
+                norm_content = current_text[start_pos:norm_end]
+                
+                # \| ... \|_{...} のパターンを解析
+                norm_match = re.match(r'\\\|\s*(.*?)\s*\\\|\s*_\{\s*(.*?)\s*\}', norm_content, re.DOTALL)
+                if norm_match:
+                    inner = norm_match.group(1).strip()
+                    subscript = norm_match.group(2).strip()
+                    
+                    # 置換を実行
+                    replacement = f'norm({inner})_({subscript})'
+                    current_text = current_text[:start_pos] + replacement + current_text[norm_end:]
+            
+            return current_text
+        
+        def find_norm_end(text, start_pos):
+            """ノルム記号の終了位置を検索（括弧のバランスを考慮）"""
+            pos = start_pos + 2  # \| の後
+            brace_count = 0
+            in_subscript = False
+            
+            while pos < len(text):
+                if text[pos:pos+2] == '\\|' and brace_count == 0:
+                    # ノルム記号の終了を発見
+                    pos += 2
+                    # 下付き文字の開始を検索
+                    while pos < len(text) and text[pos] in ' \t':
+                        pos += 1
+                    if pos < len(text) and text[pos] == '_':
+                        pos += 1
+                        while pos < len(text) and text[pos] in ' \t':
+                            pos += 1
+                        if pos < len(text) and text[pos] == '{':
+                            pos += 1
+                            brace_count = 1
+                            in_subscript = True
+                            while pos < len(text) and brace_count > 0:
+                                if text[pos] == '{':
+                                    brace_count += 1
+                                elif text[pos] == '}':
+                                    brace_count -= 1
+                                pos += 1
+                            return pos
+                    return pos
+                elif text[pos] == '{' and not in_subscript:
+                    brace_count += 1
+                elif text[pos] == '}' and not in_subscript:
+                    brace_count -= 1
+                pos += 1
+            
+            return -1
+        
+        content = process_norm_balanced(content)
         # 残存する下付き文字の {} を () に変換（複雑な内容に対応）
         content = re.sub(r'∫_\{([^{}]*(?:\([^)]*\)[^{}]*)*)\}', r'∫_(\1)', content)
         # 下付き文字の処理を正しく修正

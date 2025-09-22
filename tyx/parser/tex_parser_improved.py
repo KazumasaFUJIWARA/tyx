@@ -7,7 +7,7 @@ import re
 from typing import List, Optional, Tuple
 from .ast import (
     ASTNode, DocumentNode, SectionNode, MathNode, TheoremNode, 
-    ReferenceNode, TextNode, NodeType
+    ReferenceNode, TextNode, NormNode, NodeType
 )
 
 
@@ -30,7 +30,7 @@ class ImprovedTeXParser:
             'Tau': 'Τ', 'Upsilon': 'Υ', 'Phi': 'Φ', 'Chi': 'Χ', 'Psi': 'Ψ', 'Omega': 'Ω',
             'varepsilon': 'ε', 'varphi': 'φ', 'in': '∈', 'sim': '∼',
             'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
-            'not': '¬', 'equiv': '≡', 'quad': ' ',             'mathbb': 'ℝ', 'mathcal': 'ℋ', 'mathfrak': '𝔖', 'cdot': '⋅',
+            'not': '¬', 'equiv': '≡', 'quad': ' ',             'mathbb': 'ℝ', 'mathcal': 'ℋ', 'mathfrak': '𝔖', 'cdot': '⋅', 'ell': 'ℓ',
             'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
             'times': '×', 'langle': '⟨', 'rangle': '⟩'
         }
@@ -60,6 +60,140 @@ class ImprovedTeXParser:
                 document.add_child(node)
         
         return document
+    
+    def _parse_norm_expression(self, content: str) -> List[ASTNode]:
+        """ノルム記号を解析してASTノードに変換（拡張版）"""
+        nodes = []
+        
+        # ノルム記号の変種を正規化
+        content = self._normalize_norm_variants(content)
+        
+        # ノルム記号の開始位置を検索
+        start_pos = content.find('\\|')
+        if start_pos == -1:
+            # ノルム記号がない場合は通常のテキストノード
+            if content.strip():
+                nodes.append(TextNode(node_type=NodeType.TEXT, content=content))
+            return nodes
+        
+        # ノルム記号の前の部分
+        if start_pos > 0:
+            prefix = content[:start_pos]
+            if prefix.strip():
+                nodes.append(TextNode(node_type=NodeType.TEXT, content=prefix))
+        
+        # ノルム記号の終了位置を検索（括弧のバランスを考慮）
+        norm_end = self._find_norm_end(content, start_pos)
+        if norm_end == -1:
+            # ノルム記号が不完全な場合は通常のテキストノード
+            nodes.append(TextNode(node_type=NodeType.TEXT, content=content))
+            return nodes
+        
+        # ノルム記号の内容を抽出
+        norm_content = content[start_pos:norm_end]
+        
+        # スペース系コマンドを無視するパターン
+        _WS = r'(?:\s|\\[,;:!])*'
+        
+        # \| ... \|_{...} のパターンを解析（下付きあり、省略波括弧対応）
+        norm_match_with_sub = re.match(
+            rf'\\\|{_WS}(.*?){_WS}\\\|{_WS}_(?:\{{\s*(.*?)\s*\}}|([A-Za-z0-9]+)){_WS}$',
+            norm_content, re.DOTALL)
+        if norm_match_with_sub:
+            inner_content = norm_match_with_sub.group(1).strip()
+            subscript = (norm_match_with_sub.group(2) or norm_match_with_sub.group(3) or "").strip()
+            
+            # ノルムノードを作成
+            norm_node = NormNode(
+                node_type=NodeType.NORM,
+                content=inner_content,
+                subscript=subscript
+            )
+            nodes.append(norm_node)
+        else:
+            # \| ... \| のパターンを解析（下付きなし）
+            norm_match_without_sub = re.match(
+                rf'\\\|{_WS}(.*?){_WS}\\\|{_WS}$',
+                norm_content, re.DOTALL)
+            if norm_match_without_sub:
+                inner_content = norm_match_without_sub.group(1).strip()
+                
+                # ノルムノードを作成（下付きなし）
+                norm_node = NormNode(
+                    node_type=NodeType.NORM,
+                    content=inner_content,
+                    subscript=""
+                )
+                nodes.append(norm_node)
+            else:
+                # パターンにマッチしない場合は通常のテキストノード
+                nodes.append(TextNode(node_type=NodeType.TEXT, content=norm_content))
+        
+        # 残りの部分を処理
+        remaining = content[norm_end:]
+        if remaining.strip():
+            remaining_nodes = self._parse_norm_expression(remaining)
+            nodes.extend(remaining_nodes)
+        
+        return nodes
+    
+    def _normalize_norm_variants(self, s: str) -> str:
+        """ノルム記号の変種を正規化"""
+        # \left\| ... \right\| → \| ... \|
+        s = re.sub(r'\\left\s*\\\|', r'\\|', s)
+        s = re.sub(r'\\right\s*\\\|', r'\\|', s)
+        # \lVert \rVert / \Vert / \vert → \|（両側揃ったもののみ想定）
+        s = re.sub(r'\\lVert', r'\\|', s)
+        s = re.sub(r'\\rVert', r'\\|', s)
+        s = re.sub(r'\\Vert', r'\\|', s)
+        return s
+    
+    def _find_norm_end(self, content: str, start_pos: int) -> int:
+        """ノルム記号の終了位置を検索（堅牢版）"""
+        pos = start_pos + 2  # \| の後
+        brace_count = 0
+        paren_count = 0
+        in_subscript = False
+        
+        while pos < len(content):
+            if content[pos:pos+2] == '\\|' and brace_count == 0 and paren_count == 0:
+                # ノルム記号の終了を発見
+                pos += 2
+                # 下付き文字の開始を検索
+                while pos < len(content) and content[pos] in ' \t':
+                    pos += 1
+                if pos < len(content) and content[pos] == '_':
+                    pos += 1
+                    while pos < len(content) and content[pos] in ' \t':
+                        pos += 1
+                    if pos < len(content) and content[pos] == '{':
+                        # 波括弧付き下付き
+                        pos += 1
+                        brace_count = 1
+                        in_subscript = True
+                        while pos < len(content) and brace_count > 0:
+                            if content[pos] == '{':
+                                brace_count += 1
+                            elif content[pos] == '}':
+                                brace_count -= 1
+                            pos += 1
+                        return pos
+                    elif pos < len(content) and content[pos].isalnum():
+                        # 省略波括弧下付き（単一文字）
+                        pos += 1
+                        return pos
+                return pos
+            elif content[pos] == '{' and not in_subscript:
+                brace_count += 1
+            elif content[pos] == '}' and not in_subscript:
+                brace_count -= 1
+            elif content[pos] == '(' and not in_subscript:
+                paren_count += 1
+            elif content[pos] == ')' and not in_subscript:
+                paren_count -= 1
+            pos += 1
+        
+        return -1
     
     def _preprocess(self, tex_content: str) -> str:
         """前処理：preambleをコメントアウトして保持"""
@@ -248,6 +382,8 @@ class ImprovedTeXParser:
         
         # \mathcal H 全体を ℋ に変換
         content = re.sub(r'\\mathcal\s+H', 'ℋ', content)
+        # \mathbb H 全体を ℍ に変換
+        content = re.sub(r'\\mathbb\s+H', 'ℍ', content)
         # ℋ H を ℋ に変換（前処理後の修正）
         content = content.replace('ℋ H', 'ℋ')
         # 𝔖 S を 𝔖 に変換（前処理後の修正）
@@ -256,6 +392,10 @@ class ImprovedTeXParser:
         content = content.replace('𝔖 A', '𝔄')
         # ℋ V を 𝒱 に変換（前処理後の修正）
         content = content.replace('ℋ V', '𝒱')
+        # ℝ H を ℍ に変換（前処理後の修正）
+        content = content.replace('ℝ H', 'ℍ')
+        # 𝔖 W を 𝔚 に変換（前処理後の修正）
+        content = content.replace('𝔖 W', '𝔚')
         
         # &= = の重複を修正
         content = re.sub(r'&=\s*=', '&=', content)
@@ -448,32 +588,56 @@ class ImprovedTeXParser:
         """数式を解析"""
         if content.startswith('\\begin{align}'):
             math_content = content[12:-13]  # \begin{align}と\end{align}を除去
-            return MathNode(
+            # ノルム記号を解析して子ノードに変換
+            child_nodes = self._parse_norm_expression(math_content)
+            math_node = MathNode(
                 node_type=NodeType.MATH_ALIGN,
                 content=math_content,
                 math_type="align"
             )
+            # 子ノードを追加
+            for child in child_nodes:
+                math_node.add_child(child)
+            return math_node
         elif content.startswith('\\begin{align*}'):
             math_content = content[13:-14]  # \begin{align*}と\end{align*}を除去
-            return MathNode(
+            # ノルム記号を解析して子ノードに変換
+            child_nodes = self._parse_norm_expression(math_content)
+            math_node = MathNode(
                 node_type=NodeType.MATH_ALIGN_STAR,
                 content=math_content,
                 math_type="align*"
             )
+            # 子ノードを追加
+            for child in child_nodes:
+                math_node.add_child(child)
+            return math_node
         elif content.startswith('\\['):
             math_content = content[2:-2]  # \[と\]を除去
-            return MathNode(
+            # ノルム記号を解析して子ノードに変換
+            child_nodes = self._parse_norm_expression(math_content)
+            math_node = MathNode(
                 node_type=NodeType.MATH_DISPLAY,
                 content=math_content,
                 math_type="display"
             )
+            # 子ノードを追加
+            for child in child_nodes:
+                math_node.add_child(child)
+            return math_node
         elif content.startswith('$'):
             math_content = content[1:-1]  # $を除去
-            return MathNode(
+            # ノルム記号を解析して子ノードに変換
+            child_nodes = self._parse_norm_expression(math_content)
+            math_node = MathNode(
                 node_type=NodeType.MATH_INLINE,
                 content=math_content,
                 math_type="inline"
             )
+            # 子ノードを追加
+            for child in child_nodes:
+                math_node.add_child(child)
+            return math_node
         return MathNode(node_type=NodeType.MATH_INLINE, content=content, math_type="inline")
     
     def _parse_reference(self, content: str) -> ReferenceNode:
