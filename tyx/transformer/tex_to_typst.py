@@ -409,6 +409,24 @@ class TeXToTypstTransformer:
         while '\t ' in content:
             content = re.sub(r'\t ', '\t', content)
         
+        # 変数の空白分離：予約関数名以外の連続するアルファベットを空白で分離
+        reserved_functions = ['sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'arcsin', 'arccos', 'arctan', 
+                            'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'log', 'ln', 'exp', 
+                            'max', 'min', 'sup', 'inf', 'lim', 'limsup', 'liminf', 'gcd', 'lcm',
+                            'det', 'rank', 'trace', 'dim', 'ker', 'im', 'span', 'norm', 'abs']
+        
+        # 連続するアルファベットを空白で分離（予約関数名は除く）
+        def separate_variables(match):
+            text = match.group(0)
+            # 予約関数名かチェック
+            for func in reserved_functions:
+                if text == func:
+                    return text
+            # 予約関数名でない場合は空白で分離
+            return ' '.join(text)
+        
+        content = re.sub(r'[a-zA-Z]{2,}', separate_variables, content)
+        
         return content
     
     def _transform_align_content(self, content: str) -> str:
@@ -742,6 +760,24 @@ class TeXToTypstTransformer:
         # タブ+スペースをタブに正規化（複数回適用）
         while '\t ' in content:
             content = re.sub(r'\t ', '\t', content)
+        
+        # 変数の空白分離：予約関数名以外の連続するアルファベットを空白で分離
+        reserved_functions = ['sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'arcsin', 'arccos', 'arctan', 
+                            'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'log', 'ln', 'exp', 
+                            'max', 'min', 'sup', 'inf', 'lim', 'limsup', 'liminf', 'gcd', 'lcm',
+                            'det', 'rank', 'trace', 'dim', 'ker', 'im', 'span', 'norm', 'abs']
+        
+        # 連続するアルファベットを空白で分離（予約関数名は除く）
+        def separate_variables(match):
+            text = match.group(0)
+            # 予約関数名かチェック
+            for func in reserved_functions:
+                if text == func:
+                    return text
+            # 予約関数名でない場合は空白で分離
+            return ' '.join(text)
+        
+        content = re.sub(r'[a-zA-Z]{2,}', separate_variables, content)
         
         # 最後の処理：^と_の後の(?)や{?}を?にする変換（1文字の場合のみ）
         content = re.sub(r'([\^_])\((.)\)', r'\1\2', content)
