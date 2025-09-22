@@ -106,6 +106,8 @@ class TeXToTypstTransformer:
             'lim': 'lim',
             'max': 'max',
             'min': 'min',
+            'sup': 'sup',
+            'inf': 'inf',
         }
     
     def transform(self, ast: DocumentNode) -> str:
@@ -264,8 +266,26 @@ class TeXToTypstTransformer:
         content = re.sub(r'\\eqref\{([^}]+)\}', r'@\1 //[ref type:eqref]', content)
         content = re.sub(r'\\cite\{([^}]+)\}', r'@\1 //[ref type:cite]', content)
         
+        # 残存するTeXコマンドの処理
+        content = re.sub(r'\\end\{[^}]+\}', '', content)  # \end{Lemma}等を除去
+        content = re.sub(r'\\noindent', '', content)  # \noindentを除去
+        
+        # 重複した内容を除去（同じ内容が連続している場合）
+        lines = content.split('\n')
+        cleaned_lines = []
+        prev_line = None
+        for line in lines:
+            if line.strip() != prev_line:
+                cleaned_lines.append(line)
+                prev_line = line.strip()
+        content = '\n'.join(cleaned_lines)
+        
         # 基本的なエスケープ処理（必要最小限）
         # content = content.replace("\\", "\\\\")  # コメントアウト：preambleで問題になる
+        
+        # タブ+スペースをタブに正規化（複数回適用）
+        while '\t ' in content:
+            content = re.sub(r'\t ', '\t', content)
         
         return content
     
@@ -301,14 +321,16 @@ class TeXToTypstTransformer:
                     parts = line.split('&=')
                     converted_parts = []
                     for part in parts:
-                        converted_part = self._transform_math_content(part.strip())
+                        # タブを保持するため、先頭の空白のみ削除
+                        converted_part = self._transform_math_content(part.lstrip())
                         converted_parts.append(converted_part)
                     converted_line = " &= ".join(converted_parts)
                 else:
                     parts = line.split('&')
                     converted_parts = []
                     for part in parts:
-                        converted_part = self._transform_math_content(part.strip())
+                        # タブを保持するため、先頭の空白のみ削除
+                        converted_part = self._transform_math_content(part.lstrip())
                         converted_parts.append(converted_part)
                     converted_line = " &= ".join(converted_parts)
                 converted_lines.append(converted_line)
@@ -319,7 +341,10 @@ class TeXToTypstTransformer:
         
         # Typstのalign形式に変換（README.mdの仕様に従う）
         if len(converted_lines) == 1:
-            return converted_lines[0]
+            result = converted_lines[0]
+            # タブ+スペースをタブに正規化
+            result = re.sub(r'\t ', '\t', result)
+            return result
         else:
             # 各行にタブを追加し、\\を\に変換
             tabbed_lines = []
@@ -366,6 +391,9 @@ class TeXToTypstTransformer:
             
             result = '\n'.join(new_lines)
             
+            # タブ+スペースをタブに正規化
+            result = re.sub(r'\t ', '\t', result)
+            
             return result
     
     def _transform_math_content(self, content: str) -> str:
@@ -373,6 +401,35 @@ class TeXToTypstTransformer:
         import re
         
         # 分数の変換は前処理で完了済み
+        
+        # 数式演算子の変換（前処理で完了済みのため不要）
+        # 残存するコマンドのみ処理
+        content = re.sub(r'\\int(?![a-zA-Z])', '∫', content)
+        
+        # 残存する\fracと\sqrtを処理
+        content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)
+        content = re.sub(r'\\sqrt\{([^}]+)\}', r'sqrt(\1)', content)
+        
+        # 残存する\biggと\left/rightを処理
+        content = re.sub(r'\\bigg\(', '( //[command type:bigg]\n\t', content)
+        content = re.sub(r'\\bigg\)', ') //[command type:bigg]\n', content)
+        content = re.sub(r'\\bigg\[', '[ //[command type:bigg]\n\t', content)
+        content = re.sub(r'\\bigg\]', '] //[command type:bigg]\n', content)
+        content = re.sub(r'\\bigg\{', '{ //[command type:bigg]\n\t', content)
+        content = re.sub(r'\\bigg\}', '} //[command type:bigg]\n', content)
+        
+        content = re.sub(r'\\left\(', '( //[command type:left]\n\t', content)
+        content = re.sub(r'\\right\)', ') //[command type:right]\n', content)
+        content = re.sub(r'\\left\[', '[ //[command type:left]\n\t', content)
+        content = re.sub(r'\\right\]', '] //[command type:right]\n', content)
+        content = re.sub(r'\\left\{', '{ //[command type:left]\n\t', content)
+        content = re.sub(r'\\right\}', '} //[command type:right]\n', content)
+        
+        # 残存するノルム記号を norm(*) に変換
+        content = re.sub(r'\\bigg\\|([^|]+)\\bigg\\|', r'norm(\1)', content)
+        content = re.sub(r'\\left\\|([^|]+)\\right\\|', r'norm(\1)', content)
+        content = re.sub(r'\\Big\\|([^|]+)\\Big\\|', r'norm(\1)', content)
+        content = re.sub(r'\\|([^|]+)\\|', r'norm(\1)', content)
         
         # 上付き文字の変換
         content = re.sub(r'([a-zA-Z0-9]+)\^\{([^}]+)\}', r'\1^(\2)', content)
@@ -421,7 +478,11 @@ class TeXToTypstTransformer:
         # その他のコマンドの処理（より安全に）
         # content = re.sub(r'\\([a-zA-Z]+)\{([^}]*)\}', r'\\\1(\2)', content)  # preambleで問題になるためコメントアウト
         
-        # 空行の処理
-        content = content.strip()
+        # 空行の処理（改行を保持）
+        # content = content.strip()  # 改行を保持するためコメントアウト
+        
+        # タブ+スペースをタブに正規化（複数回適用）
+        while '\t ' in content:
+            content = re.sub(r'\t ', '\t', content)
         
         return content

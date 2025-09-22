@@ -64,7 +64,7 @@
 // that produce global solutions through a sign-changing mechanism,
 // even though these data do not satisfy
 // the standard assumptions of the comparison argument.
-// \end{abstract}
+// 
 
 // \maketitle
 
@@ -77,21 +77,27 @@ we consider the behavior of solutions
 to the Cauchy problem for the semilinear damped wave equation
 	$
 cases(
-	∂_t^(2) u+∂_t u-Δ u=|u|^p\, &= t>0\, x ∈ ℝ^n\, \
-	u(0)=u_(0)\, ∂_t u(0)=u_(1)\, &= x ∈ ℝ^n .
+	∂_t^(2) u+∂_t u-Δ u=|u|^p\,  &= t>0\, x ∈ ℝ^n\, \
+	u(0)=u_(0)\, ∂_t u(0)=u_(1)\,  &= x ∈ ℝ^n .
 	)
 	$ //[formula type:align]
 The aim of this manuscript
 is to establish the global existence of solutions
 under the initial conditions
 	$
-	 &= (u_(0), u_(1))=(ε_0 φ, ε_1 φ), \
-	 &= 0 < ε_0 < |ε_1| = - ε_1.
+	&= ( //[command type:left]
+	u_(0), u_(1)) //[command type:right]
+	=( //[command type:left]
+	ε_0 φ, ε_1 φ) //[command type:right]
+	, \
+	&= 0 < ε_0 < |ε_1| = - ε_1.
 	$ //[formula type:align]
 with
 $n = 1$
 ,
-$(ε_0, ε_1) ∈ ℝ^2$
+$( //[command type:left]
+	ε_0, ε_1) //[command type:right]
+ ∈ ℝ^2$
 small,
 and
 $φ$
@@ -168,7 +174,7 @@ comparison principle for
 @eq:DW //[ref type:eqref]
 in one and two dimensional case:
 if
-$\overline{u_(0)} ≥ \underline{u_(0)}$
+$\overline{u_(0)} ≥ \underline{u_(0)} $
 and
 $\overline{u_(1)} + \overline{u_(0)}/2 ≥ \underline{u_(1)} + \underline{u_(0)}/2$
 ,
@@ -279,30 +285,16 @@ $(u_0,u_1) ∈ W^{1,∞} ∩ W^{1,1} × L^∞ ∩ L^1$ and $p > 1$ and $n =1$.
 There exists
 $T_1=T_1(u_0,u_1)$
 such that @eq:DW //[ref type:eqref] possesses a unique mild solution
-$u ∈ C([0, T_1) ;W^{1,∞} ∩ W^{1,1})$
+$u ∈ C( //[command type:left]
+	[ //[command type:left]
+	0, T_1) //[command type:right]
+ ;W^{1,∞} ∩ W^{1,1}) //[command type:right]
+$
 satisfying the estimate
-	$ sup _{0 ≤ t ≤ T_1} \|u(t) \|_{ L^{∞}}
+	$ sup_{0 ≤ t ≤ T_1} \|u(t) \|_{ L^{∞}}
 	≲ ( \|u_0 \|_{L^∞} + \|u_1 \|_{L^∞}). $ //[formula type:align]
 ] //[Lemma]
-$(u_(0),u_(1)) ∈ W^(1,∞) ∩ W^(1,1) × L^∞ ∩ L^(1)$
-and
-$p > 1$
-and
-$n =1$
-.
-There exists
-$T_(1)=T_(1)(u_(0),u_(1))$
-such that
-@eq:DW //[ref type:eqref]
-possesses a unique mild solution
-$u ∈ C([0, T_(1)) ;W^(1,∞) ∩ W^(1,1))$
-satisfying the estimate
-	$
-	sup _{0 ≤ t ≤ T_(1)} \|u(t) \|_{ L^(∞)}
-	≲ ( \|u_(0) \|_{L^∞} + \|u_(1) \|_{L^∞}).
-	$ //[formula type:align]
-\end{Lemma}
-\noindent
+
 Here
 $W^(1,q)$
 for
@@ -464,9 +456,11 @@ there exist smooth initial data
 $(u_(0), u_(1))$
 satisfying
 	$
+	
 	∫ u_(0) dx = μ_0,
-	 
+	
 	∫ u_(1) dx = μ_1,
+	
 	$ //[formula type:display]
 
 such that the corresponding solution blows up in finite time.
@@ -482,8 +476,8 @@ $L$
 be a large positive number.
 If
 	$
-	u_(0)(x) &= ψ(x) + (μ_0-1) ψ(x-L), \
-	u_(1)(x) &= μ_1 ψ(x-L),
+	u_(0)(x)  &= ψ(x) + (μ_0-1) ψ(x-L), \
+	u_(1)(x)  &= μ_1 ψ(x-L),
 	$ //[formula type:align*]
 then one can show
 $u(t,x) = u_(b)(t,x) + u_(g)(t,x-L)$
@@ -507,9 +501,11 @@ there exists a time
 $t_(0)$
 such that
 	$
+	
 	∫ u(t_(0)) + ∂_t u(t_(0)) dx
 	= ∫ u_(b)(t_(0)) + ∂_t u_(b)(t_(0)) dx + ∫ u_(g)(t_(0)) + ∂_t u_(g)(t_(0)) dx
 	> 0.
+	
 	$ //[formula type:display]
 
 Therefore, the solution
@@ -625,7 +621,9 @@ Does there exist a constant
 $c_(0) > 0$
 such that, for
 	$
+	
 	0 < ε_0 < c_(0) |ε_1| ≪ 1,
+	
 	$ //[formula type:display]
 
 there exists a smooth, positive function
@@ -645,7 +643,9 @@ and a smooth, positive function
 $φ$
 such that, for
 	$
+	
 	ε_0 < c_(0) |ε_1| ≪ 1,
+	
 	$ //[formula type:display]
 
 the solution
@@ -693,44 +693,6 @@ of
 	$ \label{eq.deft}
 	(ε_0)/(|ε_1|) =  (4t)/((4-t)(2+t)). $ //[formula type:align]
 ] //[Theorem]
-	$
-0 < ε_0 < -ε_1 ≪ 1.
-	$ //[formula type:align]
-Then there exists a sufficiently small number
-$ρ$
-and
-a positive function
-$φ ∈ W^(2,1) ∩ W^(2,∞)$
-satisfying the following pointwise control
-	$
-	\tag{H1}
-	|φ^'(x)| + |φ^{''} (x)| ≤ ρ  φ(x) , \ \ \forall x ≥ 0
-	$ //[formula type:align]
-and the mild solution
-$u ∈ C([0,T_(0)) × ℝ)$
-to
-@eq:DW //[ref type:eqref]
-with initial data
-$(u_(0),u_(1)) = (ε_0 φ, ε_1 φ)$
-exists and satisfies the pointwise estimates
-@eq:aim //[ref type:eqref]
-at time
-	$
-	t(ε_0/|ε_1|)+δ ∈ (0,2),
-	$ //[formula type:display]
-
-where
-$δ>0$
-is sufficiently small
-and
-$t=t(ε_0/|ε_1|)$
-is the unique positive solution 
-of
-	$
-(ε_0)/(|ε_1|) =  (4t)/((4-t)(2+t)).
-	$ //[formula type:align]
-\end{Theorem}
-
 We give some remarks on Theorem
 @theorem:main //[ref type:ref]
 .
@@ -759,15 +721,17 @@ be an integer,
 $a >1$
 , and
 	$
+	
 	φ(x) = (N^(2)+x^(2))^{-a/2}
+	
 	$ //[formula type:display]
 
 then
 $φ ∈ W^(2,1) ∩ W^(2,∞)$
 and
 	$
-	|φ^'(x)| &= ≤ (a)/(N) φ(x),\
-	|φ^{''}(x)| &= ≤ (a(a+1))/(N^(2)) φ(x),
+	|φ^'(x)|  &= ≤ (a)/(N) φ(x),\
+	|φ^{''}(x)|  &= ≤ (a(a+1))/(N^(2)) φ(x),
 	$ //[formula type:align*]
 so
 $ρ = a/N + a(a+1)/N^(2) \to 0$
@@ -792,7 +756,9 @@ and this pointwise control implies the conclusion.
 Finally,
 the function
 	$
+	
 	a(t) = (4t)/((4-t)(2+t))
+	
 	$ //[formula type:display]
 
 is strictly increasing for
@@ -811,12 +777,16 @@ The smallness of
 $δ$
 is determined by
 	$
+	
 	δ < b(t)-a(t),
+	
 	$ //[formula type:display]
 
 where
 	$
+	
 	b(t) = (8t)/((2+t)^2).
+	
 	$ //[formula type:display]
 
 The proof that
@@ -842,11 +812,13 @@ and
 $ε_1$
 are sufficiently small and satisfy
 	$
+	
 	ε_0 < 0, 
 	ε_1 > 0, 
 	ε_0 + ε_1 < 0, 
 	\mbox{and} \
 	ε_1 + ε_0/2 > 0.
+	
 	$ //[formula type:display]
 
 In the next section, we collect some preliminary estimates.
@@ -865,42 +837,17 @@ to the following Cauchy problem:
 	∂_t^2 v + ∂_t v - ∂_x^2 v  = f w+g ∂_x w,\\
 	v(0,x)= ε_0,\\
 	∂_t v(0,x)= ε_1.
-	\end{cases} $ //[formula type:display]
+	$ //[formula type:display]
 Moreover, $v$ enjoys the following estimate:
 	$ \|v(t)\|_{L^∞}
 	& ≤ ε_0 e^{-t} + (ε_0 + ε_1) (1-e^{-t})\\
-	& + C t \bigg(
+	& + C t ( //[command type:bigg]
+	
 		\|f\|_{L^∞(0,t; L^∞)} + \| g \|_{W^{1,∞}}
-	\bigg) \|w\|_{L^∞(0,t; L^∞)}.
+	) //[command type:bigg]
+ \|w\|_{L^∞(0,t; L^∞)}.
 	\label{1dmax} $ //[formula type:align]
 ] //[Lemma]
-$g ∈ W^(1,∞)$
-and
-$f, w ∈ L^∞(0,2;L^∞)$
-.
-Then there exists a unique
-$L^∞$
-valued mild solution
-$v$
-to the following Cauchy problem:
-	$
-	cases( ∂_t^(2) v + ∂_t v - ∂_x^(2) v  = f w+g ∂_x w,\\
-	v(0,x)= ε_0,\\
-	∂_t v(0,x)= ε_1.
-	)
-	$ //[formula type:display]
-
-Moreover,
-$v$
-enjoys the following estimate:
-	$
-	\|v(t)\|_{L^∞}
-	 &= ≤ ε_0 e^(-t) + (ε_0 + ε_1) (1-e^(-t))\
-	 &= + C t \bigg(
-	\|f\|_{L^∞(0,t; L^∞)} + \| g \|_{W^(1,∞)}
-	\bigg) \|w\|_{L^∞(0,t; L^∞)}.
-	$ //[formula type:align]
-\end{Lemma}
 #proof[
 We recall that a standard Duhamel formula implies that
 	$ v(t,x)
@@ -910,89 +857,40 @@ We recall that a standard Duhamel formula implies that
 	+ ∫_0^t S(t-τ) g ∂_x w(τ,x) dτ, $ //[formula type:align*]
 where
 	$ S(t) h(x)
-	= (1)/(2) e^{-t/2} ∫_{-t}^{t} I_0 \bigg( \frac{\sqrt{t^2-y^2}}{2} \bigg) h(x+y) d y. $ //[formula type:display]
-We note that by denoting $ω = \sqrt{t^2-y^2}$ we have
-	$ e^{-t/2} I_0 \bigg( (ω)/(2) \bigg)
-	≤ \langle ω \rangle^{-1/2} e^{(ω - t/2)}
-	≤ C \langle t \rangle^{-1/2} e^{-y^2/8t}. $ //[formula type:display]
+	= (1)/(2) e^{-t/2} ∫_{-t}^{t} I_0 ( //[command type:bigg]
+	(sqrt(t^2-y^2))/(2) ) //[command type:bigg]
+ h(x+y) d y. $ //[formula type:display]
+We note that by denoting $ω = sqrt(t^2-y^2)$ we have
+	$ e^{-t/2} I_0 ( //[command type:bigg]
+	(ω)/(2) ) //[command type:bigg]
+
+	≤ ⟨ ω ⟩^{-1/2} e^{(ω - t/2)}
+	≤ C ⟨ t ⟩^{-1/2} e^{-y^2/8t}. $ //[formula type:display]
 Therfore, a straightforward calculation shows that
 	$ \| S(t-τ) f(τ) w(τ) \|_{L^∞}
 	≤ C \| f(τ) \|_{L^∞} \| w(τ) \|_{L^∞}. $ //[formula type:display]
 We note that by writing $σ = t-τ$ we have
 	$ e^{σ/2} S(σ) g ∂_x w(τ)(x)
-	&= ∫_{-σ}^{σ} I_0 \bigg( \frac{\sqrt{σ^2-y^2}}{2} \bigg) g(x+y) ∂_x w(τ, x+y) dy\\
+	&= ∫_{-σ}^{σ} I_0 ( //[command type:bigg]
+	(sqrt(σ^2-y^2))/(2) ) //[command type:bigg]
+ g(x+y) ∂_x w(τ, x+y) dy\\
 	&= g(x+σ) w(τ,x+σ) - g(x-σ) w(τ,x-σ)\\
-	&- ∫_{-σ}^{σ} I_0 \bigg( \frac{\sqrt{σ^2-y^2}}{2} \bigg) \dot g(x+y) w(τ,x+y) dy\\
-	&+ ∫_{-σ}^{σ} I_1 \bigg( \frac{\sqrt{σ^2-y^2}}{2} \bigg) (y)/(\sqrt{σ^2-y^2)} g(x+y) w(τ,x+y) dy. $ //[formula type:align*]
-We note that by writing $ω = \sqrt{σ^2-y^2}$,
+	&- ∫_{-σ}^{σ} I_0 ( //[command type:bigg]
+	(sqrt(σ^2-y^2))/(2) ) //[command type:bigg]
+ \dot g(x+y) w(τ,x+y) dy\\
+	&+ ∫_{-σ}^{σ} I_1 ( //[command type:bigg]
+	(sqrt(σ^2-y^2))/(2) ) //[command type:bigg]
+ (y)/(sqrt(σ^2-y^2)) g(x+y) w(τ,x+y) dy. $ //[formula type:align*]
+We note that by writing $ω = sqrt(σ^2-y^2)$,
 we have
 	$ \bigg| e^{-σ/2} (y)/(ω) I_1(ω/2) \bigg|
-	≤ C (y)/(\langle ω \rangle^{3/2)} e^{(ω - σ)/2}
-	≤ C \langle σ \rangle^{-1/2} e^{-y^2/8σ}. $ //[formula type:display]
+	≤ C (y)/(⟨ ω ⟩^{3/2)} e^{(ω - σ)/2}
+	≤ C ⟨ σ ⟩^{-1/2} e^{-y^2/8σ}. $ //[formula type:display]
 Thereore, we have
 	$ \| S(t-τ) g(τ) ∂_x w(τ) \|_{L^∞}
 	≤ C \| g \|_{W^{1,∞}} \| w(τ) \|_{L^∞} $ //[formula type:display]
 and this implies @1dmax //[ref type:eqref].
 ] //[proof]
-	$
-	v(t,x)
-	 &= ε_0 e^(-t)
-	+ ( ε_0 + ε_1 )(1-e^(-t))\
-	 &= + ∫_0^(t) S(t-τ) f(τ) w(τ)(x) dτ
-	+ ∫_0^(t) S(t-τ) g ∂_x w(τ,x) dτ,
-	$ //[formula type:align*]
-where
-	$
-	S(t) h(x)
-	= (1)/(2) e^(-t/2) ∫_{-t}^{t} I_(0) \bigg( \frac{\sqrt{t^(2)-y^(2)}}{2} \bigg) h(x+y) d y.
-	$ //[formula type:display]
-
-We note that by denoting
-$ω = \sqrt{t^(2)-y^(2)}$
-we have
-	$
-	e^(-t/2) I_(0) \bigg( (ω)/(2) \bigg)
-	≤ \langle ω \rangle^(-1/2) e^((ω - t/2))
-	≤ C \langle t \rangle^(-1/2) e^(-y^(2)/8t).
-	$ //[formula type:display]
-
-Therfore, a straightforward calculation shows that
-	$
-	\| S(t-τ) f(τ) w(τ) \|_{L^∞}
-	≤ C \| f(τ) \|_{L^∞} \| w(τ) \|_{L^∞}.
-	$ //[formula type:display]
-
-We note that by writing
-$σ = t-τ$
-we have
-	$
-	e^(σ/2) S(σ) g ∂_x w(τ)(x)
-	 &= ∫_{-σ}^{σ} I_(0) \bigg( \frac{\sqrt{σ^2-y^(2)}}{2} \bigg) g(x+y) ∂_x w(τ, x+y) dy\
-	 &= g(x+σ) w(τ,x+σ) - g(x-σ) w(τ,x-σ)\
-	 &= - ∫_{-σ}^{σ} I_(0) \bigg( \frac{\sqrt{σ^2-y^(2)}}{2} \bigg) \dot g(x+y) w(τ,x+y) dy\
-	 &= + ∫_{-σ}^{σ} I_(1) \bigg( \frac{\sqrt{σ^2-y^(2)}}{2} \bigg) (y)/(\sqrt{σ^2-y^(2))} g(x+y) w(τ,x+y) dy.
-	$ //[formula type:align*]
-We note that by writing
-$ω = \sqrt{σ^2-y^(2)}$
-,
-we have
-	$
-	\bigg| e^(-σ/2) (y)/(ω) I_(1)(ω/2) \bigg|
-	≤ C (y)/(\langle ω \rangle^(3/2)) e^((ω - σ)/2)
-	≤ C \langle σ \rangle^(-1/2) e^(-y^(2)/8σ).
-	$ //[formula type:display]
-
-Thereore, we have
-	$
-	\| S(t-τ) g(τ) ∂_x w(τ) \|_{L^∞}
-	≤ C \| g \|_{W^(1,∞)} \| w(τ) \|_{L^∞}
-	$ //[formula type:display]
-
-and this implies
-@1dmax //[ref type:eqref]
-.
-\end{proof}
-
 By using Lemma
 @lemma:estimate_of_transformed_wave //[ref type:ref]
 ,
@@ -1020,81 +918,35 @@ satsify
 	≤ C ( ε_1^{p-1} + ρ ). $ //[formula type:display]
 Then $u$ enjoys the following estimate for $t ∈ (0,T_0)$:
 	$ \label{eq2mm}
-	\| (u(t))/(φ) \|_{ L^{∞}}
+	\left\| (u(t))/(φ) \right\|_{ L^{∞}}
 	≤ \frac{|ε_0 e^{-t} + (ε_1 + ε_0)(1-e^{-t})|}{1-C ( |ε_1|^{p-1} + ρ ) t}. $ //[formula type:align]
 ] //[Lemma]
-$ε_0$
-and
-$ε_1$
-are real constans sufficiently close to
-$0$
-satisfying
-$0 < ε_0 < - ε_1$
-.
-Let
-$t ∈ (0,T_(0))$
-and
-$ρ >0$
-satisfy
-	$
-C ( |ε_1|^{p-1} + ρ ) t < 1
-	$ //[formula type:align]
-with a positive constant
-$C$
-.
-Assume that
-$φ ∈ W^(2,1) ∩ W^(2,∞)$
-satisfy
-@eq:shape_assumption //[ref type:eqref]
-.
-If the mild solution
-$u$
-of Lemma
-@lemma:local_existence //[ref type:ref]
-with initial data
-$(u_(0),u_(1)) = (ε_0,ε_1)$
-satsify
-	$
-	\| |u|^{p-2}u\|_{L^∞(0,T_(0); L^∞)}
-	+ \bigg\|(\ddot φ)/(φ) \bigg\|_{L^∞}
-	+ \bigg\|(\dot φ^2)/(φ^2) \bigg\|_{L^∞}
-	≤ C ( ε_1^(p-1) + ρ ).
-	$ //[formula type:display]
-
-Then
-$u$
-enjoys the following estimate for
-$t ∈ (0,T_(0))$
-:
-	$
-	\| (u(t))/(φ) \|_{ L^(∞)}
-	≤ \frac{|ε_0 e^(-t) + (ε_1 + ε_0)(1-e^(-t))|}{1-C ( |ε_1|^{p-1} + ρ ) t}.
-	$ //[formula type:align]
-\end{Lemma}
 #proof[
 We make the substitution
 	$ v(t,x) = (u(t,x))/(φ(x)), $ //[formula type:display]
 so we have
 	$ ∂_t^2 v + ∂_t v - ∂_x^2 v
-	 = (|u|^p)/(φ)
-	 + 2 (\dot φ ∂_x u)/(φ^2)
-	 + (\ddot φ)/(φ^2) u
-	 - 2 (\dot φ^2)/(φ^3) u $ //[formula type:align*]
+	= (|u|^p)/(φ)
+	+ 2 (\dot φ ∂_x u)/(φ^2)
+	+ (\ddot φ)/(φ^2) u
+	- 2 (\dot φ^2)/(φ^3) u $ //[formula type:align*]
 Since
 	$ ∂_x u = v \dot φ  + φ ∂_x v $ //[formula type:display]
 we arrive at
 	$ ∂_t^2 v + ∂_t v - ∂_x^2 v \\
-	= \bigg( |u|^{p-2} u + (\ddot φ)/(φ) \bigg) v
+	= ( //[command type:bigg]
+	|u|^{p-2} u + (\ddot φ)/(φ) ) //[command type:bigg]
+ v
 	+ 2 (\dot φ)/(φ) ∂_x v $ //[formula type:display]
 Therefore, the Cauchy problem can be rewritten as
 	$ \begin{cases}
 	∂_t^2 v + ∂_t v - ∂_x^2 v  = f v+g∂_xv, \\
 	v(0,x)=ε_0 , & x ∈ ℝ, \\
 	∂_t v(0,x) =ε_1 , & x ∈ ℝ.
-	\end{cases} $ //[formula type:align*]
+	$ //[formula type:align*]
 with 
 	$ f = |u|^{p-2}u  + (\ddot φ)/(φ),
-	 
+	
 	g =  2  (\dot φ)/(φ). $ //[formula type:display]
 Noting
 	$ \dot g = 2 (\ddot φ)/(φ) - 2 (\dot φ^2)/(φ^2) $ //[formula type:display]	
@@ -1105,67 +957,6 @@ $ \|f\|_{L^∞(0,T_0; L^∞)}
 and $\|g\|_{W^{1,∞}} ≤ C_1 ρ$
 with some positive constants $C_1$.
 ] //[proof]
-	$
-	v(t,x) = (u(t,x))/(φ(x)),
-	$ //[formula type:display]
-
-so we have
-	$
-	∂_t^(2) v + ∂_t v - ∂_x^(2) v
-	= (|u|^p)/(φ)
-	+ 2 (\dot φ ∂_x u)/(φ^2)
-	+ (\ddot φ)/(φ^2) u
-	- 2 (\dot φ^2)/(φ^3) u
-	$ //[formula type:align*]
-Since
-	$
-	∂_x u = v \dot φ  + φ ∂_x v
-	$ //[formula type:display]
-
-we arrive at
-	$
-	∂_t^(2) v + ∂_t v - ∂_x^(2) v \\
-	= \bigg( |u|^{p-2} u + (\ddot φ)/(φ) \bigg) v
-	+ 2 (\dot φ)/(φ) ∂_x v
-	$ //[formula type:display]
-
-Therefore, the Cauchy problem can be rewritten as
-	$
-cases(
-	∂_t^(2) v + ∂_t v - ∂_x^(2) v  = f v+g∂_xv\, \
-	v(0\,x)=ε_0 \, &= x ∈ ℝ\, \
-	∂_t v(0\,x) =ε_1 \, &= x ∈ ℝ.
-	)
-	$ //[formula type:align*]
-with
-	$
-	f = |u|^{p-2}u  + (\ddot φ)/(φ),
-	 
-	g =  2  (\dot φ)/(φ).
-	$ //[formula type:display]
-
-Noting
-	$
-	\dot g = 2 (\ddot φ)/(φ) - 2 (\dot φ^2)/(φ^2)
-	$ //[formula type:display]
-
-and applying Lemma
-@lemma:local_existence //[ref type:ref]
-and the assumption
-@eq:shape_assumption //[ref type:eqref]
-,
-	$
-	\|f\|_{L^∞(0,T_(0); L^∞)}
-≤ C_(1) ( |ε_1|^{p-1} + ρ )
-	$ //[formula type:display]
-
-and
-$\|g\|_{W^(1,∞)} ≤ C_(1) ρ$
-with some positive constants
-$C_(1)$
-.
-\end{proof}
-
 Next estimate plays an important role
 to estimate the solution on the basis of initial data.
 #lemma(title: "Hermite–Hadamard", id: "l3")[
@@ -1181,27 +972,6 @@ $ \label{eq.HH1mm}
       & ( φ(α) + φ(β))/(2) ≥  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ -(ρ)/(2) ∫_{α}^β φ(σ) d σ $ //[formula type:align]
 for $0  ≤  α < β < ∞.$
 ] //[Lemma]
-$φ$
-be
-$C^(1)(ℝ; [0,∞))$
-,
-such that there is a positive constant
-$ρ$
-so that
-	$
- &= |\dot φ(x)| ≤ ρ  φ(x) , \ \ \forall x ≥ 0
-	$ //[formula type:align]
-Then we have
-	$
- &= ( φ(α) + φ(β))/(2) ≤  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ + (ρ)/(2) ∫_{α}^β φ(σ) d
-	$ //[formula type:align]
-and
-	$
- &= ( φ(α) + φ(β))/(2) ≥  (1)/(β - α) ∫_{α}^{β} φ(σ) d σ -(ρ)/(2) ∫_{α}^β φ(σ) d
-	$ //[formula type:align]
-for
-$0  ≤  α < β < ∞.$
-\end{Lemma}
 #proof[
 We use the following identity, obtained in @DA98 //[ref type:cite]
 (see Lemma 2.1 in @DA98 //[ref type:cite])
@@ -1225,55 +995,6 @@ In fact, when $α < 0 < β$ we define the interval $J\subset [0,∞)$ with ends 
 	+ (ρ)/(2) ∫_{J } φ(σ) d σ. $ //[formula type:align]
 This completes the proof.
 ] //[proof]
-@DA98 //[ref type:cite]
-(see Lemma 2.1 in
-@DA98 //[ref type:cite]
-)
-	$
-	( φ(α) + φ(β))/(2) - (1)/(β - α) ∫_{α}^{β} φ(σ) d σ
-	= (β -  α)/(2) ∫_0^(1) (1-2t) \dot φ(t α + (1-t)β) dt.
-	$ //[formula type:display]
-
-Then we can write
-	$
-	( φ(α) + φ(β))/(2) - (1)/(β - α) ∫_{α}^{β} φ(σ) d σ
-	 &= = (β - α)/(2) ∫_0^(1) (1-2t) \dot φ(t α + (1-t)β) dt \
-	 &= ≤ (β - α)/(2) ∫_{0}^1  | \dot φ(t α + (1-t)β)| dt \
-	 &= = (1)/(2)∫_{α}^{β} |\dot φ(σ)| d σ.
-	$ //[formula type:align*]
-Assuming
-@eq.bb1 //[ref type:eqref]
-, we get
-@eq.HH1 //[ref type:eqref]
-.
-
-It is easy to extend this estimate also to the cases
-$α < 0 < β$
-and
-$α < β <0$
-using the additional assumption that
-$φ$
-is an even function.
-In fact, when
-$α < 0 < β$
-we define the interval
-$J\subset [0,∞)$
-with ends
-$-α$
-and
-$β$
-and then we can apply
-@eq.HH1 //[ref type:eqref]
-so we have
-	$
-	( φ(α) + φ(β))/(2)
-	= ( φ(-α) + φ(β))/(2)
-	≤  (1)/(|J|) ∫_{J} φ(σ) d σ
-	+ (ρ)/(2) ∫_{J } φ(σ) d σ.
-	$ //[formula type:align]
-This completes the proof.
-\end{proof}
-
 We finalize this section
 by collecting some estimates of calculs to control nonlinaerity.
 Consider the function
@@ -1283,8 +1004,10 @@ Consider the function
 	$ //[formula type:align]
 where
 	$
+	
 	G(τ,r,ρ,ε_1)
 	= \frac{ | r + e^(-τ) - 1 |}{1-C ( |ε_1|^{p-1} + ρ ) τ}
+	
 	$ //[formula type:display]
 
 under the assumption
@@ -1305,29 +1028,13 @@ We have the relation
 	G(t,r,ρ, ε_1) & \text{if }   r < r_1(t), \\
 	r & \text{if }   r ∈ [r_1(t), r_2(t)], \\
 	G(min(t,- log(1-r)),r,ρ, ε_1) & \text{if }   r > r_2(t),
-	\end{cases} $ //[formula type:display]
+	$ //[formula type:display]
 where
 	$ r_1(t)
 	&= \frac{1+C | ε_1|^{p-1} t + C ρ t}{2 + t},\\
 	r_2(t)
 	&= \frac{1-e^{-τ}}{C ( |ε_1|^{p-1} + ρ ) τ}. $ //[formula type:align*]
 ] //[Lemma]
-	$
-	C(t,r,ρ, ε_1)
-	= cases( G(t\,r\,ρ\, ε_1) & \text{if }   r < r_(1)(t), \\
-	r & \text{if }   r ∈ [r_(1)(t), r_(2)(t)], \\
-	G(min(t,- log(1-r)),r,ρ, ε_1) & \text{if }   r > r_(2)(t),
-	)
-	$ //[formula type:display]
-
-where
-	$
-	r_(1)(t)
-	 &= \frac{1+C | ε_1|^{p-1} t + C ρ t}{2 + t},\
-	r_(2)(t)
-	 &= \frac{1-e^(-τ)}{C ( |ε_1|^{p-1} + ρ ) τ}.
-	$ //[formula type:align*]
-\end{Lemma}
 #proof[
 We split the proof into three cases,
 $r < r_1(t)$, $r ∈ [r_1(t), r_2(t)]$ and $r > r_2(t)$.
@@ -1368,97 +1075,6 @@ Moreover, we also compute
 This implise that
 	$ C(t,r,ρ, ε_1) = G(min(t,- log(1-r)),r,ρ, ε_1). $ //[formula type:display]
 ] //[proof]
-$r < r_(1)(t)$
-,
-$r ∈ [r_(1)(t), r_(2)(t)]$
-and
-$r > r_(2)(t)$
-.
-
-We note that
-$r_(1)$
-is a increasing function and
-$r_(2)$
-is a decreasing function.
-The monotonicity of
-$r_(2)$
-follows from the fact that
-	$
-	\frac{1-e^(-τ)}{τ}
-	= ∫_0^(1) e^(-τ σ) d σ.
-	$ //[formula type:display]
-
-Therfore,
-$r ∈ [r_(1)(t), r_(2)(t)]$
-implies that
-	$
-	r ∈ \bigcap_(τ ∈ [0,t]) [r_(1)(τ), r_(2)(τ)].
-	$ //[formula type:display]
-
-Since
-$C δ t < 1$
-, we note that
-$1-e^(-τ) ∈ [r_(1)(τ), r_(2)(τ)]$
-for any
-$τ ∈ [0,t]$
-.
-In the case where
-$r ∈ [r_(1)(τ), 1-e^(-τ)]$
-, we have
-	$
-	 &= G(τ,r,ρ, ε_1) ≤ r\
-	\Leftrightarrow &= \frac{ 1 - e^(-τ) - r}{1-C ( |ε_1|^{p-1} + ρ ) τ} ≤ r\
-	\Leftrightarrow &= 1 - e^(-τ) - r ≤ r (1-C ( |ε_1|^{p-1} + ρ ) τ)\
-	\Leftrightarrow &= r ≥ \frac{1-e^(-τ)}{2-C ( |ε_1|^{p-1} + ρ ) τ} = r_(1)(τ).
-	$ //[formula type:align*]
-Similarly, in the case where
-$r ∈ [1-e^(-τ), r_(2)(τ)]$
-, we have
-	$
-	 &= G(τ,r,ρ, ε_1) ≤ r\
-	\Leftrightarrow &= \frac{ r - 1 + e^(-τ)}{1-C ( |ε_1|^{p-1} + ρ ) τ} ≤ r\
-	\Leftrightarrow &= r - 1 + e^(-τ) ≤ r (1-C ( |ε_1|^{p-1} + ρ ) τ)\
-	\Leftrightarrow &= r ≤ \frac{1-e^(-τ)}{C ( |ε_1|^{p-1} + ρ ) τ} = r_(2)(τ).
-	$ //[formula type:align*]
-These computations imples that
-$C(t,r,ρ, ε_1) = r$
-for
-$r ∈ [r_(1)(t), r_(2)(t)]$
-.
-
-In the case where
-$r < r_(1)(t)$
-,
-$C(t,r,ρ, ε_1) = G(t,r,ρ, ε_1)$
-because
-$C(\cdot,r,ρ, ε_1)$
-is increasing.
-
-In the case where
-$r > r_(2)(t)$
-,
-we compute
-	$
-	∂_τ G(τ,r,ρ, ε_1)
-	 &= - \frac{ e^(-τ)}{1-C ( |ε_1|^{p-1} + ρ ) τ}
-	+ \frac{ C ( |ε_1|^{p-1} + ρ ) (r + e^(-τ) - 1) }{(1-C ( |ε_1|^{p-1} + ρ ) τ)^2}\
-	 &= \frac{ C ( |ε_1|^{p-1} + ρ ) (r + ( τ + 1 ) e^(-τ) - 1) - e^(-τ) }{(1-C ( |ε_1|^{p-1} + ρ ) τ)^2}\
-	 &= e^(-τ) \frac{ C ( |ε_1|^{p-1} + ρ ) ( τ + 1) - 1 - (1-r) C ( |ε_1|^{p-1} + ρ ) e^τ }{(1-C ( |ε_1|^{p-1} + ρ ) τ)^2}.
-	$ //[formula type:align*]
-So
-$∂_τ G(0,r,ρ, ε_1) < 0$
-.
-Moreover, we also compute
-	$
-	 &= ∂_τ \{ C ( |ε_1|^{p-1} + ρ ) ( τ + 1) - 1 - (1-r) C ( |ε_1|^{p-1} + ρ ) e^τ \}\
-	 &= C ( |ε_1|^{p-1} + ρ ) (1 - (1-r) e^τ).
-	$ //[formula type:align*]
-This implise that
-	$
-	C(t,r,ρ, ε_1) = G(min(t,- log(1-r)),r,ρ, ε_1).
-	$ //[formula type:display]
-
-\end{proof}
 #corollary(id: "c62")[
 We have the relation
 	$ C(t,r,0,1/4) =
@@ -1467,39 +1083,22 @@ We have the relation
 	& \mbox{if}   r < r_t,\\
 	r
 	& \mbox{if}   r ≥ r_t,
-	\end{cases} $ //[formula type:align]
+	$ //[formula type:align]
 where
 	$ r_t
 	= (4t)/(8+2t-t^2)
 	= (4t)/((4-t)(2+t)). $ //[formula type:display]
 ] //[Corollary]
-	$
-	C(t,r,0,1/4) =
-cases(
-	(t(1-r/2)-r )/((1-t^(2)/4)) &= \mbox{if}   r < r_(t)\,\
-	r &= \mbox{if}   r ≥ r_(t)\,
-	)
-	$ //[formula type:align]
-where
-	$
-	r_(t)
-	= (4t)/(8+2t-t^(2))
-	= (4t)/((4-t)(2+t)).
-	$ //[formula type:display]
-
-\end{Corollary}
-
 // %[[[
 # Comparison principle
 # Proof of Theorem \ref{theorem:main
-@theorem:main //[ref type:ref]
 }
 // %[[[ Proposition Comparison Principle
 $w = e^(t/2) u$
 is a solution to the Cauchy problem
 	$
 cases(
-	∂_t^(2) w - Δ w = ((1)/(4) + u|u|^{p-2} ) w\, &= t ∈ (0\,T_(0))\, \
+	∂_t^(2) w - Δ w = ( //[command type:left] (1)/(4) + u|u|^{p-2} ) //[command type:right] w\, &= t ∈ (0\,T_(0))\, \
 	x ∈ ℝ\,\
 	w(0)=ε_0 φ(x)\, &= x ∈ ℝ\,\
 	∂_t w(0) =ε_1φ(x)+(ε_0)/(2)φ(x)\, &= x ∈ ℝ.
@@ -1507,22 +1106,40 @@ cases(
 	$ //[formula type:align]
 The D'Alembert formula implies
 	$
-	 &= w(t) = ε_0 (d)/(dt) W(t) (φ)(x) + (ε_1 + (ε_0)/(2) ) W(t)(φ)(x)\
-	 &= + ∫_0^(t) W(t-τ)( ((1)/(4)+u(τ)|u(τ)|^{p-2}) w(τ) ) (x) dτ
+	&= w(t) = ε_0 (d)/(dt) W(t) (φ)(x) + ( //[command type:left]
+	ε_1 + (ε_0)/(2) ) //[command type:right]
+	W(t)(φ)(x)\
+	&= + ∫_0^(t) W(t-τ)( //[command type:left]
+	( //[command type:left]
+	(1)/(4)+u(τ)|u(τ)|^{p-2}) //[command type:right]
+	w(τ) ) //[command type:right]
+	(x) dτ
 	$ //[formula type:align*]
 where
 	$
+	
 	W(t)(f)(x) = (1)/(2) ∫_{x-t}^{x+t} f(τ) dτ,
+	
 	$ //[formula type:display]
 
 so
 	$
-	 &= ∂_t w(t,x) =  ε_0 ((d)/(dt))^2 W(t) (φ)(x) + (ε_1 + (ε_0)/(2) ) (d)/(dt) W(t)(φ)(x)\
-	 &= + ∫_0^(t) (d)/(dt) W(t-τ)( ((1)/(4)+u(τ)|u(τ)|^{p-2}) w(τ) ) (x) dτ
+	&= ∂_t w(t,x) =  ε_0 ( //[command type:left]
+	(d)/(dt)) //[command type:right]
+	^2 W(t) (φ)(x) + ( //[command type:left]
+	ε_1 + (ε_0)/(2) ) //[command type:right]
+	(d)/(dt) W(t)(φ)(x)\
+	&= + ∫_0^(t) (d)/(dt) W(t-τ)( //[command type:left]
+	( //[command type:left]
+	(1)/(4)+u(τ)|u(τ)|^{p-2}) //[command type:right]
+	w(τ) ) //[command type:right]
+	(x) dτ
 	$ //[formula type:align*]
 Set
 	$
+	
 	r = ε_0/|ε_1|
+	
 	$ //[formula type:display]
 
 and
@@ -1535,7 +1152,7 @@ The idea of the proof is to define the set
 \begin{equation}\label{eq.dA}
 \mathcal{A}
 = \{r ∈ [0,1); \exists (t,ε_0, ε_1, φ), \  w(t,x) ≤ 0,\  ∂_t w(t,x) ≤ 0 \ \mbox{for a.e.} \ \  x ∈ ℝ \}
-\end{equation}
+
 and show that
 $\mathcal{A}$
 covers the whole interval
@@ -1544,9 +1161,7 @@ i.e.
 \begin{equation}\label{Asup}
     \begin{aligned}
         \mathcal{A} \supset [0,1).
-    \end{aligned}
-\end{equation}
-
+    
 We start with a sufficient condition that guaranties
 $∂_t w(t,x) ≤ 0$
 for almost every
@@ -1560,68 +1175,66 @@ and $c_0$ be a number close to $1/4.$
 If $C(t,r,ρ,c_0)$ defined by @eq.dC //[ref type:eqref] satisfies the estimate
 	\begin{equation}\label{eq.a1}
 	(c_0)/(2) C(t,r,ρ,c_0)
-	≤ \bigg(1 - r \bigg( ρ + (1)/(2) \bigg) \bigg) \bigg( (1)/(2t) - \frac ρ 2 \bigg)
-	\end{equation}
+	≤ ( //[command type:bigg]
+	1 - r ( //[command type:bigg]
+	ρ + (1)/(2) ) //[command type:bigg]
+ ) //[command type:bigg]
+ ( //[command type:bigg]
+	(1)/(2t) - \frac ρ 2 ) //[command type:bigg]
+
 then $∂_t w(t,x) ≤ 0$ for a.e. $x ∈ ℝ.$
 ] //[Lemma]
-@lemma:estaimte_of_u_devided //[ref type:ref]
-be satisfied.
-Let
-$ρ$
-be the parameter from assumption
-@eq:shape_assumption //[ref type:eqref]
-and
-$c_(0)$
-be a number close to
-$1/4.$
-If
-$C(t,r,ρ,c_(0))$
-defined by
-@eq.dC //[ref type:eqref]
-satisfies the estimate
-	\begin{equation}\label{eq.a1}
-	(c_0)/(2) C(t,r,ρ,c_0)
-	≤ \bigg(1 - r \bigg( ρ + (1)/(2) \bigg) \bigg) \bigg( (1)/(2t) - \frac ρ 2 \bigg)
-	\end{equation}
-then
-$∂_t w(t,x) ≤ 0$
-for a.e.
-$x ∈ ℝ.$
-\end{Lemma}
 #proof[
 The D'Alembert formula gives
 \begin{equation}
     \begin{aligned}
    &∂_t w(t,x)\\
 	&= ε_0 (φ^'(x+t)- φ^'(x-t))/(2) 
-	+ (ε_1 + (ε_0)/(2) ) (φ(x+t) + φ(x-t))/(2) \\
-    & + ∫_0^t (d)/(dt) W(t-τ)( ((1)/(4)+u(τ)|u(τ)|^{p-2}) w(τ) ) (x) dτ.
-    \end{aligned}
-\end{equation}
-
- 
+	+ ( //[command type:left]
+	ε_1 + (ε_0)/(2) ) //[command type:right]
+ (φ(x+t) + φ(x-t))/(2) \\
+    & + ∫_0^t (d)/(dt) W(t-τ)( //[command type:left]
+	( //[command type:left]
+	(1)/(4)+u(τ)|u(τ)|^{p-2}) //[command type:right]
+ w(τ) ) //[command type:right]
+ (x) dτ.
+    
 Then using @eq2mm //[ref type:eqref] in  Lemma @lemma:estimate_of_transformed_wave //[ref type:ref],
 we obtain 
-	$ &∫_0^t (d)/(dt) W(t-τ)( ((1)/(4)+u(τ)|u(τ)|^{p-2}) w(τ) ) (x) dτ \\
+	$ &∫_0^t (d)/(dt) W(t-τ)( //[command type:left]
+	( //[command type:left]
+	(1)/(4)+u(τ)|u(τ)|^{p-2}) //[command type:right]
+ w(τ) ) //[command type:right]
+ (x) dτ \\
 	& ≤ c_0 ∫_0^t (d)/(dt) W(t-τ) ( w(τ) ) (x) dτ \\
-	&=  (c_0)/(2)∫_0^t (  w(τ, x+t-τ) +  w(τ, x-t+τ) ) dτ \\
+	&=  (c_0)/(2)∫_0^t ( //[command type:left]
+	w(τ, x+t-τ) +  w(τ, x-t+τ) ) //[command type:right]
+ dτ \\
 	& ≤ (c_0)/(2)max_{0≤ τ ≤ t} ( |ε_0 + τ(ε_1 + ε_0/2)|)/((1-c_0 τ^2-2c_0ρ τ^2 - 3 ρ τ))
-	∫_0^t (  φ(x+t-τ) +  φ( x-t+τ) ) dτ\\
+	∫_0^t ( //[command type:left]
+	φ(x+t-τ) +  φ( x-t+τ) ) //[command type:right]
+ dτ\\
 	& ≤ (c_0)/(2)| ε_1 | C(t,r) ∫_{-t}^t  φ(x+σ) dσ. $ //[formula type:align*]
 
 Using  @eq:shape_assumption //[ref type:eqref], we obtain
 	$ &∂_t w(t,x)\\
 	&≤ ε_0 (φ^'(x+t)- φ^'(x-t))/(2) 
-	+ (ε_1 + (ε_0)/(2) ) (φ(x+t) + φ(x-t))/(2) \\
+	+ ( //[command type:left]
+	ε_1 + (ε_0)/(2) ) //[command type:right]
+ (φ(x+t) + φ(x-t))/(2) \\
 	& + (c_0)/(2) |ε_1| C(t,r) ∫_{-t}^t  φ(x+σ) dτ\\
-	& ≤ (ε_0 ρ + ε_1 + (ε_0)/(2))(φ(x+t) + φ(x-t))/(2)
+	& ≤ ( //[command type:left]
+	ε_0 ρ + ε_1 + (ε_0)/(2)) //[command type:right]
+(φ(x+t) + φ(x-t))/(2)
 	+ (c_0)/(2)| ε_1 | C(t,r)
 	∫_{-t}^t  φ(x+σ) dσ. $ //[formula type:align*]
 
 Lemma @l3 //[ref type:ref] implies
 	$ \label{eq.HH1m1}
 	(φ(x+t) + φ(x-t))/(2)
-	≥  ( (1)/(2t) - \frac ρ 2 )
+	≥  ( //[command type:left]
+	(1)/(2t) - \frac ρ 2 ) //[command type:right]
+
 	∫_{-t}^t  φ(x+σ) dτ. $ //[formula type:align]
 
 Then we estimate
@@ -1630,66 +1243,18 @@ Then we estimate
 	&≤ |ε_1| A(t,r) ∫_{-t}^t  φ(x+σ) dτ, $ //[formula type:align]
 where 
 	$ A(t,r) =
-	- \bigg(1 - r \bigg( ρ + (1)/(2) \bigg) \bigg) \bigg( (1)/(2t) - \frac ρ 2 \bigg)
+	- ( //[command type:bigg]
+	1 - r ( //[command type:bigg]
+	ρ + (1)/(2) ) //[command type:bigg]
+ ) //[command type:bigg]
+ ( //[command type:bigg]
+	(1)/(2t) - \frac ρ 2 ) //[command type:bigg]
+
 	+ (c_0)/(2) C(t,r, ρ,c_0). $ //[formula type:display]
 Therefore, the condition @eq.a1 //[ref type:eqref] implies $A(t,r) ≤ 0$
 and hence $∂_t w(t,x) ≤ 0$ a.e.
 This completes the proof.
 ] //[proof]
-@eq2mm //[ref type:eqref]
-in  Lemma
-@lemma:estimate_of_transformed_wave //[ref type:ref]
-,
-we obtain
-	$
-	 &= ∫_0^(t) (d)/(dt) W(t-τ)( ((1)/(4)+u(τ)|u(τ)|^{p-2}) w(τ) ) (x) dτ \
-	 &= ≤ c_(0) ∫_0^(t) (d)/(dt) W(t-τ) ( w(τ) ) (x) dτ \
-	 &= (c_(0))/(2)∫_0^(t) (  w(τ, x+t-τ) +  w(τ, x-t+τ) ) dτ \
-	 &= ≤ (c_(0))/(2)max_(0≤ τ ≤ t) ( |ε_0 + τ(ε_1 + ε_0/2)|)/((1-c_(0) τ^2-2c_(0)ρ τ^2 - 3 ρ τ))
-	∫_0^(t) (  φ(x+t-τ) +  φ( x-t+τ) ) dτ\
-	 &= ≤ (c_(0))/(2)| ε_1 | C(t,r) ∫_{-t}^t  φ(x+σ) dσ.
-	$ //[formula type:align*]
-Using
-@eq:shape_assumption //[ref type:eqref]
-, we obtain
-	$
-	 &= ∂_t w(t,x)\
-	 &= ≤ ε_0 (φ^'(x+t)- φ^'(x-t))/(2)
-	+ (ε_1 + (ε_0)/(2) ) (φ(x+t) + φ(x-t))/(2) \
-	 &= + (c_(0))/(2) |ε_1| C(t,r) ∫_{-t}^t  φ(x+σ) dτ\
-	 &= ≤ (ε_0 ρ + ε_1 + (ε_0)/(2))(φ(x+t) + φ(x-t))/(2)
-	+ (c_(0))/(2)| ε_1 | C(t,r)
-	∫_{-t}^t  φ(x+σ) dσ.
-	$ //[formula type:align*]
-Lemma
-@l3 //[ref type:ref]
-implies
-	$
-	(φ(x+t) + φ(x-t))/(2)
-	≥  ( (1)/(2t) - \frac ρ 2 )
-	∫_{-t}^t  φ(x+σ) dτ.
-	$ //[formula type:align]
-Then we estimate
-	$
-	∂_t w(t,x)
-	 &= ≤ |ε_1| A(t,r) ∫_{-t}^t  φ(x+σ) dτ,
-	$ //[formula type:align]
-where
-	$
-	A(t,r) =
-	- \bigg(1 - r \bigg( ρ + (1)/(2) \bigg) \bigg) \bigg( (1)/(2t) - \frac ρ 2 \bigg)
-	+ (c_(0))/(2) C(t,r, ρ,c_(0)).
-	$ //[formula type:display]
-
-Therefore, the condition
-@eq.a1 //[ref type:eqref]
-implies
-$A(t,r) ≤ 0$
-and hence
-$∂_t w(t,x) ≤ 0$
-a.e.
-This completes the proof.
-\end{proof}
 #lemma[
 \label{lemma:condition_for_negative_position}
 Let the assumption of Lemma @lemma:estaimte_of_u_devided //[ref type:ref]
@@ -1697,61 +1262,33 @@ be satisfied.
 If the inequality
 	\begin{equation}\label{eq.a2}
    (c_0)/(2)t  C(t,r,ρ,c_0)
-	≤ \frac 1 2 - \bigg( (2ρ+1)/(4) + (1)/(2t)\bigg) r
-	\end{equation}
+	≤ \frac 1 2 - ( //[command type:bigg]
+	(2ρ+1)/(4) + (1)/(2t)) //[command type:bigg]
+ r
+	
 holds, then
 $ w (t,x) ≤ 0$ for a.e. $x ∈ ℝ$.
 Here $C(t,r,ρ,c_0)$ is defined in @eq.dC //[ref type:eqref].
 ] //[Lemma]
-@lemma:estaimte_of_u_devided //[ref type:ref]
-be satisfied.
-If the inequality
-	\begin{equation}\label{eq.a2}
-   (c_0)/(2)t  C(t,r,ρ,c_0)
-	≤ \frac 1 2 - \bigg( (2ρ+1)/(4) + (1)/(2t)\bigg) r
-	\end{equation}
-holds, then
-$w (t,x) ≤ 0$
-for a.e.
-$x ∈ ℝ$
-.
-Here
-$C(t,r,ρ,c_(0))$
-is defined in
-@eq.dC //[ref type:eqref]
-.
-\end{Lemma}
 #proof[
 We have
      $ &w(t,x)\\
 	&≤ ε_0 (φ(x+t)+ φ(x-t))/(2) 
-	+ (ε_1 + (ε_0)/(2) ) ∫_{-t}^{t}(φ(x+τ))/(2) dτ \\
+	+ ( //[command type:left]
+	ε_1 + (ε_0)/(2) ) //[command type:right]
+ ∫_{-t}^{t}(φ(x+τ))/(2) dτ \\
 	& + (c_0)/(2)|ε_1| C(t,r) ∫_0^t ∫_{τ-t}^{t-τ}φ(x+σ) dσ dτ\\
 	&≤
 	- |ε_1|
 	\bigg\{
 		\frac 1 2
-		- \bigg( (2ρ+1)/(4) + (1)/(2t)\bigg) r
+		- ( //[command type:bigg]
+	(2ρ+1)/(4) + (1)/(2t)) //[command type:bigg]
+ r
 		- (c_0)/(2) t  C(t,r)
 	\bigg\}
 	∫_{-t}^t φ(x+σ) dσ. $ //[formula type:align*]
 ] //[proof]
-	$
-	 &= w(t,x)\
-	 &= ≤ ε_0 (φ(x+t)+ φ(x-t))/(2)
-	+ (ε_1 + (ε_0)/(2) ) ∫_{-t}^{t}(φ(x+τ))/(2) dτ \
-	 &= + (c_(0))/(2)|ε_1| C(t,r) ∫_0^(t) ∫_{τ-t}^{t-τ}φ(x+σ) dσ dτ\
-	 &= ≤
-	- |ε_1|
-	\bigg\{
-	\frac 1 2
-	- \bigg( (2ρ+1)/(4) + (1)/(2t)\bigg) r
-	- (c_(0))/(2) t  C(t,r)
-	\bigg\}
-	∫_{-t}^t φ(x+σ) dσ.
-	$ //[formula type:align*]
-\end{proof}
-
 In view of the above Lemmas
 @lemma:estaimte_of_u_devided //[ref type:ref]
 ,
@@ -1763,22 +1300,16 @@ and
 $\mathcal{A}$
 contains the following set.
 	$
+	
 	\mathcal{B}
 	= \{r ∈ [0,1); \exists (t,c_(0),ρ)\
 	\mathrm{satisfying}\
 	\eqref{eq:condition_(f)or_(u)_devided},\
 	\eqref{eq.a1},\
 	\mathrm{and}\ \eqref{eq.a2}\}
+	
 	$ //[formula type:display]
 
-@eq:condition_for_u_devided //[ref type:eqref]
-,\
-@eq.a1 //[ref type:eqref]
-,\
-	\mathrm{and}\
-@eq.a2 //[ref type:eqref]
-\}
-	\]
 Indeed, if
 $r ∈ \mathcal{B}$
 , then
@@ -1805,8 +1336,7 @@ imply
 	& \mbox{if} \ r < 4t/(8+2t-t^2),\\
 	r
 	& \mbox{if} \ r > 4t/(8+2t-t^2).
-	\end{cases}
-	\end{equation}
+	
 Therefore, a sufficient condition for
 $r ∈ \mathcal B$
 is that whether
@@ -1824,29 +1354,41 @@ $t$
 such that 
 }
 
-
-
 the following two inequalities hold:
 	\begin{equation}\label{sys1}
 	\begin{cases}
-	(1)/(8)  ((t(1-r/2)-r )/((1-t^2/4))  )
-	< \bigg(1 - (r)/(2)  \bigg) \bigg( (1)/(2t) \bigg),\\
-	(1)/(8) t  ((t(1-r/2)-r )/((1-t^2/4))  )
-	< 1 - \bigg( (1)/(2) + (1)/(2t)\bigg) r,\\
+	(1)/(8)  ( //[command type:left]
+	(t(1-r/2)-r )/((1-t^2/4))  ) //[command type:right]
+
+	< ( //[command type:bigg]
+	1 - (r)/(2)  ) //[command type:bigg]
+ ( //[command type:bigg]
+	(1)/(2t) ) //[command type:bigg]
+,\\
+	(1)/(8) t  ( //[command type:left]
+	(t(1-r/2)-r )/((1-t^2/4))  ) //[command type:right]
+
+	< 1 - ( //[command type:bigg]
+	(1)/(2) + (1)/(2t)) //[command type:bigg]
+ r,\\
 	r
 	< (4t)/((4-t)(2+t))
-	\end{cases}
-	\end{equation}
+	
 and
 	\begin{equation}\label{sys2}
 	\begin{cases}
 	(1)/(8)  r
-	< \bigg(1 - (r)/(2)  \bigg) \bigg( (1)/(2t) \bigg),\\
+	< ( //[command type:bigg]
+	1 - (r)/(2)  ) //[command type:bigg]
+ ( //[command type:bigg]
+	(1)/(2t) ) //[command type:bigg]
+,\\
 	(1)/(8) t  r
-	< \frac 1 2 - \bigg( (1)/(4) + (1)/(2t)\bigg) r,\\
+	< \frac 1 2 - ( //[command type:bigg]
+	(1)/(4) + (1)/(2t)) //[command type:bigg]
+ r,\\
 	r > (4t)/((4-t)(2+t)).
-	\end{cases}
-	\end{equation}
+	
 In particular, if
 $r ∈ [0,1)$
 admits some
@@ -1880,13 +1422,11 @@ Consequently,
 $\mathcal B$
 contains the following set:
 	$
+	
 	\mathcal C
 	= \{r ∈ [0,1); \exists t, \ (t,r) \ \mbox{is a solution to \eqref{sys2}}\}.
+	
 	$ //[formula type:display]
-
-@sys2 //[ref type:eqref]
-}\}.
-	\]
 
 Finally, we show that
 $\mathcal C \supset [0,1)$
@@ -1905,42 +1445,55 @@ A positive solution
 $r$
 can be found iff
 	$
-	(4t)/((4-t)(2+t)) < min ((4)/(2+t), (8t)/((2+t)^2)  ) .
+	
+	(4t)/((4-t)(2+t)) < min ( //[command type:left]
+	(4)/(2+t), (8t)/((2+t)^2)  ) //[command type:right]
+ .
+	
 	$ //[formula type:display]
 
 Note that for
 $t ∈ [0,4)$
 	$
+	
 	(4t)/((4-t)(2+t)) < (4)/(2+t)
+	
 	$ //[formula type:display]
 
 is equivalent to
 $t <2$
 and
 	$
+	
 	(4t)/((4-t)(2+t)) < (8t)/((2+t)^2)
+	
 	$ //[formula type:display]
 
 is equivalent to
 $t <2.$
 Therefore the interval
 	$
-	I(t) &= (a(t),b(t)), \
-	a(t) &= (4t)/((4-t)(2+t)) , \
-	b(t) &= min ((4)/(2+t), (8t)/((2+t)^2)  )
+	I(t)  &= (a(t),b(t)), \
+	a(t)  &= (4t)/((4-t)(2+t)) , \
+	b(t)  &= min ( //[command type:left]
+	(4)/(2+t), (8t)/((2+t)^2)  ) //[command type:right]
 	$ //[formula type:align*]
 is nonempty for any
 $t ∈ (0,2).$
 Note that
 	$
+	
 	(8t)/((2+t)^2) < (4)/(2+t)
+	
 	$ //[formula type:display]
 
 for
 $t ∈ (0,2).$
 Therefore,
 	$
+	
 	b(t) = (8t)/((2+t)^2).
+	
 	$ //[formula type:display]
 
 The function
@@ -1949,17 +1502,23 @@ is increasing on
 $[0,4)$
 , because
 	$
+	
 	a(t)
-	= (4)/(4-t)\bigg( 1 - (2)/(t+2) \bigg).
+	= (4)/(4-t)( //[command type:bigg]
+	1 - (2)/(t+2) ) //[command type:bigg]
+.
+	
 	$ //[formula type:display]
 
 Moreover,
-$a(0)=0$
+$a(0)=0 $
 and
-$a(2)=b(2)=1$
+$ a(2)=b(2)=1$
 imply that
 	$
+	
 	\mathcal{A} \supset \mathcal{B} \supset \mathcal{C} \supset [0,1).
+	
 	$ //[formula type:display]
 
 This completes the proof.
@@ -1975,5 +1534,3 @@ This completes the proof.
 
 // %\bibliographystyle{plain}
 // %\bibliography{DAMP}
-
-\end{document}

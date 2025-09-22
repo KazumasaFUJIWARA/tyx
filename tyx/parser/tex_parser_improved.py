@@ -28,7 +28,7 @@ class ImprovedTeXParser:
             'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
             'not': '¬', 'equiv': '≡', 'quad': ' ', 'mathbb': 'ℝ',
             'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
-            'times': '×'
+            'times': '×', 'langle': '⟨', 'rangle': '⟩'
         }
         
         # 数式演算子のUnicodeマッピング
@@ -167,13 +167,15 @@ class ImprovedTeXParser:
         
         # 記号変換を前処理として実施
         processed_content = '\n'.join(processed_lines)
+        
+        # 数式環境を先に抽出してから記号変換を適用
         processed_content = self._convert_math_symbols(processed_content)
         
         return processed_content
     
     def _convert_math_symbols(self, content: str) -> str:
         """数式記号をUnicodeに変換（前処理として実施）"""
-        # 基本的な数式記号の変換
+        # 基本的な数式記号の変換（数式モードの判定を行わず直接置換）
         for tex_symbol, unicode_char in self.math_symbols.items():
             if tex_symbol == 'mathbb':
                 # \mathbb{R} → ℝ, \mathbb{N} → ℕ, \mathbb{Z} → ℤ, \mathbb{Q} → ℚ, \mathbb{C} → ℂ
@@ -183,25 +185,56 @@ class ImprovedTeXParser:
                 content = re.sub(r'\\mathbb\s*\{?Q\}?', 'ℚ', content)
                 content = re.sub(r'\\mathbb\s*\{?C\}?', 'ℂ', content)
             else:
-                # \symbol → unicode
+                # \symbol → unicode（数式モードの判定を行わず直接置換）
                 pattern = r'\\' + re.escape(tex_symbol) + r'(?![a-zA-Z])'
                 content = re.sub(pattern, unicode_char, content)
         
-        # 数式演算子の変換
+        # 数式演算子の変換（数式モードの判定を行わず直接置換）
         for tex_operator, unicode_char in self.math_operators.items():
-            pattern = r'\\' + re.escape(tex_operator) + r'(?![a-zA-Z])'
-            content = re.sub(pattern, unicode_char, content)
+            if tex_operator == 'sup':
+                # sup _{...} のパターンを特別に処理
+                # \sup _{...} → sup_{...}
+                content = re.sub(r'\\sup\s*_\{([^}]+)\}', r'sup_{\1}', content)
+                # \sup _... → sup_...
+                content = re.sub(r'\\sup\s*_([a-zA-Z0-9])', r'sup_\1', content)
+                # その他の\sup → sup
+                content = re.sub(r'\\sup(?![a-zA-Z])', 'sup', content)
+            else:
+                # その他の演算子を直接置換
+                pattern = r'\\' + re.escape(tex_operator) + r'(?![a-zA-Z])'
+                content = re.sub(pattern, unicode_char, content)
         
         # 特別な処理
         # \not\equiv → ≢
         content = re.sub(r'\\not\\equiv', '≢', content)
         
-        # \left と \right を削除
-        content = re.sub(r'\\left', '', content)
-        content = re.sub(r'\\right', '', content)
+        # \left と \right をメタコメント付きで変換
+        content = re.sub(r'\\left\(', '( //[command type:left]\n\t', content)
+        content = re.sub(r'\\right\)', ') //[command type:right]\n', content)
+        content = re.sub(r'\\left\[', '[ //[command type:left]\n\t', content)
+        content = re.sub(r'\\right\]', '] //[command type:right]\n', content)
+        content = re.sub(r'\\left\{', '{ //[command type:left]\n\t', content)
+        content = re.sub(r'\\right\}', '} //[command type:right]\n', content)
         
         # \prime の処理（上付き文字の前に処理）
         content = re.sub(r'\\prime', "'", content)
+        
+        # \bigg をメタコメント付きで変換
+        content = re.sub(r'\\bigg\(', '( //[command type:bigg]\n\t', content)
+        content = re.sub(r'\\bigg\)', ') //[command type:bigg]\n', content)
+        content = re.sub(r'\\bigg\[', '[ //[command type:bigg]\n\t', content)
+        content = re.sub(r'\\bigg\]', '] //[command type:bigg]\n', content)
+        content = re.sub(r'\\bigg\{', '{ //[command type:bigg]\n\t', content)
+        content = re.sub(r'\\bigg\}', '} //[command type:bigg]\n', content)
+        
+        # ノルム記号を norm(*) に変換（メタコメントなし）
+        content = re.sub(r'\\bigg\\|([^|]+)\\bigg\\|', r'norm(\1)', content)
+        content = re.sub(r'\\left\\|([^|]+)\\right\\|', r'norm(\1)', content)
+        content = re.sub(r'\\Big\\|([^|]+)\\Big\\|', r'norm(\1)', content)
+        content = re.sub(r'\\|([^|]+)\\|', r'norm(\1)', content)
+        
+        # \sqrt の処理（\fracより先に処理）
+        content = re.sub(r'\\sqrt\{([^}]+)\}', r'sqrt(\1)', content)
         
         # \frac の処理
         content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)
@@ -252,9 +285,15 @@ class ImprovedTeXParser:
         
         all_matches.sort(key=lambda x: x[1])
         
-        # 要素を抽出
+        # 要素を抽出（重複を避ける）
         last_end = 0
+        processed_positions = set()
+        
         for element_type, start, end, match in all_matches:
+            # 重複チェック：既に処理済みの位置範囲と重複していないか確認
+            if any(pos >= start and pos < end for pos in processed_positions):
+                continue
+                
             # 前の要素との間のテキスト
             if start > last_end:
                 text_between = content[last_end:start].strip()
@@ -263,13 +302,18 @@ class ImprovedTeXParser:
             
             # 現在の要素
             if element_type == 'theorem':
-                elements.append(('theorem', match.group(0)))
+                theorem_content = match.group(0)
+                elements.append(('theorem', theorem_content))
             elif element_type == 'section':
                 elements.append(('section', match.group(0)))
             elif element_type == 'math':
                 elements.append(('math', match.group(0)))
             elif element_type == 'ref':
                 elements.append(('ref', match.group(0)))
+            
+            # 処理済み位置を記録
+            for pos in range(start, end):
+                processed_positions.add(pos)
             
             last_end = end
         
@@ -332,6 +376,7 @@ class ImprovedTeXParser:
                 label=label or "",
                 content=processed_body
             )
+        
         return TheoremNode(node_type=NodeType.THEOREM, theorem_type="", title="", label="", content="")
     
     def _get_theorem_node_type(self, theorem_type: str) -> NodeType:
