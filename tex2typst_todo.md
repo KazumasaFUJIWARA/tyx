@@ -40,11 +40,11 @@
 	- [x] `\bar{x}` → `$ bar(x) $`
 	- [x] `\tilde{x}` → `$ tilde(x) $`
 	- [x] `\vec{x}` → `$ arrow(x) $`
-- [ ] その他数式コマンド
+- [x] その他数式コマンド
 	- [x] `\frac`
 	- [x] `norm`
-	- [ ] `abs`
-- [ ] \left, \right, \bigg
+	- [x] `abs`
+- [x] \left, \right, \bigg
 
 #### 3-2. [ ] その他
 - [ ] `_`, `^` の後が１文字の場合は`()`をつけない

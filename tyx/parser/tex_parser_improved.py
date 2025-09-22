@@ -7,7 +7,7 @@ import re
 from typing import List, Optional, Tuple
 from .ast import (
     ASTNode, DocumentNode, SectionNode, MathNode, TheoremNode, 
-    ReferenceNode, TextNode, NormNode, NodeType
+    ReferenceNode, TextNode, NormNode, AbsNode, NodeType
 )
 
 
@@ -103,12 +103,18 @@ class ImprovedTeXParser:
             inner_content = norm_match_with_sub.group(1).strip()
             subscript = (norm_match_with_sub.group(2) or norm_match_with_sub.group(3) or "").strip()
             
+            # 内側の内容で絶対値記号を再帰的に処理
+            inner_abs_nodes = self._parse_abs_expression(inner_content)
+            
             # ノルムノードを作成
             norm_node = NormNode(
                 node_type=NodeType.NORM,
                 content=inner_content,
                 subscript=subscript
             )
+            # 絶対値ノードを子ノードとして追加
+            for abs_node in inner_abs_nodes:
+                norm_node.add_child(abs_node)
             nodes.append(norm_node)
         else:
             # \| ... \| のパターンを解析（下付きなし）
@@ -118,16 +124,22 @@ class ImprovedTeXParser:
             if norm_match_without_sub:
                 inner_content = norm_match_without_sub.group(1).strip()
                 
+                # 内側の内容で絶対値記号を再帰的に処理
+                inner_abs_nodes = self._parse_abs_expression(inner_content)
+                
                 # ノルムノードを作成（下付きなし）
                 norm_node = NormNode(
                     node_type=NodeType.NORM,
                     content=inner_content,
                     subscript=""
                 )
+                # 絶対値ノードを子ノードとして追加
+                for abs_node in inner_abs_nodes:
+                    norm_node.add_child(abs_node)
                 nodes.append(norm_node)
             else:
-                # パターンにマッチしない場合は通常のテキストノード
-                nodes.append(TextNode(node_type=NodeType.TEXT, content=norm_content))
+                # パターンにマッチしない場合は何もしない（他の解析で処理される）
+                pass
         
         # 残りの部分を処理
         remaining = content[norm_end:]
@@ -146,7 +158,56 @@ class ImprovedTeXParser:
         s = re.sub(r'\\lVert', r'\\|', s)
         s = re.sub(r'\\rVert', r'\\|', s)
         s = re.sub(r'\\Vert', r'\\|', s)
+        # 絶対値記号はそのまま（| ... |）
+        # ノルム記号のみ \bigg| \Big| \big| → \|
+        # 注意: 絶対値記号（|）とノルム記号（\|）を区別
         return s
+    
+    def _parse_abs_expression(self, content: str) -> List[ASTNode]:
+        """絶対値記号を解析してASTノードを作成"""
+        nodes = []
+        
+        # \bigg| ... \bigg| パターンを検索（最優先）
+        pattern = r'\\bigg\s*\|(.*?)\\bigg\s*\|'
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            inner_content = match.group(1).strip()
+            abs_node = AbsNode()
+            abs_node.content = inner_content
+            nodes.append(abs_node)
+            return nodes
+        
+        # \Big| ... \Big| パターンを検索
+        pattern = r'\\Big\s*\|(.*?)\\Big\s*\|'
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            inner_content = match.group(1).strip()
+            abs_node = AbsNode()
+            abs_node.content = inner_content
+            nodes.append(abs_node)
+            return nodes
+        
+        # \big| ... \big| パターンを検索
+        pattern = r'\\big\s*\|(.*?)\\big\s*\|'
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            inner_content = match.group(1).strip()
+            abs_node = AbsNode()
+            abs_node.content = inner_content
+            nodes.append(abs_node)
+            return nodes
+        
+        # 通常の | ... | パターンを検索（最後）
+        pattern = r'(?<!\\)\|(.*?)(?<!\\)\|'
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            inner_content = match.group(1).strip()
+            abs_node = AbsNode()
+            abs_node.content = inner_content
+            nodes.append(abs_node)
+            return nodes
+        
+        return nodes
     
     def _find_norm_end(self, content: str, start_pos: int) -> int:
         """ノルム記号の終了位置を検索（堅牢版）"""
@@ -736,8 +797,10 @@ class ImprovedTeXParser:
         """数式を解析"""
         if content.startswith('\\begin{align}'):
             math_content = content[12:-13]  # \begin{align}と\end{align}を除去
-            # ノルム記号を解析して子ノードに変換
+            # ノルム記号と絶対値記号を解析して子ノードに変換
             child_nodes = self._parse_norm_expression(math_content)
+            abs_nodes = self._parse_abs_expression(math_content)
+            child_nodes.extend(abs_nodes)
             math_node = MathNode(
                 node_type=NodeType.MATH_ALIGN,
                 content=math_content,
@@ -749,8 +812,10 @@ class ImprovedTeXParser:
             return math_node
         elif content.startswith('\\begin{align*}'):
             math_content = content[13:-14]  # \begin{align*}と\end{align*}を除去
-            # ノルム記号を解析して子ノードに変換
+            # ノルム記号と絶対値記号を解析して子ノードに変換
             child_nodes = self._parse_norm_expression(math_content)
+            abs_nodes = self._parse_abs_expression(math_content)
+            child_nodes.extend(abs_nodes)
             math_node = MathNode(
                 node_type=NodeType.MATH_ALIGN_STAR,
                 content=math_content,
@@ -762,8 +827,10 @@ class ImprovedTeXParser:
             return math_node
         elif content.startswith('\\['):
             math_content = content[2:-2]  # \[と\]を除去
-            # ノルム記号を解析して子ノードに変換
+            # ノルム記号と絶対値記号を解析して子ノードに変換
             child_nodes = self._parse_norm_expression(math_content)
+            abs_nodes = self._parse_abs_expression(math_content)
+            child_nodes.extend(abs_nodes)
             math_node = MathNode(
                 node_type=NodeType.MATH_DISPLAY,
                 content=math_content,
@@ -775,16 +842,31 @@ class ImprovedTeXParser:
             return math_node
         elif content.startswith('$'):
             math_content = content[1:-1]  # $を除去
-            # ノルム記号を解析して子ノードに変換
+            # ノルム記号を先に解析（ノルム内で絶対値記号も処理される）
             child_nodes = self._parse_norm_expression(math_content)
-            math_node = MathNode(
-                node_type=NodeType.MATH_INLINE,
-                content=math_content,
-                math_type="inline"
-            )
-            # 子ノードを追加
-            for child in child_nodes:
-                math_node.add_child(child)
+            
+            # ノルム記号が見つからない場合のみ絶対値記号を解析
+            if not child_nodes:
+                abs_nodes = self._parse_abs_expression(math_content)
+                child_nodes.extend(abs_nodes)
+            
+            # 子ノードがある場合は、contentを空にして子ノードのみを使用
+            if child_nodes:
+                math_node = MathNode(
+                    node_type=NodeType.MATH_INLINE,
+                    content="",  # 子ノードがある場合は空
+                    math_type="inline"
+                )
+                # 子ノードを追加
+                for child in child_nodes:
+                    math_node.add_child(child)
+            else:
+                # 子ノードがない場合は通常の処理
+                math_node = MathNode(
+                    node_type=NodeType.MATH_INLINE,
+                    content=math_content,
+                    math_type="inline"
+                )
             return math_node
         return MathNode(node_type=NodeType.MATH_INLINE, content=content, math_type="inline")
     

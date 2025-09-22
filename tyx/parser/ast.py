@@ -48,6 +48,7 @@ class NodeType(Enum):
     SUBSCRIPT = "subscript"
     SUPERSCRIPT = "superscript"
     NORM = "norm"
+    ABS = "abs"
     
     # その他
     TEXT = "text"
@@ -248,9 +249,19 @@ class NormNode(ASTNode):
     """ノルム記号ノード"""
     content: str = ""
     subscript: str = ""
-    
+
     def __post_init__(self):
         self.node_type = NodeType.NORM
+
+
+@dataclass
+class AbsNode(ASTNode):
+    """絶対値記号ノード"""
+    node_type: NodeType = NodeType.ABS
+    
+    def __post_init__(self):
+        if self.node_type != NodeType.ABS:
+            self.node_type = NodeType.ABS
 
 
 @dataclass
@@ -266,5 +277,5 @@ class UnknownNode(ASTNode):
 ASTNodeType = Union[
     DocumentNode, SectionNode, MathNode, TheoremNode, ReferenceNode,
     AccentNode, FunctionNode, SymbolNode, VariableNode, OperatorNode,
-    FractionNode, SubscriptNode, SuperscriptNode, NormNode, TextNode, UnknownNode
+    FractionNode, SubscriptNode, SuperscriptNode, NormNode, AbsNode, TextNode, UnknownNode
 ]

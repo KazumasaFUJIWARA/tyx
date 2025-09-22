@@ -6,7 +6,7 @@ TeXからTypstへの変換器
 from typing import List, Optional
 from ..parser.ast import (
     ASTNode, DocumentNode, SectionNode, MathNode, TheoremNode, 
-    ReferenceNode, TextNode, NormNode, NodeType
+    ReferenceNode, TextNode, NormNode, AbsNode, NodeType
 )
 from ..utils.meta_comments import MetaCommentGenerator
 from ..utils.labels import LabelManager
@@ -164,6 +164,8 @@ class TeXToTypstTransformer:
             return self._transform_text(node)
         elif node.node_type == NodeType.NORM:
             return self._transform_norm(node)
+        elif node.node_type == NodeType.ABS:
+            return self._transform_abs(node)
         else:
             return f"// Unknown node type: {node.node_type}"
     
@@ -183,14 +185,18 @@ class TeXToTypstTransformer:
         # 子ノードがある場合は子ノードを変換
         if node.children:
             content_parts = []
-            for child in node.children:
-                content_parts.append(self._transform_node(child))
+            # 特殊なノード（AbsNode、NormNode）がある場合は、それらのみを使用
+            special_nodes = [child for child in node.children if child.node_type in [NodeType.ABS, NodeType.NORM]]
+            if special_nodes:
+                for child in special_nodes:
+                    content_parts.append(self._transform_node(child))
+            else:
+                # 特殊なノードがない場合はすべての子ノードを使用
+                for child in node.children:
+                    content_parts.append(self._transform_node(child))
             content = "".join(content_parts)
         else:
             content = self._transform_math_content(node.content)
-        
-        # ノルム記号の反復的変換を適用
-        content = self._transform_norm_content_iterative(content)
         
         return f"${content}$"
     
@@ -274,8 +280,26 @@ class TeXToTypstTransformer:
     
     def _transform_norm(self, node: NormNode) -> str:
         """ノルム記号を変換"""
-        # 内側の内容を反復的に変換
-        inner_content = self._transform_norm_content_iterative(node.content)
+        # 子ノードがある場合は、それらを置換してから残りの内容を処理
+        if node.children:
+            inner_content = node.content
+            # 子ノードの絶対値記号を置換
+            for child in node.children:
+                if child.node_type == NodeType.ABS:
+                    # 絶対値記号のパターンを検索して置換
+                    import re
+                    abs_pattern = r'\\bigg\s*\|(.*?)\\bigg\s*\|'
+                    match = re.search(abs_pattern, inner_content, re.DOTALL)
+                    if match and match.group(1).strip() == child.content:
+                        replacement = self._transform_abs(child)
+                        inner_content = inner_content[:match.start()] + replacement + inner_content[match.end():]
+            
+            # 残りの内容を反復的に変換
+            inner_content = self._transform_norm_content_iterative(inner_content)
+        else:
+            # 内側の内容を反復的に変換
+            inner_content = self._transform_norm_content_iterative(node.content)
+        
         if node.subscript:
             return f"norm({inner_content})_({node.subscript})"
         else:
@@ -305,6 +329,37 @@ class TeXToTypstTransformer:
                 
                 # 置換を実行
                 replacement = f'norm({inner_converted})_({subscript})'
+                current_content = current_content[:match.start()] + replacement + current_content[match.end():]
+        
+        return current_content
+    
+    def _transform_abs(self, node: AbsNode) -> str:
+        """絶対値記号を変換"""
+        # 内側の内容を変換
+        inner_content = self._transform_abs_content_iterative(node.content)
+        return f"abs({inner_content})"
+    
+    def _transform_abs_content_iterative(self, content: str) -> str:
+        """絶対値記号の内容を反復的に変換"""
+        import re
+        
+        # 変換が起こらなくなるまで繰り返す
+        prev_content = ""
+        current_content = content
+        
+        while prev_content != current_content:
+            prev_content = current_content
+            
+            # \bigg| ... \bigg| を abs(...) に変換
+            pattern = r'\\bigg\s*\|(.*?)\\bigg\s*\|'
+            match = re.search(pattern, current_content, re.DOTALL)
+            
+            if match:
+                inner = match.group(1).strip()
+                # 内側の内容を再帰的に変換
+                inner_converted = self._transform_abs_content_iterative(inner)
+                # 置換を実行
+                replacement = f'abs({inner_converted})'
                 current_content = current_content[:match.start()] + replacement + current_content[match.end():]
         
         return current_content
