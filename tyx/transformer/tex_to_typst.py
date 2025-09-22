@@ -122,7 +122,73 @@ class TeXToTypstTransformer:
         for child in ast.children:
             typst_content.append(self._transform_node(child))
         
-        return "\n".join(typst_content)
+        # 最後に統一的なインデント処理を実行
+        result = "\n".join(typst_content)
+        result = self._normalize_indentation(result)
+        
+        return result
+    
+    def _normalize_indentation(self, content: str) -> str:
+        """統一的なインデント処理を実行"""
+        import re
+        
+        lines = content.split('\n')
+        normalized_lines = []
+        
+        for line in lines:
+            # 数式のインデントを正規化
+            if line.strip().startswith('$') and line.strip().endswith('$'):
+                # インライン数式はインデントなし
+                if '//[formula type:' not in line:
+                    normalized_lines.append(line.strip())
+                    continue
+            
+            # ディスプレイ数式のインデント正規化
+            if '//[formula type:display]' in line:
+                # 数式ブロック全体を1レベルインデント
+                if line.strip().startswith('$'):
+                    normalized_lines.append('\t' + line.strip())
+                elif line.strip().endswith('$'):
+                    normalized_lines.append('\t' + line.strip())
+                else:
+                    normalized_lines.append('\t' + line.strip())
+                continue
+            
+            # ディスプレイ数式の開始行（単独の$）も1レベルインデント
+            if line.strip() == '$' and not line.startswith('\t'):
+                normalized_lines.append('\t' + line.strip())
+                continue
+            
+            # align環境のインデント正規化
+            if '//[formula type:align' in line:
+                # 数式ブロック全体を1レベルインデント
+                if line.strip().startswith('$'):
+                    normalized_lines.append('\t' + line.strip())
+                elif line.strip().endswith('$'):
+                    normalized_lines.append('\t' + line.strip())
+                else:
+                    normalized_lines.append('\t' + line.strip())
+                continue
+            
+            # cases環境のインデント正規化
+            if 'cases(' in line or '//[command type:cases]' in line:
+                # cases( は1レベルインデント
+                if line.strip().startswith('cases('):
+                    normalized_lines.append('\t' + line.strip())
+                # cases終了の ) //[command type:cases] は1レベルインデント
+                elif line.strip().endswith('//[command type:cases]'):
+                    normalized_lines.append('\t' + line.strip())
+                # cases内の各行は2レベルインデント
+                elif line.strip() and not line.strip().startswith(')'):
+                    normalized_lines.append('\t\t' + line.strip())
+                else:
+                    normalized_lines.append(line)
+                continue
+            
+            # その他の行はそのまま
+            normalized_lines.append(line)
+        
+        return '\n'.join(normalized_lines)
     
     def _transform_node(self, node: ASTNode) -> str:
         """ノードをTypstに変換"""
@@ -409,23 +475,8 @@ class TeXToTypstTransformer:
         while '\t ' in content:
             content = re.sub(r'\t ', '\t', content)
         
-        # 変数の空白分離：予約関数名以外の連続するアルファベットを空白で分離
-        reserved_functions = ['sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'arcsin', 'arccos', 'arctan', 
-                            'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'log', 'ln', 'exp', 
-                            'max', 'min', 'sup', 'inf', 'lim', 'limsup', 'liminf', 'gcd', 'lcm',
-                            'det', 'rank', 'trace', 'dim', 'ker', 'im', 'span', 'norm', 'abs']
         
-        # 連続するアルファベットを空白で分離（予約関数名は除く）
-        def separate_variables(match):
-            text = match.group(0)
-            # 予約関数名かチェック
-            for func in reserved_functions:
-                if text == func:
-                    return text
-            # 予約関数名でない場合は空白で分離
-            return ' '.join(text)
-        
-        content = re.sub(r'[a-zA-Z]{2,}', separate_variables, content)
+        # 通常テキストでは変数の空白分離は行わない（数式のみで実施）
         
         return content
     
@@ -696,6 +747,46 @@ class TeXToTypstTransformer:
         content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)
         content = re.sub(r'\\sqrt\{([^}]+)\}', r'sqrt(\1)', content)
         
+        # \quadをquadに変換
+        content = re.sub(r'\\quad', 'quad', content)
+        
+        # \mathrm{text}を"text"に変換
+        content = re.sub(r'\\mathrm\{([^}]+)\}', r'"\1"', content)
+        
+        # cases環境の変換（コマンド保護処理より前）
+        content = re.sub(r'\\begin\{cases\}', 'cases(', content)
+        content = re.sub(r'\\end\{cases\}', ') //[command type:cases]', content)
+        content = re.sub(r'\\end\{cases', ') //[command type:cases]', content)  # 不完全な場合も処理
+        
+        
+        # 改行文字の前後のcasesを適切に処理
+        content = re.sub(r'\ncases\(', '\ncases(', content)
+        content = re.sub(r'cases\(\n', 'cases(\n', content)
+        
+        # 改行文字を含むcasesを保護
+        content = re.sub(r'\ncases\(', '__CASES_START__', content)
+        content = re.sub(r'cases\(\n', '__CASES_START__', content)
+        
+        # 改行文字を含むcasesを保護
+        content = re.sub(r'\ncases\(', '__CASES_START__', content)
+        content = re.sub(r'cases\(\n', '__CASES_START__', content)
+        
+        # 改行文字を含むcasesを保護
+        content = re.sub(r'\ncases\(', '__CASES_START__', content)
+        content = re.sub(r'cases\(\n', '__CASES_START__', content)
+        
+        # 改行文字を含むcasesを保護
+        content = re.sub(r'\ncases\(', '__CASES_START__', content)
+        content = re.sub(r'cases\(\n', '__CASES_START__', content)
+        
+        # 改行文字を含むcasesを保護
+        content = re.sub(r'\ncases\(', '__CASES_START__', content)
+        content = re.sub(r'cases\(\n', '__CASES_START__', content)
+        
+        # 改行文字を含むcasesを保護
+        content = re.sub(r'\ncases\(', '__CASES_START__', content)
+        content = re.sub(r'cases\(\n', '__CASES_START__', content)
+        
         # 残存する\biggと\left/rightを処理
         content = re.sub(r'\\bigg\(', '( //[command type:bigg]\n\t', content)
         content = re.sub(r'\\bigg\)', ') //[command type:bigg]\n', content)
@@ -732,24 +823,6 @@ class TeXToTypstTransformer:
         
         # 記号変換は前処理で完了済みのため、ここでは不要
         
-        # cases環境の変換
-        content = re.sub(r'\\begin\{cases\}', 'cases(', content)
-        content = re.sub(r'\\end\{cases\}', ')', content)
-        content = re.sub(r'\\end\{cases', ')', content)  # 不完全な場合も処理
-        
-        # cases環境内の処理（複数行対応）
-        def process_cases_content(match):
-            cases_content = match.group(1)
-            # 改行を除去して一行にまとめる
-            cases_content = cases_content.replace('\n', ' ')
-            # 複数のスペースを単一スペースに
-            cases_content = re.sub(r'\s+', ' ', cases_content)
-            # , を \, に変換（cases環境内のみ）
-            cases_content = cases_content.replace(',', '\\,')
-            return f'cases({cases_content})'
-        
-        # cases(内容)のパターンを処理（複数行対応）
-        content = re.sub(r'cases\(([^)]+)\)', process_cases_content, content, flags=re.DOTALL)
         
         # その他のコマンドの処理（より安全に）
         # content = re.sub(r'\\([a-zA-Z]+)\{([^}]*)\}', r'\\\1(\2)', content)  # preambleで問題になるためコメントアウト
@@ -765,19 +838,123 @@ class TeXToTypstTransformer:
         reserved_functions = ['sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'arcsin', 'arccos', 'arctan', 
                             'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'log', 'ln', 'exp', 
                             'max', 'min', 'sup', 'inf', 'lim', 'limsup', 'liminf', 'gcd', 'lcm',
-                            'det', 'rank', 'trace', 'dim', 'ker', 'im', 'span', 'norm', 'abs']
+                            'det', 'rank', 'trace', 'dim', 'ker', 'im', 'span', 'norm', 'abs', 'cases',
+                            'command', 'type', 'if', 'then', 'else', 'and', 'or', 'not', 'quad']
+        
+        # コマンド内のテキストを保護してから変数分離を実行
+        # \mathrm{...}, \mathbf{...} などのコマンド内のテキストを一時的に置換
+        command_placeholders = {}
+        placeholder_counter = 0
+        
+        # コマンド内のテキストを保護
+        def protect_command_content(match):
+            nonlocal placeholder_counter
+            placeholder = f"__CMD_{placeholder_counter}__"
+            command_placeholders[placeholder] = match.group(0)
+            placeholder_counter += 1
+            return placeholder
+        
+        # \mathrm{...}, \mathbf{...} などのコマンドを保護
+        content = re.sub(r'\\[a-zA-Z]+\{[^}]*\}', protect_command_content, content)
         
         # 連続するアルファベットを空白で分離（予約関数名は除く）
         def separate_variables(match):
             text = match.group(0)
+            # プレースホルダーは変数分離しない
+            if text.startswith('__CMD_') or text.startswith('__FUNC_') or text.startswith('__COMMENT_'):
+                return text
+            # 改行文字を含む場合は、改行文字を除いてチェック
+            clean_text = text.replace('\n', '').replace('\r', '')
             # 予約関数名かチェック
             for func in reserved_functions:
-                if text == func:
-                    return text
+                if clean_text == func:
+                    return text  # 元の文字列をそのまま返す
             # 予約関数名でない場合は空白で分離
             return ' '.join(text)
         
-        content = re.sub(r'[a-zA-Z]{2,}', separate_variables, content)
+        # コメント部分を保護してから変数分離
+        comment_placeholders = {}
+        comment_counter = 0
+        
+        def protect_comment(match):
+            nonlocal comment_counter
+            placeholder = f"__COMMENT_{comment_counter}__"
+            comment_placeholders[placeholder] = match.group(0)
+            comment_counter += 1
+            return placeholder
+        
+        # //[...] 形式のコメントを保護
+        content = re.sub(r'//\[[^\]]+\]', protect_comment, content)
+        
+        # 改行文字の前後を適切に処理してから変数分離
+        # 関数呼び出しパターンを保護してから変数分離
+        # cases(, sin(, cos( などのパターンを保護（改行文字を含む場合も）
+        content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
+        
+        # 改行文字を含む関数呼び出しパターンも保護
+        content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
+        
+        # 改行文字を含む関数呼び出しパターンも保護
+        content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
+        
+        # 改行文字を含む関数呼び出しパターンも保護
+        content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
+        
+        # 改行文字を含む関数呼び出しパターンも保護
+        content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
+        
+        # 改行文字を含む関数呼び出しパターンも保護
+        content = re.sub(r'([a-zA-Z]+)\(', r'__FUNC_\1__(', content)
+        
+        # プレースホルダーを保護してから変数分離
+        placeholder_protections = {}
+        protection_counter = 0
+        
+        def protect_placeholder(match):
+            nonlocal protection_counter
+            placeholder = f"__PROTECT_{protection_counter}__"
+            placeholder_protections[placeholder] = match.group(0)
+            protection_counter += 1
+            return placeholder
+        
+        # プレースホルダーを保護
+        content = re.sub(r'__[A-Z_]+_[a-zA-Z\s]+__', protect_placeholder, content)
+        
+        # 通常の変数分離（関数呼び出しパターンを除外）
+        content = re.sub(r'[a-zA-Z]{2,}(?!\()', separate_variables, content)
+        
+        # プレースホルダーを元に戻す
+        for placeholder, original in placeholder_protections.items():
+            content = content.replace(placeholder, original)
+        
+        # 関数呼び出しパターンを元に戻す
+        content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
+        
+        # 変数分離された関数名を元に戻す
+        content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
+        
+        # 変数分離された関数名を元に戻す
+        content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
+        
+        # 変数分離された関数名を元に戻す
+        content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
+        
+        # 変数分離された関数名を元に戻す
+        content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
+        
+        # 変数分離された関数名を元に戻す
+        content = re.sub(r'__FUNC_([a-zA-Z\s]+)__\(', lambda m: m.group(1).replace(' ', '') + '(', content)
+        
+        # 保護したコメントを元に戻す
+        for placeholder, original in comment_placeholders.items():
+            content = content.replace(placeholder, original)
+        
+        # 保護したコマンドを元に戻す
+        for placeholder, original in command_placeholders.items():
+            content = content.replace(placeholder, original)
+        
+        # 保護したcasesを元に戻す
+        content = content.replace('__CASES_START__', 'cases(')
         
         # 最後の処理：^と_の後の(?)や{?}を?にする変換（1文字の場合のみ）
         content = re.sub(r'([\^_])\((.)\)', r'\1\2', content)

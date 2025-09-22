@@ -30,7 +30,7 @@ class ImprovedTeXParser:
             'Tau': 'Τ', 'Upsilon': 'Υ', 'Phi': 'Φ', 'Chi': 'Χ', 'Psi': 'Ψ', 'Omega': 'Ω',
             'varepsilon': 'ε', 'varphi': 'φ', 'in': '∈', 'sim': '∼',
             'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
-            'not': '¬', 'equiv': '≡', 'quad': ' ',             'mathbb': 'ℝ', 'cdot': '⋅', 'ell': 'ℓ',
+            'not': '¬', 'equiv': '≡', 'quad': 'quad',             'mathbb': 'ℝ', 'cdot': '⋅', 'ell': 'ℓ',
             'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
             'times': '×', 'langle': '⟨', 'rangle': '⟩'
         }
