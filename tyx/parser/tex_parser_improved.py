@@ -227,11 +227,6 @@ class ImprovedTeXParser:
         content = re.sub(r'\\bigg\{', '{ //[command type:bigg]\n\t', content)
         content = re.sub(r'\\bigg\}', '} //[command type:bigg]\n', content)
         
-        # ノルム記号を norm(*) に変換（メタコメントなし）
-        content = re.sub(r'\\bigg\\|([^|]+)\\bigg\\|', r'norm(\1)', content)
-        content = re.sub(r'\\left\\|([^|]+)\\right\\|', r'norm(\1)', content)
-        content = re.sub(r'\\Big\\|([^|]+)\\Big\\|', r'norm(\1)', content)
-        content = re.sub(r'\\|([^|]+)\\|', r'norm(\1)', content)
         
         # \sqrt の処理（\fracより先に処理）
         content = re.sub(r'\\sqrt\{([^}]+)\}', r'sqrt(\1)', content)

@@ -69,8 +69,8 @@
 // \maketitle
 
 // %[[[
-# Introduction
-# Introduction
+= Introduction
+= Introduction
 // %[[[ In this note,
 In this note,
 we consider the behavior of solutions
@@ -826,7 +826,7 @@ Theorem
 @theorem:main //[ref type:ref]
 is shown in the last section.
 // %]]]
-# Preliminary
+= Preliminary
 We, at first, show the estimate
 for the solution to the Cauchy problem for a nonhomogeneous wave equation.
 #lemma(id: "lemma:estimate_of_transformed_wave")[
@@ -1090,8 +1090,8 @@ where
 	= (4t)/((4-t)(2+t)). $ //[formula type:display]
 ] //[Corollary]
 // %[[[
-# Comparison principle
-# Proof of Theorem \ref{theorem:main
+= Comparison principle
+= Proof of Theorem \ref{theorem:main
 }
 // %[[[ Proposition Comparison Principle
 $w = e^(t/2) u$

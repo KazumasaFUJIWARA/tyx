@@ -128,6 +128,8 @@ class TeXToTypstTransformer:
         """ノードをTypstに変換"""
         if node.node_type == NodeType.SECTION:
             return self._transform_section(node)
+        elif node.node_type == NodeType.SUBSECTION:
+            return self._transform_section(node)
         elif node.node_type == NodeType.MATH_INLINE:
             return self._transform_math_inline(node)
         elif node.node_type == NodeType.MATH_DISPLAY:
@@ -166,13 +168,13 @@ class TeXToTypstTransformer:
     def _transform_section(self, node: SectionNode) -> str:
         """セクションを変換"""
         if node.level == 1:
-            return f"# {node.title}"
+            return f"= {node.title}"
         elif node.level == 2:
-            return f"## {node.title}"
+            return f"== {node.title}"
         elif node.level == 3:
-            return f"### {node.title}"
+            return f"=== {node.title}"
         else:
-            return f"# {node.title}"
+            return f"= {node.title}"
     
     def _transform_math_inline(self, node: MathNode) -> str:
         """インライン数式を変換"""
@@ -425,11 +427,6 @@ class TeXToTypstTransformer:
         content = re.sub(r'\\left\{', '{ //[command type:left]\n\t', content)
         content = re.sub(r'\\right\}', '} //[command type:right]\n', content)
         
-        # 残存するノルム記号を norm(*) に変換
-        content = re.sub(r'\\bigg\\|([^|]+)\\bigg\\|', r'norm(\1)', content)
-        content = re.sub(r'\\left\\|([^|]+)\\right\\|', r'norm(\1)', content)
-        content = re.sub(r'\\Big\\|([^|]+)\\Big\\|', r'norm(\1)', content)
-        content = re.sub(r'\\|([^|]+)\\|', r'norm(\1)', content)
         
         # 上付き文字の変換
         content = re.sub(r'([a-zA-Z0-9]+)\^\{([^}]+)\}', r'\1^(\2)', content)
