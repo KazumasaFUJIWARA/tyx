@@ -198,6 +198,11 @@ class TeXToTypstTransformer:
         else:
             content = self._transform_math_content(node.content)
         
+        # 最後の処理：^と_の後の(?)や{?}を?にする変換（1文字の場合のみ）
+        import re
+        content = re.sub(r'([\^_])\((.)\)', r'\1\2', content)
+        content = re.sub(r'([\^_])\{(.)\}', r'\1\2', content)
+        
         return f"${content}$"
     
     def _transform_math_display(self, node: MathNode) -> str:
@@ -296,9 +301,19 @@ class TeXToTypstTransformer:
             
             # 残りの内容を反復的に変換
             inner_content = self._transform_norm_content_iterative(inner_content)
+            # 積分記号などの他の数学記号も変換
+            inner_content = self._transform_math_content(inner_content)
+            # _transform_math_contentの最後の処理も適用
+            inner_content = re.sub(r'([\^_])\((.)\)', r'\1\2', inner_content)
+            inner_content = re.sub(r'([\^_])\{(.)\}', r'\1\2', inner_content)
         else:
             # 内側の内容を反復的に変換
             inner_content = self._transform_norm_content_iterative(node.content)
+        
+        # 最後の処理：^と_の後の(?)や{?}を?にする変換（1文字の場合のみ）
+        import re
+        inner_content = re.sub(r'([\^_])\((.)\)', r'\1\2', inner_content)
+        inner_content = re.sub(r'([\^_])\{(.)\}', r'\1\2', inner_content)
         
         if node.subscript:
             return f"norm({inner_content})_({node.subscript})"
@@ -727,5 +742,9 @@ class TeXToTypstTransformer:
         # タブ+スペースをタブに正規化（複数回適用）
         while '\t ' in content:
             content = re.sub(r'\t ', '\t', content)
+        
+        # 最後の処理：^と_の後の(?)や{?}を?にする変換（1文字の場合のみ）
+        content = re.sub(r'([\^_])\((.)\)', r'\1\2', content)
+        content = re.sub(r'([\^_])\{(.)\}', r'\1\2', content)
         
         return content
