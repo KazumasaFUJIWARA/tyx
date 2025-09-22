@@ -130,6 +130,17 @@ a &= b\\
 Σ, ∫, ∏, lim, max, min, sup, inf
 ```
 
+**積分記号の詳細処理**
+```tex
+\int_{a+b}^\infty f(x) dx
+```
+↓
+```typst
+∫_(a+b)^∞ f(x) d x
+```
+
+**注意**: `\int`の下付き・上付き文字の`{}`は`()`に変換されます。
+
 #### 2.3 数式アクセント
 
 ```tex
@@ -180,10 +191,10 @@ x & \text{if } x > 0 \\
 ```
 ↓
 ```typst
-cases(
-	x if x > 0\,
-	-x if x ≤ 0
-)
+	cases(
+		x & quad "if" quad x > 0\,\
+		-x & quad "if" quad x ≤ 0
+	)
 ```
 
 ### 3. 定理環境

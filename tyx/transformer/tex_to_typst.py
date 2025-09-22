@@ -407,6 +407,26 @@ class TeXToTypstTransformer:
         # 数式演算子の変換（前処理で完了済みのため不要）
         # 残存するコマンドのみ処理
         content = re.sub(r'\\int(?![a-zA-Z])', '∫', content)
+        content = re.sub(r'\\iint(?![a-zA-Z])', '∬', content)
+        content = re.sub(r'\\iiint(?![a-zA-Z])', '∭', content)
+        content = re.sub(r'\\oint(?![a-zA-Z])', '∮', content)
+        
+        # 積分記号の下付き・上付き文字の {} を () に変換
+        content = re.sub(r'∫_\{([^}]+)\}', r'∫_(\1)', content)
+        content = re.sub(r'∬_\{([^}]+)\}', r'∬_(\1)', content)
+        content = re.sub(r'∭_\{([^}]+)\}', r'∭_(\1)', content)
+        content = re.sub(r'∮_\{([^}]+)\}', r'∮_(\1)', content)
+        # 上付き文字の処理（単一文字を先に処理）
+        content = re.sub(r'∫\^([a-zA-Z0-9∞])', r'∫^(\1)', content)
+        content = re.sub(r'∬\^([a-zA-Z0-9∞])', r'∬^(\1)', content)
+        content = re.sub(r'∭\^([a-zA-Z0-9∞])', r'∭^(\1)', content)
+        content = re.sub(r'∮\^([a-zA-Z0-9∞])', r'∮^(\1)', content)
+        content = re.sub(r'∫\^\{([^}]+)\}', r'∫^(\1)', content)
+        content = re.sub(r'∬\^\{([^}]+)\}', r'∬^(\1)', content)
+        content = re.sub(r'∭\^\{([^}]+)\}', r'∭^(\1)', content)
+        content = re.sub(r'∮\^\{([^}]+)\}', r'∮^(\1)', content)
+        # 一般的な上付き文字の {} を () に変換
+        content = re.sub(r'\^\{([^}]+)\}', r'^(\1)', content)
         
         # 残存する\fracと\sqrtを処理
         content = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', content)

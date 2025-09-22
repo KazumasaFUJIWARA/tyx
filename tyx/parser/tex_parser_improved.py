@@ -33,7 +33,7 @@ class ImprovedTeXParser:
         
         # 数式演算子のUnicodeマッピング
         self.math_operators = {
-            'sum': 'Σ', 'int': '∫', 'prod': '∏', 'lim': 'lim',
+            'sum': 'Σ', 'int': '∫', 'iint': '∬', 'iiint': '∭', 'oint': '∮', 'prod': '∏', 'lim': 'lim',
             'sin': 'sin', 'cos': 'cos', 'tan': 'tan', 'log': 'log',
             'ln': 'ln', 'exp': 'exp', 'max': 'max', 'min': 'min',
             'sup': 'sup', 'inf': 'inf'
