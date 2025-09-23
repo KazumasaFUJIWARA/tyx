@@ -124,7 +124,7 @@ class TeXToTypstTransformer:
         
         # 最後に統一的なインデント処理を実行
         result = "\n".join(typst_content)
-        result = self._normalize_indentation(result)
+        # result = self._normalize_indentation(result)
         
         return result
     
@@ -156,19 +156,14 @@ class TeXToTypstTransformer:
             
             # ディスプレイ数式の開始行（単独の$）も1レベルインデント
             if line.strip() == '$' and not line.startswith('\t'):
-                normalized_lines.append('\t' + line.strip())
-                continue
-            
-            # align環境のインデント正規化
-            if '//[formula type:align' in line:
-                # 数式ブロック全体を1レベルインデント
-                if line.strip().startswith('$'):
-                    normalized_lines.append('\t' + line.strip())
-                elif line.strip().endswith('$'):
-                    normalized_lines.append('\t' + line.strip())
+                # align環境の最初の$は既にインデントされているのでスキップ
+                current_index = len(normalized_lines)
+                if current_index + 1 < len(lines) and '//[formula type:align' in lines[current_index + 1]:
+                    normalized_lines.append(line.strip())
                 else:
                     normalized_lines.append('\t' + line.strip())
                 continue
+            
             
             # cases環境のインデント正規化
             if 'cases(' in line or '//[command type:cases]' in line:
@@ -274,18 +269,44 @@ class TeXToTypstTransformer:
     def _transform_math_display(self, node: MathNode) -> str:
         """ディスプレイ数式を変換"""
         content = self._transform_math_content(node.content)
-        return f"\t$\n\t{content}\n\t$ //[formula type:display]\n"
+        
+        # equation環境の場合は特別な処理
+        if hasattr(node, 'math_type') and node.math_type == "equation":
+            # 行末コマンドを構築
+            end_command = "//[environment type:equation"
+            if hasattr(node, 'tag') and node.tag:
+                end_command += f" tag:{node.tag}"
+            end_command += "]"
+            
+            # パーサーで抽出されたlabelを使用
+            if hasattr(node, 'label') and node.label:
+                return f"\t$\n\t{content}\n\t$ {end_command}\n\t<{node.label}>"
+            else:
+                return f"\t$\n\t{content}\n\t$ {end_command}"
+        else:
+            return f"\t$\n\t{content}\n\t$ //[formula type:display]\n"
     
     def _transform_math_align(self, node: MathNode) -> str:
         """align環境を変換"""
         # align環境の内容を解析してTypstのalign形式に変換
-        content = self._transform_align_content(node.content)
-        return f"\t$\n{content}\n\t$ //[formula type:align]"
+        content, _ = self._transform_align_content(node.content)
+        
+        # 行末コマンドを構築
+        end_command = "//[environment type:align"
+        if hasattr(node, 'tag') and node.tag:
+            end_command += f" tag:{node.tag}"
+        end_command += "]"
+        
+        # パーサーで抽出されたlabelを使用
+        if hasattr(node, 'label') and node.label:
+            return f"\t$\n\t{content}\n\t$ {end_command}\n\t<{node.label}>"
+        else:
+            return f"\t$\n\t{content}\n\t$ {end_command}"
     
     def _transform_math_align_star(self, node: MathNode) -> str:
         """align*環境を変換"""
         # align*環境の内容を解析してTypstのalign形式に変換
-        content = self._transform_align_content(node.content)
+        content, _ = self._transform_align_content(node.content)
         return f"\t$\n{content}\n\t$ //[formula type:align*]"
     
     def _transform_theorem(self, node: TheoremNode) -> str:
@@ -484,6 +505,11 @@ class TeXToTypstTransformer:
         """align環境の内容を変換"""
         import re
         
+        # \labelを最初に抽出して除去
+        label_match = re.search(r'\\label\{([^}]+)\}', content)
+        label_name = label_match.group(1) if label_match else None
+        content = re.sub(r'\\label\{[^}]+\}', '', content)
+        
         # 行を分割
         lines = content.split('\n')
         converted_lines = []
@@ -493,8 +519,7 @@ class TeXToTypstTransformer:
             if not line:
                 continue
             
-            # \label や \nonumber を除去
-            line = re.sub(r'\\label\{[^}]+\}', '', line)
+            # \nonumber を除去
             line = re.sub(r'\\nonumber', '', line)
             
             # 残った}を除去
@@ -535,7 +560,7 @@ class TeXToTypstTransformer:
             result = converted_lines[0]
             # タブ+スペースをタブに正規化
             result = re.sub(r'\t ', '\t', result)
-            return result
+            return result, label_name
         else:
             # 各行にタブを追加し、\\を\に変換
             tabbed_lines = []
@@ -585,11 +610,12 @@ class TeXToTypstTransformer:
             # タブ+スペースをタブに正規化
             result = re.sub(r'\t ', '\t', result)
             
-            return result
+            return result, label_name
     
     def _transform_math_content(self, content: str) -> str:
         """数式内容を変換（記号変換は前処理で完了済み）"""
         import re
+        
         
         # 数式アクセントの変換（最初に実行）
         for tex_accent, typst_accent in self.math_accents.items():
@@ -752,6 +778,13 @@ class TeXToTypstTransformer:
         
         # \mathrm{text}を"text"に変換
         content = re.sub(r'\\mathrm\{([^}]+)\}', r'"\1"', content)
+        
+        # \label{...} を <...> に変換
+        content = re.sub(r'\\label\{([^}]+)\}', r'<\1>', content)
+        content = re.sub(r'\\label\{([^}]+)\}', r'<\1>', content)  # 複数回適用
+        content = re.sub(r'\\label\{([^}]+)\}', r'<\1>', content)  # 複数回適用
+        content = re.sub(r'\\label\{([^}]+)\}', r'<\1>', content)  # 複数回適用
+        
         
         # cases環境の変換（コマンド保護処理より前）
         content = re.sub(r'\\begin\{cases\}', 'cases(', content)

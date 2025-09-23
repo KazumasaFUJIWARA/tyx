@@ -32,7 +32,8 @@ class ImprovedTeXParser:
             'lesssim': '≲', 'gtrsim': '≳', 'cap': '∩',
             'not': '¬', 'equiv': '≡', 'quad': 'quad',             'mathbb': 'ℝ', 'cdot': '⋅', 'ell': 'ℓ',
             'leq': '≤', 'geq': '≥', 'll': '≪', 'gg': '≫',
-            'times': '×', 'langle': '⟨', 'rangle': '⟩'
+            'times': '×', 'langle': '⟨', 'rangle': '⟩',
+            'forall': '∀', 'exists': '∃'
         }
         
         # 数式演算子のUnicodeマッピング
@@ -627,6 +628,7 @@ class ImprovedTeXParser:
         math_patterns = [
             r'\\begin\{align\}(.*?)\\end\{align\}',
             r'\\begin\{align\*\}(.*?)\\end\{align\*\}',
+            r'\\begin\{equation\}(.*?)\\end\{equation\}',
             r'\\\[(.*?)\\\]',
             r'\$([^$]+)\$',
         ]
@@ -772,12 +774,12 @@ class ImprovedTeXParser:
         """コンテンツ内の数式環境を処理"""
         # \begin{align*}...\end{align*} を処理（先に処理する）
         content = re.sub(r'\\begin\{align\*\}(.*?)\\end\{align\*\}', 
-                        lambda m: f'$ {self._parse_math_content(m.group(1))} $ //[formula type:align*]', 
+                        lambda m: self._process_align_content(m.group(1), 'align*'), 
                         content, flags=re.DOTALL)
         
         # \begin{align}...\end{align} を処理
         content = re.sub(r'\\begin\{align\}(.*?)\\end\{align\}', 
-                        lambda m: f'$ {self._parse_math_content(m.group(1))} $ //[formula type:align]', 
+                        lambda m: self._process_align_content(m.group(1), 'align'), 
                         content, flags=re.DOTALL)
         
         # \[...\] を処理
@@ -787,16 +789,75 @@ class ImprovedTeXParser:
         
         return content
     
+    def _process_align_content(self, content: str, align_type: str) -> str:
+        """align環境の内容を処理してlabelを抽出"""
+        # \label{...}を抽出
+        label_match = re.search(r'\\label\{([^}]+)\}', content)
+        label_name = label_match.group(1) if label_match else None
+        
+        # \tag{...}を抽出
+        tag_match = re.search(r'\\tag\{([^}]+)\}', content)
+        tag_name = tag_match.group(1) if tag_match else None
+        
+        # \label{...}を除去
+        content = re.sub(r'\\label\{[^}]+\}', '', content)
+        # \tag{...}を除去
+        content = re.sub(r'\\tag\{[^}]+\}', '', content)
+        # 空行を除去
+        content = re.sub(r'\n\s*\n', '\n', content)
+        
+        # 数式内容を処理
+        math_content = self._parse_math_content(content)
+        
+        # 行末コマンドを構築
+        end_command = f'//[environment type:{align_type}'
+        if tag_name:
+            end_command += f' tag:{tag_name}'
+        end_command += ']'
+        
+        if label_name:
+            return f'$\n\t{math_content}\n\t$ {end_command}\n\t<{label_name}>'
+        else:
+            return f'$\n\t{math_content}\n\t$ {end_command}'
+    
     def _parse_math_content(self, content: str) -> str:
         """数式内容を基本的に処理"""
         # 基本的な数式処理（簡易版）
         content = content.replace('\\label{eq2}', '').strip()
+        # \label{...}を除去
+        content = re.sub(r'\\label\{[^}]+\}', '', content)
+        # \tag{...}を除去
+        content = re.sub(r'\\tag\{[^}]+\}', '', content)
+        # \mbox{...}を"..."に変換
+        content = re.sub(r'\\mbox\{([^}]+)\}', r'"\1"', content)
         return content
     
     def _parse_math(self, content: str) -> MathNode:
         """数式を解析"""
         if content.startswith('\\begin{align}'):
-            math_content = content[12:-13]  # \begin{align}と\end{align}を除去
+            # \begin{align}と\end{align}を除去
+            start_pos = 12  # \begin{align}の長さ
+            end_pos = content.rfind('\\end{align}')
+            if end_pos != -1:
+                math_content = content[start_pos:end_pos]
+            else:
+                math_content = content[start_pos:-13]  # フォールバック
+            
+            # \label{...}を抽出して除去
+            import re
+            label_match = re.search(r'\\label\{([^}]+)\}', math_content)
+            label_name = label_match.group(1) if label_match else None
+            math_content = re.sub(r'\\label\{[^}]+\}', '', math_content)
+            
+            # \tag{...}を抽出して除去
+            tag_match = re.search(r'\\tag\{([^}]+)\}', math_content)
+            tag_name = tag_match.group(1) if tag_match else None
+            math_content = re.sub(r'\\tag\{[^}]+\}', '', math_content)
+            
+            # 残った}を除去
+            math_content = re.sub(r'^}\s*', '', math_content)
+            # \mbox{...}を"..."に変換
+            math_content = re.sub(r'\\mbox\{([^}]+)\}', r'"\1"', math_content)
             # ノルム記号と絶対値記号を解析して子ノードに変換
             child_nodes = self._parse_norm_expression(math_content)
             abs_nodes = self._parse_abs_expression(math_content)
@@ -806,12 +867,36 @@ class ImprovedTeXParser:
                 content=math_content,
                 math_type="align"
             )
+            # label_nameを属性として保存
+            if label_name:
+                math_node.label = label_name
+            # tag_nameを属性として保存
+            if tag_name:
+                math_node.tag = tag_name
             # 子ノードを追加
             for child in child_nodes:
                 math_node.add_child(child)
             return math_node
         elif content.startswith('\\begin{align*}'):
-            math_content = content[13:-14]  # \begin{align*}と\end{align*}を除去
+            # \begin{align*}と\end{align*}を除去
+            start_pos = 13  # \begin{align*}の長さ
+            end_pos = content.rfind('\\end{align*}')
+            if end_pos != -1:
+                math_content = content[start_pos:end_pos]
+            else:
+                math_content = content[start_pos:-14]  # フォールバック
+            
+            # \label{...}を抽出して除去
+            import re
+            label_match = re.search(r'\\label\{([^}]+)\}', math_content)
+            label_name = label_match.group(1) if label_match else None
+            math_content = re.sub(r'\\label\{[^}]+\}', '', math_content)
+            # \tag{...}も除去
+            math_content = re.sub(r'\\tag\{[^}]+\}', '', math_content)
+            # 残った}を除去
+            math_content = re.sub(r'^}\s*', '', math_content)
+            # \mbox{...}を"..."に変換
+            math_content = re.sub(r'\\mbox\{([^}]+)\}', r'"\1"', math_content)
             # ノルム記号と絶対値記号を解析して子ノードに変換
             child_nodes = self._parse_norm_expression(math_content)
             abs_nodes = self._parse_abs_expression(math_content)
@@ -821,6 +906,50 @@ class ImprovedTeXParser:
                 content=math_content,
                 math_type="align*"
             )
+            # label_nameを属性として保存
+            if label_name:
+                math_node.label = label_name
+            # 子ノードを追加
+            for child in child_nodes:
+                math_node.add_child(child)
+            return math_node
+        elif content.startswith('\\begin{equation}'):
+            # \begin{equation}と\end{equation}を除去
+            start_pos = 16  # \begin{equation}の長さ
+            end_pos = content.rfind('\\end{equation}')
+            if end_pos != -1:
+                math_content = content[start_pos:end_pos]
+            else:
+                math_content = content[start_pos:-17]  # フォールバック
+            
+            # \label{...}を抽出して除去
+            import re
+            label_match = re.search(r'\\label\{([^}]+)\}', math_content)
+            label_name = label_match.group(1) if label_match else None
+            math_content = re.sub(r'\\label\{[^}]+\}', '', math_content)
+            # \tag{...}を抽出して除去
+            tag_match = re.search(r'\\tag\{([^}]+)\}', math_content)
+            tag_name = tag_match.group(1) if tag_match else None
+            math_content = re.sub(r'\\tag\{[^}]+\}', '', math_content)
+            # 残った}を除去
+            math_content = re.sub(r'^}\s*', '', math_content)
+            # \mbox{...}を"..."に変換
+            math_content = re.sub(r'\\mbox\{([^}]+)\}', r'"\1"', math_content)
+            # ノルム記号と絶対値記号を解析して子ノードに変換
+            child_nodes = self._parse_norm_expression(math_content)
+            abs_nodes = self._parse_abs_expression(math_content)
+            child_nodes.extend(abs_nodes)
+            math_node = MathNode(
+                node_type=NodeType.MATH_DISPLAY,
+                content=math_content,
+                math_type="equation"
+            )
+            # label_nameを属性として保存
+            if label_name:
+                math_node.label = label_name
+            # tag_nameを属性として保存
+            if tag_name:
+                math_node.tag = tag_name
             # 子ノードを追加
             for child in child_nodes:
                 math_node.add_child(child)

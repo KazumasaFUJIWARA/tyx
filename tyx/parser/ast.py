@@ -104,6 +104,7 @@ class MathNode(ASTNode):
     """数式ノード"""
     math_type: str = "inline"  # inline, display, align, align*
     label: Optional[str] = None
+    tag: Optional[str] = None
     alignment_points: List[int] = field(default_factory=list)
     
     def __post_init__(self):
